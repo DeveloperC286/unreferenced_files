@@ -1,7 +1,7 @@
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
-#[structopt(name = "find_unreferenced_files")]
+#[structopt(name = "unreferenced_files")]
 pub struct Arguments {
     #[structopt(long = "from", help = "")]
     pub from: String,
