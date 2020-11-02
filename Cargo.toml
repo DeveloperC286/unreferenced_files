@@ -13,4 +13,4 @@ categories = ["command-line-utilities", "development-tools"]
 
 [dependencies]
 structopt = "0.3.20"
-regex = "1.4.1"
+regex = "1.4.2"
