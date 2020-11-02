@@ -66,7 +66,19 @@ fn get_directory_entries(path: &Path) -> ReadDir {
 }
 
 fn get_path(path: &str) -> &Path {
-    Path::new(path)
+    let path = Path::new(path);
+
+    if !path.exists() {
+        println!("{:?} does not exist.", path);
+        exit(ERROR_EXIT_CODE);
+    }
+
+    if !path.is_dir() {
+        println!("{:?} is not a directory.", path);
+        exit(ERROR_EXIT_CODE);
+    }
+
+    path
 }
 
 fn get_files_in_directory(path: &Path) -> HashSet<PathBuf> {
