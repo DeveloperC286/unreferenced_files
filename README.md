@@ -7,12 +7,42 @@ A tool for parsing directories scanning all the files within to find unused/unre
 
 ## Content
  * [Usage](#usage)
+    + [Usage - Example](#usage-example)
+    + [Usage - Logging](#usage-logging)
  * [Compiling via Local Repository](#compiling-via-local-repository)
  * [Compiling via Cargo](#compiling-via-cargo)
  * [Issues/Feature Requests](#issuesfeature-requests)
 
 
 ## Usage
+
+
+### Usage - Example
+For an example Java project with tests referencing files  inside `src/test/resources/` where the tests are calling the files by name e.g.
+
+```
+@Test
+public void testImportingFile() {
+    ...
+    import("file.txt");
+    ...
+    import("/JSON/file.json");
+    ...
+}
+```
+
+You can find all the unreferenced files inside `src/test/resources/` via
+
+```
+cd src/test/resources/
+unreferenced_files --from ./ --search ../java/
+```
+
+
+### Usage - Logging
+The crates `pretty_env_logger` and `log` are used to provide logging.
+The environment variable `RUST_LOG` can be used to set the logging level.
+See [https://crates.io/crates/pretty_env_logger](https://crates.io/crates/pretty_env_logger) for more detailed documentation.
 
 
 ## Compiling via Local Repository
