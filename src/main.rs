@@ -21,11 +21,11 @@ fn main() {
 
     let files = get_files_in_directory(get_path(&arguments.from));
     let referenced_files = get_files_referenced_in_directory(&files, get_path(&arguments.search));
-    print_unreferenced_files(files, referenced_files);
+    print_unreferenced_files(files, &referenced_files);
 }
 
-fn print_unreferenced_files(files: HashSet<PathBuf>, referenced_files: HashSet<PathBuf>) {
-    for unreferenced_file in files.difference(&referenced_files) {
+fn print_unreferenced_files(files: HashSet<PathBuf>, referenced_files: &HashSet<PathBuf>) {
+    for unreferenced_file in files.difference(referenced_files) {
         println!("{}", unreferenced_file.display());
     }
 }
@@ -33,31 +33,28 @@ fn print_unreferenced_files(files: HashSet<PathBuf>, referenced_files: HashSet<P
 fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> HashSet<PathBuf> {
     let mut files_referenced = HashSet::new();
 
-    for entry in read_dir(path).unwrap() {
+    for entry in get_directory_entries(path) {
         match entry {
             Ok(dir_entry) => {
                 let path = dir_entry.path();
 
                 if path.is_file() {
-                    let searching = path.display().to_string();
-                    info!("Searching the file '{}'.", searching);
-                    let content = read_to_string(path).unwrap();
+                    let file_searching = path.display().to_string();
+                    let file_content = get_file_content(&path);
+                    info!("Searching the file {:?}.", file_searching);
 
                     for file in files {
-                        let searching_for = file.display().to_string();
+                        let relative_path = get_relative_path(file);
+                        let relative_path_regex = get_regex(&relative_path);
+                        let contains_relative_path = file_content_contains(
+                            &file_content,
+                            relative_path_regex,
+                            &file_searching,
+                            &relative_path,
+                        );
 
-                        if searching_for.len() > 2 {
-                            let trimmed_searching_for = &searching_for[2..];
-                            let file_regex = Regex::new(trimmed_searching_for).unwrap();
-
-                            if file_regex.is_match(&content) {
-                                trace!(
-                                    "Found the text '{}' inside the file '{}'.",
-                                    trimmed_searching_for,
-                                    searching
-                                );
-                                files_referenced.insert(file.clone());
-                            }
+                        if contains_relative_path {
+                            files_referenced.insert(file.clone());
                         }
                     }
                 } else {
@@ -75,9 +72,55 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
     files_referenced
 }
 
+fn file_content_contains(
+    file_content: &str,
+    reg: Regex,
+    text_searching_for: &str,
+    file_searching: &str,
+) -> bool {
+    match reg.is_match(file_content) {
+        true => {
+            trace!(
+                "Found the text {:?} inside the file {:?}.",
+                text_searching_for,
+                file_searching
+            );
+            true
+        }
+        false => false,
+    }
+}
+
+fn get_regex(text_to_find: &str) -> Regex {
+    match Regex::new(text_to_find) {
+        Ok(reg) => reg,
+        Err(error) => {
+            error!("{:?}", error);
+            exit(ERROR_EXIT_CODE);
+        }
+    }
+}
+
+fn get_relative_path(path: &Path) -> String {
+    path.display()
+        .to_string()
+        .trim_start_matches("./")
+        .to_string()
+}
+
 fn get_directory_entries(path: &Path) -> ReadDir {
     match read_dir(path) {
         Ok(entries) => entries,
+        Err(error) => {
+            error!("{:?}", error);
+            exit(ERROR_EXIT_CODE);
+        }
+    }
+}
+
+fn get_file_content(path: &Path) -> String {
+    match read_to_string(path) {
+        Ok(file_content) => file_content,
         Err(error) => {
             error!("{:?}", error);
             exit(ERROR_EXIT_CODE);
@@ -104,14 +147,14 @@ fn get_path(path: &str) -> &Path {
 fn get_files_in_directory(path: &Path) -> HashSet<PathBuf> {
     let mut files = HashSet::new();
 
-    info!("Searching the directory '{}' for files.", path.display());
+    info!("Searching the directory {:?} for files.", path.display());
     for dir_entry in get_directory_entries(path) {
         match dir_entry {
             Ok(dir_entry) => {
                 let path = dir_entry.path();
 
                 if path.is_file() {
-                    trace!("Adding the file '{}' to the found files.", path.display());
+                    trace!("Adding the file {:?} to the found files.", path.display());
                     files.insert(path);
                 } else {
                     files.extend(get_files_in_directory(path.as_path()));
