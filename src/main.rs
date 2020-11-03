@@ -1,3 +1,5 @@
+#[macro_use]
+extern crate log;
 extern crate regex;
 
 use std::collections::HashSet;
@@ -13,7 +15,9 @@ mod cli;
 const ERROR_EXIT_CODE: i32 = 1;
 
 fn main() {
+    env_logger::init();
     let arguments = cli::Arguments::from_args();
+    trace!("{:?}", arguments);
 
     let files = get_files_in_directory(get_path(&arguments.from));
     let referenced_files = get_files_referenced_in_directory(&files, get_path(&arguments.search));
@@ -47,7 +51,8 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
                 }
             }
             Err(error) => {
-                println!("{:?}", error);
+                error!("{:?}", error);
+                exit(ERROR_EXIT_CODE);
             }
         }
     }
@@ -59,7 +64,7 @@ fn get_directory_entries(path: &Path) -> ReadDir {
     match read_dir(path) {
         Ok(entries) => entries,
         Err(error) => {
-            println!("{:?}", error);
+            error!("{:?}", error);
             exit(ERROR_EXIT_CODE);
         }
     }
@@ -69,12 +74,12 @@ fn get_path(path: &str) -> &Path {
     let path = Path::new(path);
 
     if !path.exists() {
-        println!("{:?} does not exist.", path);
+        error!("{:?} does not exist.", path);
         exit(ERROR_EXIT_CODE);
     }
 
     if !path.is_dir() {
-        println!("{:?} is not a directory.", path);
+        error!("{:?} is not a directory.", path);
         exit(ERROR_EXIT_CODE);
     }
 
@@ -96,7 +101,8 @@ fn get_files_in_directory(path: &Path) -> HashSet<PathBuf> {
                 }
             }
             Err(error) => {
-                println!("{:?}", error);
+                error!("{:?}", error);
+                exit(ERROR_EXIT_CODE);
             }
         }
     }
