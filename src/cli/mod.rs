@@ -6,8 +6,17 @@ use structopt::StructOpt;
     about = "A tool for parsing directories scanning all the files within to find unused/unreferenced files."
 )]
 pub struct Arguments {
-    #[structopt(long = "from", help = "")]
+    #[structopt(
+        short,
+        long,
+        help = "Determine if the files in this directory are referenced."
+    )]
     pub from: String,
-    #[structopt(long = "search", help = "")]
+
+    #[structopt(
+        short,
+        long,
+        help = "The directory of files to scan for references to the files."
+    )]
     pub search: String,
 }
