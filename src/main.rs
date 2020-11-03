@@ -43,18 +43,23 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
                     let file_content = get_file_content(&path);
                     info!("Searching the file {:?}.", file_searching);
 
-                    for file in files {
-                        let relative_path = get_relative_path(file);
-                        let relative_path_regex = get_regex(&relative_path);
-                        let contains_relative_path = file_content_contains(
+                    'files: for file in files {
+                        if file_content_contains(
                             &file_content,
-                            relative_path_regex,
+                            &get_relative_path(file),
                             &file_searching,
-                            &relative_path,
-                        );
-
-                        if contains_relative_path {
+                        ) {
                             files_referenced.insert(file.clone());
+                            continue 'files;
+                        }
+
+                        if file_content_contains(
+                            &file_content,
+                            get_file_name(file),
+                            &file_searching,
+                        ) {
+                            files_referenced.insert(file.clone());
+                            continue 'files;
                         }
                     }
                 } else {
@@ -74,11 +79,10 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
 
 fn file_content_contains(
     file_content: &str,
-    reg: Regex,
     text_searching_for: &str,
     file_searching: &str,
 ) -> bool {
-    match reg.is_match(file_content) {
+    match get_regex(text_searching_for).is_match(file_content) {
         true => {
             trace!(
                 "Found the text {:?} inside the file {:?}.",
@@ -96,6 +100,22 @@ fn get_regex(text_to_find: &str) -> Regex {
         Ok(reg) => reg,
         Err(error) => {
             error!("{:?}", error);
+            exit(ERROR_EXIT_CODE);
+        }
+    }
+}
+
+fn get_file_name(path: &Path) -> &str {
+    match path.file_name() {
+        Some(file_name) => match file_name.to_str() {
+            Some(str) => str,
+            None => {
+                error!("Can not convert {:?} to str.", file_name);
+                exit(ERROR_EXIT_CODE);
+            }
+        },
+        None => {
+            error!("{:?} has no file name.", path.display());
             exit(ERROR_EXIT_CODE);
         }
     }
