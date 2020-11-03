@@ -15,6 +15,26 @@ A tool for parsing directories scanning all the files within to find unused/unre
 
 
 ## Usage
+`unreferenced_files` is a very simple and fast tool. 
+All files inside a directory provided via the argument `--from <from>` are recorded.
+The referencing of these files are searched for inside the directory provided via the argument `--search <search>`.
+
+The searching for the referencing of a file is a simple regex of the relative path of the file, inside each file in the searched directory.
+
+e.g.
+
+```
+> tree parent
+
+parent/
+├── child
+│   └── file2.txt
+└── file1.txt
+```
+
+For the example directory above, if the argument was `--from parent/` then the regex searched for would be `parent/file1.txt` and `parent/child/file2.txt`.
+
+If you changed into the parent directory and used the argument `--from ./`
 
 
 ### Usage - Example
