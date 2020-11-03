@@ -34,7 +34,7 @@ parent/
 
 For the example directory above, if the argument was `--from parent/` then the regex searched for would be `parent/file1.txt` and `parent/child/file2.txt`.
 
-If you changed into the parent directory and used the argument `--from ./`
+If you changed into the parent directory and used the argument `--from ./` then the regex searched for would be `file1.txt` and `child/file2.txt`.
 
 
 ### Usage - Example
