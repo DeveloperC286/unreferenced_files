@@ -44,16 +44,20 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
                     let content = read_to_string(path).unwrap();
 
                     for file in files {
-                        let searching_for = file.display();
-                        let file_regex = Regex::new(&*searching_for.to_string()).unwrap();
+                        let searching_for = file.display().to_string();
 
-                        if file_regex.is_match(&content) {
-                            trace!(
-                                "Found the text '{}' inside the file '{}'.",
-                                searching_for,
-                                searching
-                            );
-                            files_referenced.insert(file.clone());
+                        if searching_for.len() > 2 {
+                            let trimmed_searching_for = &searching_for[2..];
+                            let file_regex = Regex::new(trimmed_searching_for).unwrap();
+
+                            if file_regex.is_match(&content) {
+                                trace!(
+                                    "Found the text '{}' inside the file '{}'.",
+                                    trimmed_searching_for,
+                                    searching
+                                );
+                                files_referenced.insert(file.clone());
+                            }
                         }
                     }
                 } else {

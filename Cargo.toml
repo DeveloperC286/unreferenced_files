@@ -1,7 +1,7 @@
 [package]
 name = "unreferenced_files"
 description = "A tool for parsing directories scanning all the files within to find unused/unreferenced files."
-version = "0.3.0"
+version = "0.4.0"
 authors = ["C <DeveloperC@protonmail.com>"]
 edition = "2018"
 license = "AGPL-3.0"
