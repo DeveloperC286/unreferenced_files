@@ -17,11 +17,14 @@ const ERROR_EXIT_CODE: i32 = 1;
 fn main() {
     env_logger::init();
     let arguments = cli::Arguments::from_args();
-    trace!("{:?}", arguments);
+    info!("{:?}", arguments);
 
     let files = get_files_in_directory(get_path(&arguments.from));
     let referenced_files = get_files_referenced_in_directory(&files, get_path(&arguments.search));
+    print_unreferenced_files(files, referenced_files);
+}
 
+fn print_unreferenced_files(files: HashSet<PathBuf>, referenced_files: HashSet<PathBuf>) {
     for unreferenced_file in files.difference(&referenced_files) {
         println!("{}", unreferenced_file.display());
     }
@@ -36,12 +39,20 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
                 let path = dir_entry.path();
 
                 if path.is_file() {
+                    let searching = path.display().to_string();
+                    info!("Searching the file '{}'.", searching);
                     let content = read_to_string(path).unwrap();
 
                     for file in files {
-                        let file_regex = Regex::new(&*file.display().to_string()).unwrap();
+                        let searching_for = file.display();
+                        let file_regex = Regex::new(&*searching_for.to_string()).unwrap();
 
                         if file_regex.is_match(&content) {
+                            trace!(
+                                "Found the text '{}' inside the file '{}'.",
+                                searching_for,
+                                searching
+                            );
                             files_referenced.insert(file.clone());
                         }
                     }
@@ -89,12 +100,14 @@ fn get_path(path: &str) -> &Path {
 fn get_files_in_directory(path: &Path) -> HashSet<PathBuf> {
     let mut files = HashSet::new();
 
+    info!("Searching the directory '{}' for files.", path.display());
     for dir_entry in get_directory_entries(path) {
         match dir_entry {
             Ok(dir_entry) => {
                 let path = dir_entry.path();
 
                 if path.is_file() {
+                    trace!("Adding the file '{}' to the found files.", path.display());
                     files.insert(path);
                 } else {
                     files.extend(get_files_in_directory(path.as_path()));
