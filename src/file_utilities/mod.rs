@@ -1,4 +1,5 @@
-use std::path::Path;
+use std::collections::HashSet;
+use std::path::{Path, PathBuf};
 use std::process::exit;
 
 pub fn get_path(path: &str) -> &Path {
@@ -58,4 +59,30 @@ pub fn get_directory_entries(path: &Path) -> std::fs::ReadDir {
             exit(crate::ERROR_EXIT_CODE);
         }
     }
+}
+
+pub fn get_files_in_directory(path: &Path) -> HashSet<PathBuf> {
+    let mut files = HashSet::new();
+
+    info!("Searching the directory {:?} for files.", path.display());
+    for dir_entry in get_directory_entries(path) {
+        match dir_entry {
+            Ok(dir_entry) => {
+                let path = dir_entry.path();
+
+                if path.is_file() {
+                    trace!("Adding the file {:?} to the found files.", path.display());
+                    files.insert(path);
+                } else {
+                    files.extend(get_files_in_directory(path.as_path()));
+                }
+            }
+            Err(error) => {
+                error!("{:?}", error);
+                exit(crate::ERROR_EXIT_CODE);
+            }
+        }
+    }
+
+    files
 }

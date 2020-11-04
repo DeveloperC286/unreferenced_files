@@ -2,11 +2,7 @@ use std::process::exit;
 
 use regex::Regex;
 
-pub fn contains(
-    file_content: &str,
-    text_searching_for: &str,
-    file_searching: &str,
-) -> bool {
+pub fn contains(file_content: &str, text_searching_for: &str, file_searching: &str) -> bool {
     match get_regex(text_searching_for).is_match(file_content) {
         true => {
             trace!(
