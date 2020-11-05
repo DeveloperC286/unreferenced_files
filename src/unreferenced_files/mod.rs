@@ -9,13 +9,17 @@ use crate::{file_content, file_utilities, regex_utilities};
 pub fn print(from: &str, search: &str) {
     let files = file_utilities::get_files_in_directory(file_utilities::get_path(from));
     let regex_map = regex_utilities::get_regex_map(&files);
-    let referenced_files =
-        get_files_referenced_in_directory(&files, file_utilities::get_path(search), &regex_map);
-    print_unreferenced_files(files, &referenced_files);
+    let unreferenced_files =
+        get_unreferenced_files_in_directory(&files, file_utilities::get_path(search), &regex_map);
+    print_unreferenced_files(unreferenced_files);
 }
 
-fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path, regex_map: &HashMap<String, Regex>) -> HashSet<PathBuf> {
-    let mut files_referenced = HashSet::new();
+fn get_unreferenced_files_in_directory(
+    files: &HashSet<PathBuf>,
+    path: &Path,
+    regex_map: &HashMap<String, Regex>,
+) -> HashSet<PathBuf> {
+    let mut unreferenced_files = files.clone();
 
     for entry in file_utilities::get_directory_entries(path) {
         match entry {
@@ -27,30 +31,37 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path, rege
                     let file_content = file_utilities::get_file_content(&path);
                     info!("Searching the file {:?}.", file_searching);
 
-                    'files: for file in files {
+                    'files: for file in unreferenced_files.clone() {
                         if file_content::contains(
                             &file_content,
-                            &file_utilities::get_relative_path(file),
+                            &file_utilities::get_relative_path(&*file),
                             &file_searching,
                             regex_map,
                         ) {
-                            files_referenced.insert(file.clone());
+                            unreferenced_files.remove(&*file);
                             continue 'files;
                         }
 
                         if file_content::contains(
                             &file_content,
-                            file_utilities::get_file_name(file),
+                            file_utilities::get_file_name(&*file),
                             &file_searching,
                             regex_map,
                         ) {
-                            files_referenced.insert(file.clone());
+                            unreferenced_files.remove(&*file);
                             continue 'files;
                         }
                     }
                 } else {
-                    files_referenced
-                        .extend(get_files_referenced_in_directory(files, path.as_path(), regex_map));
+                    let child_directories_unreferenced_files = get_unreferenced_files_in_directory(
+                        &unreferenced_files,
+                        path.as_path(),
+                        regex_map,
+                    );
+                    unreferenced_files = unreferenced_files
+                        .intersection(&child_directories_unreferenced_files)
+                        .cloned()
+                        .collect();
                 }
             }
             Err(error) => {
@@ -60,11 +71,11 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path, rege
         }
     }
 
-    files_referenced
+    unreferenced_files
 }
 
-fn print_unreferenced_files(files: HashSet<PathBuf>, referenced_files: &HashSet<PathBuf>) {
-    for unreferenced_file in files.difference(referenced_files) {
+fn print_unreferenced_files(unreferenced_files: HashSet<PathBuf>) {
+    for unreferenced_file in unreferenced_files {
         println!("{}", unreferenced_file.display());
     }
 }

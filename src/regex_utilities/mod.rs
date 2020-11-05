@@ -19,7 +19,7 @@ pub fn get_regex_map(files: &HashSet<PathBuf>) -> HashMap<String, Regex> {
         regex_map.insert(file_name, file_name_regex);
     }
 
-    return regex_map;
+    regex_map
 }
 
 fn get_regex(text_to_find: &str) -> Regex {
