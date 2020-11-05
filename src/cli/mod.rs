@@ -1,9 +1,10 @@
-use structopt::StructOpt;
+use structopt::{clap::ArgGroup, StructOpt};
 
 #[derive(Debug, StructOpt)]
 #[structopt(
     name = "unreferenced_files",
-    about = "A tool for parsing directories scanning all the files within to find unused/unreferenced files."
+    about = "A tool for parsing directories scanning all the files within to find unused/unreferenced files.",
+    group = ArgGroup::with_name("only").required(false)
 )]
 pub struct Arguments {
     #[structopt(
@@ -19,4 +20,18 @@ pub struct Arguments {
         help = "The directory of files to scan for references to the files."
     )]
     pub search: String,
+
+    #[structopt(
+        group = "only",
+        long,
+        help = "Only search for unreferenced files via their file name."
+    )]
+    pub only_file_name: bool,
+
+    #[structopt(
+        group = "only",
+        long,
+        help = "Only search for unreferenced files via their relative path."
+    )]
+    pub only_relative_path: bool,
 }

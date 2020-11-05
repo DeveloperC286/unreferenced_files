@@ -40,28 +40,28 @@ fn get_unreferenced_files_in_directory(
                     info!("Searching the file {:?}.", file_searching);
 
                     'files: for file in unreferenced_files.clone() {
-                        if search_for_relative_path {
-                            if file_content::contains(
+                        if search_for_relative_path
+                            && file_content::contains(
                                 &file_content,
                                 &file_utilities::get_relative_path(&*file),
                                 &file_searching,
                                 regex_map,
-                            ) {
-                                unreferenced_files.remove(&*file);
-                                continue 'files;
-                            }
+                            )
+                        {
+                            unreferenced_files.remove(&*file);
+                            continue 'files;
                         }
 
-                        if search_for_file_name {
-                            if file_content::contains(
+                        if search_for_file_name
+                            && file_content::contains(
                                 &file_content,
                                 file_utilities::get_file_name(&*file),
                                 &file_searching,
                                 regex_map,
-                            ) {
-                                unreferenced_files.remove(&*file);
-                                continue 'files;
-                            }
+                            )
+                        {
+                            unreferenced_files.remove(&*file);
+                            continue 'files;
                         }
                     }
                 } else {

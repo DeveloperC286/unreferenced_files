@@ -17,5 +17,10 @@ fn main() {
     let arguments = cli::Arguments::from_args();
     info!("{:?}", arguments);
 
-    unreferenced_files::print(&arguments.from, &arguments.search, true, true);
+    unreferenced_files::print(
+        &arguments.from,
+        &arguments.search,
+        !arguments.only_file_name,
+        !arguments.only_relative_path,
+    );
 }
