@@ -1,17 +1,20 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
-use crate::{file_content, file_utilities};
+use regex::Regex;
+
+use crate::{file_content, file_utilities, regex_utilities};
 
 pub fn print(from: &str, search: &str) {
     let files = file_utilities::get_files_in_directory(file_utilities::get_path(from));
+    let regex_map = regex_utilities::get_regex_map(&files);
     let referenced_files =
-        get_files_referenced_in_directory(&files, file_utilities::get_path(search));
+        get_files_referenced_in_directory(&files, file_utilities::get_path(search), &regex_map);
     print_unreferenced_files(files, &referenced_files);
 }
 
-fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> HashSet<PathBuf> {
+fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path, regex_map: &HashMap<String, Regex>) -> HashSet<PathBuf> {
     let mut files_referenced = HashSet::new();
 
     for entry in file_utilities::get_directory_entries(path) {
@@ -29,6 +32,7 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
                             &file_content,
                             &file_utilities::get_relative_path(file),
                             &file_searching,
+                            regex_map,
                         ) {
                             files_referenced.insert(file.clone());
                             continue 'files;
@@ -38,6 +42,7 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
                             &file_content,
                             file_utilities::get_file_name(file),
                             &file_searching,
+                            regex_map,
                         ) {
                             files_referenced.insert(file.clone());
                             continue 'files;
@@ -45,7 +50,7 @@ fn get_files_referenced_in_directory(files: &HashSet<PathBuf>, path: &Path) -> H
                     }
                 } else {
                     files_referenced
-                        .extend(get_files_referenced_in_directory(files, path.as_path()));
+                        .extend(get_files_referenced_in_directory(files, path.as_path(), regex_map));
                 }
             }
             Err(error) => {

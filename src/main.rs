@@ -7,6 +7,7 @@ use structopt::StructOpt;
 mod cli;
 mod file_content;
 mod file_utilities;
+mod regex_utilities;
 mod unreferenced_files;
 
 const ERROR_EXIT_CODE: i32 = 1;
