@@ -7,6 +7,7 @@ A tool for parsing directories scanning all the files within to find unused/unre
 
 ## Content
  * [Usage](#usage)
+    + [Usage - Additional Flags](#usage-additional-flags)
     + [Usage - Example](#usage-example)
     + [Usage - Logging](#usage-logging)
  * [Compiling via Local Repository](#compiling-via-local-repository)
@@ -35,6 +36,17 @@ parent/
 
 For the example directory above, if the argument was `--from parent/` then for the file `parent/file1.txt` the relative path of `parent/file1.txt`, the file name `file1.txt` and the file stem `file1` would be searched for.
 For the file `parent/child/file2.txt` the relative path of `parent/child/file2.txt`, the file name `file2.txt` and file stem `file2` would be searched for.
+
+
+## Usage - Additional Flags
+
+Additional command line flags can be passed to alter what is searched for to determine if a file is referenced.
+
+| Flag                      | |
+|---------------------------|-|
+| --only-file-name | Only search for unreferenced files via their file name. |
+| --only-file-stem | Only search for unreferenced files via their file name without the extension. |
+| --only-relative-path | Only search for unreferenced files via their relative path. |
 
 
 ### Usage - Example
