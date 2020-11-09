@@ -32,42 +32,49 @@ fn get_unreferenced_files_in_directory(
     for entry in file_utilities::get_directory_entries(path) {
         match entry {
             Ok(dir_entry) => {
-                let path = dir_entry.path();
+                let searching = dir_entry.path();
 
-                if path.is_file() {
-                    let file_searching = path.display().to_string();
-                    let file_content = file_utilities::get_file_content(&path);
-                    info!("Searching the file {:?}.", file_searching);
+                if searching.is_file() {
+                    let file_content = file_utilities::get_file_content(&searching);
+                    info!("Searching the file {:?}.", searching);
 
-                    'files: for file in unreferenced_files.clone() {
+                    'files: for unreferenced_file in unreferenced_files.clone() {
+                        if file_utilities::is_same_path(&unreferenced_file, &searching) {
+                            warn!(
+                                "Not searching {:?} for {:?} as they are the same file.",
+                                searching, unreferenced_file
+                            );
+                            continue 'files;
+                        }
+
                         if search_for_relative_path
                             && file_content::contains(
                                 &file_content,
-                                &file_utilities::get_relative_path(&*file),
-                                &file_searching,
+                                &file_utilities::get_relative_path(&*unreferenced_file),
+                                &searching,
                                 regex_map,
                             )
                         {
-                            unreferenced_files.remove(&*file);
+                            unreferenced_files.remove(&*unreferenced_file);
                             continue 'files;
                         }
 
                         if search_for_file_name
                             && file_content::contains(
                                 &file_content,
-                                file_utilities::get_file_name(&*file),
-                                &file_searching,
+                                file_utilities::get_file_name(&*unreferenced_file),
+                                &searching,
                                 regex_map,
                             )
                         {
-                            unreferenced_files.remove(&*file);
+                            unreferenced_files.remove(&*unreferenced_file);
                             continue 'files;
                         }
                     }
                 } else {
                     let child_directories_unreferenced_files = get_unreferenced_files_in_directory(
                         &unreferenced_files,
-                        path.as_path(),
+                        searching.as_path(),
                         regex_map,
                         search_for_relative_path,
                         search_for_file_name,

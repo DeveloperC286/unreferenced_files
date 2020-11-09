@@ -64,14 +64,14 @@ pub fn get_directory_entries(path: &Path) -> std::fs::ReadDir {
 pub fn get_files_in_directory(path: &Path) -> HashSet<PathBuf> {
     let mut files = HashSet::new();
 
-    info!("Searching the directory {:?} for files.", path.display());
+    trace!("Searching the directory {:?} for files.", path.display());
     for dir_entry in get_directory_entries(path) {
         match dir_entry {
             Ok(dir_entry) => {
                 let path = dir_entry.path();
 
                 if path.is_file() {
-                    trace!("Adding the file {:?} to the found files.", path.display());
+                    info!("Adding the file {:?} to the found files.", path.display());
                     files.insert(path);
                 } else {
                     files.extend(get_files_in_directory(path.as_path()));
@@ -85,4 +85,22 @@ pub fn get_files_in_directory(path: &Path) -> HashSet<PathBuf> {
     }
 
     files
+}
+
+pub fn is_same_path(path: &Path, path2: &Path) -> bool {
+    match path.canonicalize() {
+        Ok(canonicalized_path) => match path2.canonicalize() {
+            Ok(canonicalized_path2) => {
+                return canonicalized_path == canonicalized_path2;
+            }
+            Err(_) => {
+                error!("Unable to canonicalize {:?}.", path2);
+            }
+        },
+        Err(_) => {
+            error!("Unable to canonicalize {:?}.", path);
+        }
+    }
+
+    false
 }
