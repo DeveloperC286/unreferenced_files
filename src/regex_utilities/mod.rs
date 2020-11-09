@@ -10,6 +10,7 @@ pub fn get_regex_map(
     files: &HashSet<PathBuf>,
     search_for_relative_path: bool,
     search_for_file_name: bool,
+    search_for_file_steam: bool,
 ) -> HashMap<String, Regex> {
     let mut regex_map = HashMap::new();
 
@@ -24,6 +25,12 @@ pub fn get_regex_map(
             let file_name = file_utilities::get_file_name(file).to_string();
             let file_name_regex = get_regex(&file_name);
             regex_map.insert(file_name, file_name_regex);
+        }
+
+        if search_for_file_steam {
+            let file_stem = file_utilities::get_file_stem(file).to_string();
+            let file_stem_regex = get_regex(&file_stem);
+            regex_map.insert(file_stem, file_stem_regex);
         }
     }
 

@@ -34,6 +34,22 @@ pub fn get_file_name(path: &Path) -> &str {
     }
 }
 
+pub fn get_file_stem(path: &Path) -> &str {
+    match path.file_stem() {
+        Some(file_name) => match file_name.to_str() {
+            Some(str) => str,
+            None => {
+                error!("Can not convert {:?} to str.", file_name);
+                exit(crate::ERROR_EXIT_CODE);
+            }
+        },
+        None => {
+            error!("{:?} has no file steam.", path.display());
+            exit(crate::ERROR_EXIT_CODE);
+        }
+    }
+}
+
 pub fn get_relative_path(path: &Path) -> String {
     path.display()
         .to_string()

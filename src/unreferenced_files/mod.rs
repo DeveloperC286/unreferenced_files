@@ -6,16 +6,33 @@ use regex::Regex;
 
 use crate::{file_content, file_utilities, regex_utilities};
 
-pub fn print(from: &str, search: &str, search_for_relative_path: bool, search_for_file_name: bool) {
+pub fn print(
+    from: &str,
+    search: &str,
+    search_for_relative_path: bool,
+    search_for_file_name: bool,
+    search_for_file_stem: bool,
+) {
+    trace!(
+        "Using the following search settings search_for_relative_path = {}, search_for_file_name = {}, search_for_file_stem = {}G",
+        search_for_relative_path,
+        search_for_file_name,
+        search_for_file_stem
+    );
     let files = file_utilities::get_files_in_directory(file_utilities::get_path(from));
-    let regex_map =
-        regex_utilities::get_regex_map(&files, search_for_relative_path, search_for_file_name);
+    let regex_map = regex_utilities::get_regex_map(
+        &files,
+        search_for_relative_path,
+        search_for_file_name,
+        search_for_file_stem,
+    );
     let unreferenced_files = get_unreferenced_files_in_directory(
         &files,
         file_utilities::get_path(search),
         &regex_map,
         search_for_relative_path,
         search_for_file_name,
+        search_for_file_stem,
     );
     print_unreferenced_files(unreferenced_files);
 }
@@ -26,6 +43,7 @@ fn get_unreferenced_files_in_directory(
     regex_map: &HashMap<String, Regex>,
     search_for_relative_path: bool,
     search_for_file_name: bool,
+    search_for_file_stem: bool,
 ) -> HashSet<PathBuf> {
     let mut unreferenced_files = files.clone();
 
@@ -70,6 +88,18 @@ fn get_unreferenced_files_in_directory(
                             unreferenced_files.remove(&*unreferenced_file);
                             continue 'files;
                         }
+
+                        if search_for_file_stem
+                            && file_content::contains(
+                                &file_content,
+                                file_utilities::get_file_stem(&*unreferenced_file),
+                                &searching,
+                                regex_map,
+                            )
+                        {
+                            unreferenced_files.remove(&*unreferenced_file);
+                            continue 'files;
+                        }
                     }
                 } else {
                     let child_directories_unreferenced_files = get_unreferenced_files_in_directory(
@@ -78,6 +108,7 @@ fn get_unreferenced_files_in_directory(
                         regex_map,
                         search_for_relative_path,
                         search_for_file_name,
+                        search_for_file_stem,
                     );
                     unreferenced_files = unreferenced_files
                         .intersection(&child_directories_unreferenced_files)

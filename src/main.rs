@@ -20,7 +20,8 @@ fn main() {
     unreferenced_files::print(
         &arguments.from,
         &arguments.search,
-        !arguments.only_file_name,
-        !arguments.only_relative_path,
+        !arguments.only_file_name && !arguments.only_file_stem,
+        !arguments.only_relative_path && !arguments.only_file_stem,
+        !arguments.only_relative_path && !arguments.only_file_name,
     );
 }

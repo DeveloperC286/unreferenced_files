@@ -31,6 +31,13 @@ pub struct Arguments {
     #[structopt(
         group = "only",
         long,
+        help = "Only search for unreferenced files via their file name without the extension."
+    )]
+    pub only_file_stem: bool,
+
+    #[structopt(
+        group = "only",
+        long,
         help = "Only search for unreferenced files via their relative path."
     )]
     pub only_relative_path: bool,
