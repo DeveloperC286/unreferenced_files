@@ -15,7 +15,7 @@ const ERROR_EXIT_CODE: i32 = 1;
 fn main() {
     env_logger::init();
     let arguments = cli::Arguments::from_args();
-    info!("{:?}", arguments);
+    debug!("The command line arguments provided are {:?}.", arguments);
 
     unreferenced_files::print(
         &arguments.from,
