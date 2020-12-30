@@ -1,6 +1,6 @@
 [package]
 name = "unreferenced_files"
-description = "A tool for parsing directories scanning all the files within to find unused/unreferenced files."
+description = "A tool for parsing directories and scanning all the files within, to find unused and unreferenced files."
 version = "1.0.0"
 authors = ["C <DeveloperC@protonmail.com>"]
 edition = "2018"
