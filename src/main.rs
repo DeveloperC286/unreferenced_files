@@ -43,5 +43,5 @@ fn main() {
         search_for_file_name,
         search_for_file_stem,
     );
-    crate::reporter::print(unreferenced_files);
+    crate::reporter::print(unreferenced_files, arguments.print_full_path);
 }

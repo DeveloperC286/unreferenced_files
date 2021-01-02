@@ -41,4 +41,10 @@ pub struct Arguments {
         help = "Only search for unreferenced files via their relative path."
     )]
     pub only_relative_path: bool,
+
+    #[structopt(
+        long,
+        help = "Output the full path of each unreferenced file, instead of the relative path."
+    )]
+    pub print_full_path: bool,
 }
