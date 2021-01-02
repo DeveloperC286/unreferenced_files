@@ -4,40 +4,9 @@ use std::process::exit;
 
 use regex::Regex;
 
-use crate::{file_content, file_utilities, regex_utilities};
+use crate::{file_content, file_utilities};
 
-pub fn print(
-    from: &str,
-    search: &str,
-    search_for_relative_path: bool,
-    search_for_file_name: bool,
-    search_for_file_stem: bool,
-) {
-    trace!(
-        "Using the following search settings search_for_relative_path = {}, search_for_file_name = {}, search_for_file_stem = {}G",
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem
-    );
-    let files = file_utilities::get_files_in_directory(file_utilities::get_path(from));
-    let regex_map = regex_utilities::get_regex_map(
-        &files,
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem,
-    );
-    let unreferenced_files = get_unreferenced_files_in_directory(
-        &files,
-        file_utilities::get_path(search),
-        &regex_map,
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem,
-    );
-    print_unreferenced_files(unreferenced_files);
-}
-
-fn get_unreferenced_files_in_directory(
+pub fn get_unreferenced_files_in_directory(
     files: &HashSet<PathBuf>,
     path: &Path,
     regex_map: &HashMap<String, Regex>,
@@ -124,10 +93,4 @@ fn get_unreferenced_files_in_directory(
     }
 
     unreferenced_files
-}
-
-fn print_unreferenced_files(unreferenced_files: HashSet<PathBuf>) {
-    for unreferenced_file in unreferenced_files {
-        println!("{}", unreferenced_file.display());
-    }
 }
