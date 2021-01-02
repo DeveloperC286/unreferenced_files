@@ -5,8 +5,8 @@ extern crate regex;
 use structopt::StructOpt;
 
 mod cli;
-mod file_content;
 mod file_utilities;
+mod model;
 mod regex_utilities;
 mod reporter;
 mod unreferenced_files;
@@ -22,20 +22,26 @@ fn main() {
     let search_for_file_name = !arguments.only_relative_path && !arguments.only_file_stem;
     let search_for_file_stem = !arguments.only_relative_path && !arguments.only_file_name;
 
-    let files = file_utilities::get_files_in_directory(file_utilities::get_path(&arguments.from));
-    let regex_map = regex_utilities::get_regex_map(
-        &files,
+    let searching_for = crate::model::file_path_variants::get_file_path_variants_in_directory(
+        file_utilities::get_path(&arguments.from),
+    );
+    let searching = crate::model::raw_file::get_raw_files_in_directory(file_utilities::get_path(
+        &arguments.search,
+    ));
+    let searching_for_regex_map = crate::regex_utilities::get_regex_map(
+        &searching_for,
         search_for_relative_path,
         search_for_file_name,
         search_for_file_stem,
     );
-    let unreferenced_files = unreferenced_files::get_unreferenced_files_in_directory(
-        &files,
-        file_utilities::get_path(&arguments.search),
-        &regex_map,
+
+    let unreferenced_files = crate::unreferenced_files::get_unreferenced_files_in_directory(
+        searching_for,
+        searching_for_regex_map,
+        searching,
         search_for_relative_path,
         search_for_file_name,
         search_for_file_stem,
     );
-    reporter::print(unreferenced_files);
+    crate::reporter::print(unreferenced_files);
 }

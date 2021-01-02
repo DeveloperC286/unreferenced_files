@@ -1,96 +1,74 @@
 use std::collections::{HashMap, HashSet};
-use std::path::{Path, PathBuf};
-use std::process::exit;
 
 use regex::Regex;
 
-use crate::{file_content, file_utilities};
+use crate::model::file_path_variants::FilePathVariants;
+use crate::model::raw_file::RawFile;
 
 pub fn get_unreferenced_files_in_directory(
-    files: &HashSet<PathBuf>,
-    path: &Path,
-    regex_map: &HashMap<String, Regex>,
+    mut searching_for: HashSet<FilePathVariants>,
+    searching_for_regex_map: HashMap<String, Regex>,
+    searching: HashSet<RawFile>,
     search_for_relative_path: bool,
     search_for_file_name: bool,
     search_for_file_stem: bool,
-) -> HashSet<PathBuf> {
-    let mut unreferenced_files = files.clone();
+) -> HashSet<FilePathVariants> {
+    for raw_file in searching {
+        if searching_for.is_empty() {
+            return searching_for;
+        }
 
-    for entry in file_utilities::get_directory_entries(path) {
-        match entry {
-            Ok(dir_entry) => {
-                let searching = dir_entry.path();
+        info!(
+            "Searching the file {:?}.",
+            raw_file.file_path_variants.file_relative_path
+        );
 
-                if searching.is_file() {
-                    let file_content = file_utilities::get_file_content(&searching);
-                    info!("Searching the file {:?}.", searching);
-
-                    'files: for unreferenced_file in unreferenced_files.clone() {
-                        if file_utilities::is_same_path(&unreferenced_file, &searching) {
-                            warn!(
-                                "Not searching {:?} for {:?} as they are the same file.",
-                                searching, unreferenced_file
-                            );
-                            continue 'files;
-                        }
-
-                        if search_for_relative_path
-                            && file_content::contains(
-                                &file_content,
-                                &file_utilities::get_relative_path(&*unreferenced_file),
-                                &searching,
-                                regex_map,
-                            )
-                        {
-                            unreferenced_files.remove(&*unreferenced_file);
-                            continue 'files;
-                        }
-
-                        if search_for_file_name
-                            && file_content::contains(
-                                &file_content,
-                                file_utilities::get_file_name(&*unreferenced_file),
-                                &searching,
-                                regex_map,
-                            )
-                        {
-                            unreferenced_files.remove(&*unreferenced_file);
-                            continue 'files;
-                        }
-
-                        if search_for_file_stem
-                            && file_content::contains(
-                                &file_content,
-                                file_utilities::get_file_stem(&*unreferenced_file),
-                                &searching,
-                                regex_map,
-                            )
-                        {
-                            unreferenced_files.remove(&*unreferenced_file);
-                            continue 'files;
-                        }
-                    }
-                } else {
-                    let child_directories_unreferenced_files = get_unreferenced_files_in_directory(
-                        &unreferenced_files,
-                        searching.as_path(),
-                        regex_map,
-                        search_for_relative_path,
-                        search_for_file_name,
-                        search_for_file_stem,
-                    );
-                    unreferenced_files = unreferenced_files
-                        .intersection(&child_directories_unreferenced_files)
-                        .cloned()
-                        .collect();
-                }
+        'files: for unreferenced_file in searching_for.clone() {
+            if unreferenced_file.file_canonicalize_path
+                == raw_file.file_path_variants.file_canonicalize_path
+            {
+                warn!(
+                    "Not searching {:?} for {:?} as they are the same file.",
+                    raw_file.file_path_variants.file_relative_path,
+                    unreferenced_file.file_relative_path
+                );
+                continue 'files;
             }
-            Err(error) => {
-                error!("{:?}", error);
-                exit(crate::ERROR_EXIT_CODE);
+
+            if search_for_relative_path
+                && crate::regex_utilities::contains(
+                    &raw_file,
+                    &unreferenced_file.file_relative_path,
+                    &searching_for_regex_map,
+                )
+            {
+                searching_for.remove(&unreferenced_file);
+                continue 'files;
+            }
+
+            if search_for_file_name
+                && crate::regex_utilities::contains(
+                    &raw_file,
+                    &unreferenced_file.file_name,
+                    &searching_for_regex_map,
+                )
+            {
+                searching_for.remove(&unreferenced_file);
+                continue 'files;
+            }
+
+            if search_for_file_stem
+                && crate::regex_utilities::contains(
+                    &raw_file,
+                    &unreferenced_file.file_stem,
+                    &searching_for_regex_map,
+                )
+            {
+                searching_for.remove(&unreferenced_file);
+                continue 'files;
             }
         }
     }
 
-    unreferenced_files
+    searching_for
 }
