@@ -30,20 +30,14 @@ fn main() {
         file_utilities::get_path(&arguments.search),
         arguments.search_ignore_file_regex,
     );
-    let searching_for_regex_map = crate::regex_utilities::get_regex_map(
-        &searching_for,
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem,
-    );
 
-    let unreferenced_files = crate::unreferenced_files::get_unreferenced_files_in_directory(
+    let unreferenced_files = crate::unreferenced_files::get_unreferenced_files(
         searching_for,
-        searching_for_regex_map,
         searching,
         search_for_relative_path,
         search_for_file_name,
         search_for_file_stem,
     );
+
     crate::reporter::print(unreferenced_files, arguments.print_full_path);
 }

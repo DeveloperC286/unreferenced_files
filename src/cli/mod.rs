@@ -2,9 +2,9 @@ use structopt::{clap::ArgGroup, StructOpt};
 
 #[derive(Debug, StructOpt)]
 #[structopt(
-name = "unreferenced_files",
-about = "A tool for parsing directories and scanning all the files within, to find unused and unreferenced files.",
-group = ArgGroup::with_name("only").required(false)
+    name = "unreferenced_files",
+    about = "A tool for parsing directories and scanning all the files within, to find unused and unreferenced files.",
+    group = ArgGroup::with_name("only").required(false)
 )]
 pub struct Arguments {
     #[structopt(

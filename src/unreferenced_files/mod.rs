@@ -5,7 +5,31 @@ use regex::Regex;
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::raw_file::RawFile;
 
-pub fn get_unreferenced_files_in_directory(
+pub fn get_unreferenced_files(
+    searching_for: HashSet<FilePathVariants>,
+    searching: HashSet<RawFile>,
+    search_for_relative_path: bool,
+    search_for_file_name: bool,
+    search_for_file_stem: bool,
+) -> HashSet<FilePathVariants> {
+    let searching_for_regex_map = crate::regex_utilities::get_regex_map(
+        &searching_for,
+        search_for_relative_path,
+        search_for_file_name,
+        search_for_file_stem,
+    );
+
+    get_unreferenced_files_in_directory(
+        searching_for,
+        searching_for_regex_map,
+        searching,
+        search_for_relative_path,
+        search_for_file_name,
+        search_for_file_stem,
+    )
+}
+
+fn get_unreferenced_files_in_directory(
     mut searching_for: HashSet<FilePathVariants>,
     searching_for_regex_map: HashMap<String, Regex>,
     searching: HashSet<RawFile>,
