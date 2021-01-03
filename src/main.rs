@@ -26,9 +26,10 @@ fn main() {
         file_utilities::get_path(&arguments.from),
         arguments.from_ignore_file_regex,
     );
-    let searching = crate::model::raw_file::get_raw_files_in_directory(file_utilities::get_path(
-        &arguments.search,
-    ));
+    let searching = crate::model::raw_file::get_raw_files(
+        file_utilities::get_path(&arguments.search),
+        arguments.search_ignore_file_regex,
+    );
     let searching_for_regex_map = crate::regex_utilities::get_regex_map(
         &searching_for,
         search_for_relative_path,

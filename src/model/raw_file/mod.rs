@@ -2,6 +2,8 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
+use regex::Regex;
+
 use crate::model::file_path_variants::FilePathVariants;
 
 pub type FileContent = String;
@@ -22,7 +24,12 @@ impl RawFile {
     }
 }
 
-pub fn get_raw_files_in_directory(path: &Path) -> HashSet<RawFile> {
+pub fn get_raw_files(path: &Path, ignore_file_regexes: Vec<String>) -> HashSet<RawFile> {
+    let compiled_ignore_file_regexes = crate::regex_utilities::get_regexes(ignore_file_regexes);
+    get_raw_files_in_directory(path, &compiled_ignore_file_regexes)
+}
+
+fn get_raw_files_in_directory(path: &Path, ignore_file_regexes: &[Regex]) -> HashSet<RawFile> {
     let mut files = HashSet::new();
     trace!("Searching the directory {:?} for files.", path.display());
     for dir_entry in crate::file_utilities::get_directory_entries(path) {
@@ -31,10 +38,27 @@ pub fn get_raw_files_in_directory(path: &Path) -> HashSet<RawFile> {
                 let path = dir_entry.path();
 
                 if path.is_file() {
-                    info!("Adding the file {:?} to the found files.", path.display());
-                    files.insert(RawFile::new(path));
+                    let raw_file = RawFile::new(path);
+                    let file_canonicalize_path =
+                        &raw_file.file_path_variants.file_canonicalize_path;
+
+                    if crate::regex_utilities::does_not_match_any(
+                        file_canonicalize_path,
+                        &*ignore_file_regexes,
+                    ) {
+                        trace!(
+                            "Adding the file {:?} to the found raw files.",
+                            file_canonicalize_path
+                        );
+                        files.insert(raw_file);
+                    } else {
+                        debug!("Ignoring the file {:?}.", file_canonicalize_path);
+                    }
                 } else {
-                    files.extend(get_raw_files_in_directory(path.as_path()));
+                    files.extend(get_raw_files_in_directory(
+                        path.as_path(),
+                        ignore_file_regexes,
+                    ));
                 }
             }
             Err(error) => {
