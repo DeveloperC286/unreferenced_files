@@ -2,6 +2,8 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
+use regex::Regex;
+
 #[derive(Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
 pub struct FilePathVariants {
     pub file_canonicalize_path: String,
@@ -70,20 +72,41 @@ fn get_file_stem(path: &Path) -> String {
     }
 }
 
-pub fn get_file_path_variants_in_directory(path: &Path) -> HashSet<FilePathVariants> {
+pub fn get_file_path_variants(
+    path: &Path,
+    ignore_file_regexes: Vec<String>,
+) -> HashSet<FilePathVariants> {
+    let compiled_ignore_file_regexes = crate::regex_utilities::get_regexes(ignore_file_regexes);
+    get_file_path_variants_in_directory(path, &compiled_ignore_file_regexes)
+}
+
+fn get_file_path_variants_in_directory(
+    path: &Path,
+    ignore_file_regexes: &[Regex],
+) -> HashSet<FilePathVariants> {
     let mut files = HashSet::new();
 
-    trace!("Searching the directory {:?} for files.", path.display());
     for dir_entry in crate::file_utilities::get_directory_entries(path) {
         match dir_entry {
             Ok(dir_entry) => {
                 let path = dir_entry.path();
 
                 if path.is_file() {
-                    info!("Adding the file {:?} to the found files.", path.display());
-                    files.insert(FilePathVariants::new(path));
+                    let file_canonicalize_path = get_file_canonicalize_path(&path);
+                    if crate::regex_utilities::does_not_match_any(
+                        &file_canonicalize_path,
+                        &*ignore_file_regexes,
+                    ) {
+                        trace!("Adding the file {:?} to the found files.", path.display());
+                        files.insert(FilePathVariants::new(path));
+                    } else {
+                        debug!("Ignoring the file {:?}.", file_canonicalize_path);
+                    }
                 } else {
-                    files.extend(get_file_path_variants_in_directory(path.as_path()));
+                    files.extend(get_file_path_variants_in_directory(
+                        path.as_path(),
+                        ignore_file_regexes,
+                    ));
                 }
             }
             Err(error) => {

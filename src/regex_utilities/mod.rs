@@ -34,6 +34,20 @@ pub fn get_regex_map(
     regex_map
 }
 
+pub fn does_not_match_any(checking: &str, regexes: &[Regex]) -> bool {
+    for regex in regexes {
+        if regex.is_match(checking) {
+            return false;
+        }
+    }
+
+    true
+}
+
+pub fn get_regexes(regexes: Vec<String>) -> Vec<Regex> {
+    regexes.iter().map(|regex| get_regex(regex)).collect()
+}
+
 fn get_regex(text_to_find: &str) -> Regex {
     match Regex::new(text_to_find) {
         Ok(reg) => reg,
