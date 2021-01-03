@@ -2,6 +2,8 @@
 extern crate log;
 extern crate regex;
 
+use std::process::exit;
+
 use structopt::StructOpt;
 
 mod cli;
@@ -38,6 +40,11 @@ fn main() {
         search_for_file_name,
         search_for_file_stem,
     );
+    let is_not_empty = !unreferenced_files.is_empty();
 
     crate::reporter::print(unreferenced_files, arguments.print_full_path);
+
+    if arguments.assert_no_unreferenced_files && is_not_empty {
+        exit(ERROR_EXIT_CODE);
+    }
 }

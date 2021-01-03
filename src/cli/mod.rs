@@ -59,4 +59,10 @@ pub struct Arguments {
         help = "Output the full path of each unreferenced file, instead of the relative path."
     )]
     pub print_full_path: bool,
+
+    #[structopt(
+        long,
+        help = "Return a non zero exit code if there are any unreferenced files."
+    )]
+    pub assert_no_unreferenced_files: bool,
 }
