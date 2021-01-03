@@ -48,6 +48,8 @@ Additional command line flags can be passed to alter what is searched for to det
 | --only-file-stem | Only search for unreferenced files via their file name without the extension. |
 | --only-relative-path | Only search for unreferenced files via their relative path. |
 | --print-full-path | Output the full path of each unreferenced file, instead of the relative path. |
+| --from-ignore-file-regex | Ignore every file in the from directory that matches any of these regexes. |
+| --search-ignore-file-regex | Ignore every file in the search directory that matches any of these regexes. |
 
 
 ### Usage - Example

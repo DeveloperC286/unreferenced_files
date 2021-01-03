@@ -16,7 +16,7 @@ pub struct Arguments {
 
     #[structopt(
         long,
-        help = "Ignore every file that matches any of these provided regexes in the from directory. For example, to all XML and CSV files  `--ignore-file-regex '[.]xml$' '[.]csv$'`."
+        help = "Ignore every file in the from directory that matches any of these regexes."
     )]
     pub from_ignore_file_regex: Vec<String>,
 
@@ -29,7 +29,7 @@ pub struct Arguments {
 
     #[structopt(
         long,
-        help = "Ignore every file that matches any of these provided regexes in the search directory. For example, to all XML and CSV files  `--ignore-file-regex '[.]xml$' '[.]csv$'`."
+        help = "Ignore every file in the search directory that matches any of these regexes."
     )]
     pub search_ignore_file_regex: Vec<String>,
 
