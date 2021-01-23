@@ -1,0 +1,5 @@
+---
+source: src/unreferenced_files/tests/singular_searching/mod.rs
+expression: sorted_unreferenced_files
+---
+[]

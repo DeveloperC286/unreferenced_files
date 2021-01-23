@@ -4,7 +4,7 @@ use std::process::exit;
 
 use regex::Regex;
 
-#[derive(Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
+#[derive(Debug, Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
 pub struct FilePathVariants {
     pub file_canonicalize_path: String,
     pub file_relative_path: String,

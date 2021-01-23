@@ -96,3 +96,8 @@ fn get_unreferenced_files_in_directory(
 
     searching_for
 }
+
+#[cfg(test)]
+#[macro_use]
+mod tests;
+
