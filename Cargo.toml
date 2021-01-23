@@ -13,8 +13,8 @@ categories = ["command-line-utilities", "development-tools"]
 
 [dependencies]
 structopt = "0.3.21"
-regex = "1.4.2"
-log = "0.4.11"
+regex = "1.4.3"
+log = "0.4.13"
 env_logger = "0.8.2"
 
 
