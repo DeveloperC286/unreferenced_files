@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate log;
+extern crate pretty_env_logger;
 extern crate regex;
 
 use std::process::exit;
@@ -16,7 +17,7 @@ mod unreferenced_files;
 const ERROR_EXIT_CODE: i32 = 1;
 
 fn main() {
-    env_logger::init();
+    pretty_env_logger::init();
     let arguments = cli::Arguments::from_args();
     debug!("The command line arguments provided are {:?}.", arguments);
 
