@@ -15,4 +15,5 @@ macro_rules! assert_sorted_unreferenced_files_snapshot {
     };
 }
 
+mod multiple_searching;
 mod singular_searching;
