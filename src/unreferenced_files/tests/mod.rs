@@ -1,7 +1,7 @@
-use super::*;
-
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::raw_file::RawFile;
+
+use super::*;
 
 const FOUND: &str = "found";
 const NOT_FOUND: &str = "not_found";
@@ -16,4 +16,5 @@ macro_rules! assert_sorted_unreferenced_files_snapshot {
 }
 
 mod multiple_searching;
+mod relative_path;
 mod singular_searching;
