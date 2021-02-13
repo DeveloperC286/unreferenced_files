@@ -47,7 +47,7 @@ fn get_unreferenced_files_in_directory(
             raw_file.file_path_variants.file_relative_path
         );
 
-        'files: for unreferenced_file in searching_for.clone() {
+        searching_for.retain(|unreferenced_file| {
             if unreferenced_file.file_canonicalize_path
                 == raw_file.file_path_variants.file_canonicalize_path
             {
@@ -56,7 +56,7 @@ fn get_unreferenced_files_in_directory(
                     raw_file.file_path_variants.file_relative_path,
                     unreferenced_file.file_relative_path
                 );
-                continue 'files;
+                return true;
             }
 
             if search_for_relative_path
@@ -66,8 +66,7 @@ fn get_unreferenced_files_in_directory(
                     &searching_for_regex_map,
                 )
             {
-                searching_for.remove(&unreferenced_file);
-                continue 'files;
+                return false;
             }
 
             if search_for_file_name
@@ -77,8 +76,7 @@ fn get_unreferenced_files_in_directory(
                     &searching_for_regex_map,
                 )
             {
-                searching_for.remove(&unreferenced_file);
-                continue 'files;
+                return false;
             }
 
             if search_for_file_stem
@@ -88,10 +86,11 @@ fn get_unreferenced_files_in_directory(
                     &searching_for_regex_map,
                 )
             {
-                searching_for.remove(&unreferenced_file);
-                continue 'files;
+                return false;
             }
-        }
+
+            true
+        });
     }
 
     searching_for
