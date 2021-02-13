@@ -1,11 +1,12 @@
 use super::*;
 
+const SEARCH_FOR_RELATIVE_PATH: bool = true;
+const SEARCH_FOR_FILE_NAME: bool = true;
+const SEARCH_FOR_FILE_STEM: bool = true;
+
 #[test]
 fn test_singular_searching_for_found() {
     // Given
-    let search_for_relative_path = true;
-    let search_for_file_name = true;
-    let search_for_file_stem = true;
     let searching_for = [FilePathVariants {
         file_canonicalize_path: "/tmp/folder/file1.txt".to_string(),
         file_relative_path: "./folder/file1.txt".to_string(),
@@ -33,9 +34,9 @@ fn test_singular_searching_for_found() {
     let unreferenced_files = get_unreferenced_files(
         searching_for,
         searching,
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem,
+        SEARCH_FOR_RELATIVE_PATH,
+        SEARCH_FOR_FILE_NAME,
+        SEARCH_FOR_FILE_STEM,
     );
 
     // Then
@@ -45,9 +46,6 @@ fn test_singular_searching_for_found() {
 #[test]
 fn test_singular_searching_for_not_found() {
     // Given
-    let search_for_relative_path = true;
-    let search_for_file_name = true;
-    let search_for_file_stem = true;
     let searching_for = [FilePathVariants {
         file_canonicalize_path: "/tmp/folder/file1.txt".to_string(),
         file_relative_path: "./folder/file1.txt".to_string(),
@@ -75,9 +73,9 @@ fn test_singular_searching_for_not_found() {
     let unreferenced_files = get_unreferenced_files(
         searching_for,
         searching,
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem,
+        SEARCH_FOR_RELATIVE_PATH,
+        SEARCH_FOR_FILE_NAME,
+        SEARCH_FOR_FILE_STEM,
     );
 
     // Then
@@ -87,9 +85,6 @@ fn test_singular_searching_for_not_found() {
 #[test]
 fn test_multiple_searching_for_found() {
     // Given
-    let search_for_relative_path = true;
-    let search_for_file_name = true;
-    let search_for_file_stem = true;
     let searching_for = [
         FilePathVariants {
             file_canonicalize_path: "/tmp/folder/file1.txt".to_string(),
@@ -117,17 +112,17 @@ fn test_multiple_searching_for_found() {
         file_content: "@test\npublic void testImporting() {\n  import(\"./file2.txt\");\n  import(\"./file1.txt\");\n}"
             .to_string(),
     }]
-    .iter()
-    .cloned()
-    .collect();
+        .iter()
+        .cloned()
+        .collect();
 
     // When
     let unreferenced_files = get_unreferenced_files(
         searching_for,
         searching,
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem,
+        SEARCH_FOR_RELATIVE_PATH,
+        SEARCH_FOR_FILE_NAME,
+        SEARCH_FOR_FILE_STEM,
     );
 
     // Then
@@ -137,9 +132,6 @@ fn test_multiple_searching_for_found() {
 #[test]
 fn test_multiple_searching_for_not_found() {
     // Given
-    let search_for_relative_path = true;
-    let search_for_file_name = true;
-    let search_for_file_stem = true;
     let searching_for = [
         FilePathVariants {
             file_canonicalize_path: "/tmp/folder/file1.txt".to_string(),
@@ -167,17 +159,17 @@ fn test_multiple_searching_for_not_found() {
         file_content: "@test\npublic void testImporting() {\n  import(\"./file3.txt\");\n  import(\"./file4.txt\");\n}"
             .to_string(),
     }]
-    .iter()
-    .cloned()
-    .collect();
+        .iter()
+        .cloned()
+        .collect();
 
     // When
     let unreferenced_files = get_unreferenced_files(
         searching_for,
         searching,
-        search_for_relative_path,
-        search_for_file_name,
-        search_for_file_stem,
+        SEARCH_FOR_RELATIVE_PATH,
+        SEARCH_FOR_FILE_NAME,
+        SEARCH_FOR_FILE_STEM,
     );
 
     // Then
