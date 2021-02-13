@@ -15,6 +15,7 @@ macro_rules! assert_sorted_unreferenced_files_snapshot {
     };
 }
 
+mod file_name;
 mod multiple_searching;
 mod relative_path;
 mod singular_searching;
