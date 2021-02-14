@@ -17,12 +17,16 @@ pub fn get_path(path: &str) -> &Path {
     path
 }
 
-pub fn get_file_content(path: &Path) -> String {
+pub fn get_file_content(path: &Path) -> Option<String> {
     match std::fs::read_to_string(path) {
-        Ok(file_content) => file_content,
+        Ok(file_content) => Some(file_content),
         Err(error) => {
-            error!("{:?}", error);
-            exit(crate::ERROR_EXIT_CODE);
+            warn!(
+                "Encountered {} while trying to read the file {}.",
+                error,
+                path.display()
+            );
+            None
         }
     }
 }

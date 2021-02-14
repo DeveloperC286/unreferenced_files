@@ -85,6 +85,10 @@ fn get_file_path_variants_in_directory(
     ignore_file_regexes: &[Regex],
 ) -> HashSet<FilePathVariants> {
     let mut files = HashSet::new();
+    trace!(
+        "Searching the directory {:?} for files to search for.",
+        path.display()
+    );
 
     for dir_entry in crate::file_utilities::get_directory_entries(path) {
         match dir_entry {
@@ -97,10 +101,13 @@ fn get_file_path_variants_in_directory(
                         &file_canonicalize_path,
                         &*ignore_file_regexes,
                     ) {
-                        trace!("Adding the file {:?} to the found files.", path.display());
+                        trace!("Adding {:?} to the files searching for.", path.display());
                         files.insert(FilePathVariants::new(path));
                     } else {
-                        debug!("Ignoring the file {:?}.", file_canonicalize_path);
+                        debug!(
+                            "Ignoring the file {:?} and not searching for it.",
+                            file_canonicalize_path
+                        );
                     }
                 } else {
                     files.extend(get_file_path_variants_in_directory(
