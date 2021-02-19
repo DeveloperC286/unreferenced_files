@@ -1,7 +1,7 @@
 Feature: Unreferenced Files can detect unused and unreferenced files.
 
 
-  Scenario Outline: Unused and unreferenced files are found.
+  Scenario Outline:
     Given the repository "<repository>" is cloned and checked out at the commit "<checkout_commit>".
     And the directory is changed to the cloned repository.
     When the argument --search is provided as "<search_dir>".
@@ -14,7 +14,7 @@ Feature: Unreferenced Files can detect unused and unreferenced files.
       | https://github.com/monicahq/monica.git | 88b8ad7af190021bf6dd7f0bfcd1ab76df989d4c | docs/installation/ | docs/images/ |
 
 
-  Scenario Outline: Unused and unreferenced files are found.
+  Scenario Outline:
     Given the repository "<repository>" is cloned and checked out at the commit "<checkout_commit>".
     And the directory is changed to the cloned repository.
     When the argument --search is provided as "<search_dir>".

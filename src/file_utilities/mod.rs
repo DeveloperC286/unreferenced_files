@@ -9,11 +9,6 @@ pub fn get_path(path: &str) -> &Path {
         exit(crate::ERROR_EXIT_CODE);
     }
 
-    if !path.is_dir() {
-        error!("{:?} is not a directory.", path);
-        exit(crate::ERROR_EXIT_CODE);
-    }
-
     path
 }
 
