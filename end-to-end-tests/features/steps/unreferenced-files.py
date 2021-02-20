@@ -1,7 +1,5 @@
 import os
-
 from behave import *
-
 from util import execute_command
 
 
@@ -32,7 +30,10 @@ def then_not_found(context):
     assert int(context.exit_code) == 0
 
 
-@then('unreferenced files are found.')
-def then_found(context):
+@then('the unreferenced files are "{unreferenced_files}".')
+def then_found(context, unreferenced_files):
     execute_unreferenced_files(context)
     assert int(context.exit_code) != 0
+    unreferenced_files = unreferenced_files.strip()\
+        .strip('\"').replace("\\n", '\n').encode('utf-8')
+    assert context.stdout == unreferenced_files
