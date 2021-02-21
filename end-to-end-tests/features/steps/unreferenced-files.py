@@ -1,5 +1,6 @@
 import os
 from behave import *
+
 from util import execute_command
 
 
@@ -28,12 +29,13 @@ def execute_unreferenced_files(context):
 def then_not_found(context):
     execute_unreferenced_files(context)
     assert int(context.exit_code) == 0
+    assert context.stdout == "".encode('utf-8')
 
 
 @then('the unreferenced files are "{unreferenced_files}".')
 def then_found(context, unreferenced_files):
     execute_unreferenced_files(context)
     assert int(context.exit_code) != 0
-    unreferenced_files = unreferenced_files.strip()\
+    unreferenced_files = unreferenced_files.strip() \
         .strip('\"').replace("\\n", '\n').encode('utf-8')
     assert context.stdout == unreferenced_files

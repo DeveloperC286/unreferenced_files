@@ -12,7 +12,7 @@ pub struct Arguments {
         long,
         help = "Determine if the files in this directory are referenced."
     )]
-    pub from: String,
+    pub from: Vec<String>,
 
     #[structopt(
         long,
@@ -25,7 +25,7 @@ pub struct Arguments {
         long,
         help = "The directory of files to scan for references to the files."
     )]
-    pub search: String,
+    pub search: Vec<String>,
 
     #[structopt(
         long,

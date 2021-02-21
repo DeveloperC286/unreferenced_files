@@ -27,19 +27,21 @@ impl RawFile {
     }
 }
 
-pub fn get_raw_files(path: &Path, ignore_file_regexes: Vec<String>) -> HashSet<RawFile> {
+pub fn get_raw_files(paths: Vec<PathBuf>, ignore_file_regexes: Vec<String>) -> HashSet<RawFile> {
     let compiled_ignore_file_regexes = crate::regex_utilities::get_regexes(ignore_file_regexes);
     let mut raw_files = HashSet::new();
 
-    if path.is_dir() {
-        raw_files.extend(get_raw_files_in_directory(
-            path,
-            &compiled_ignore_file_regexes,
-        ));
-    } else if let Some(raw_file) =
-        get_raw_files_in_file(path.to_path_buf(), &compiled_ignore_file_regexes)
-    {
-        raw_files.insert(raw_file);
+    for path in paths {
+        if path.is_dir() {
+            raw_files.extend(get_raw_files_in_directory(
+                &path,
+                &compiled_ignore_file_regexes,
+            ));
+        } else if let Some(raw_file) =
+            get_raw_files_in_file(path.to_path_buf(), &compiled_ignore_file_regexes)
+        {
+            raw_files.insert(raw_file);
+        }
     }
 
     raw_files

@@ -26,11 +26,11 @@ fn main() {
     let search_for_file_stem = !arguments.only_relative_path && !arguments.only_file_name;
 
     let searching_for = crate::model::file_path_variants::get_file_path_variants(
-        file_utilities::get_path(&arguments.from),
+        file_utilities::get_paths(arguments.from),
         arguments.from_ignore_file_regex,
     );
     let searching = crate::model::raw_file::get_raw_files(
-        file_utilities::get_path(&arguments.search),
+        file_utilities::get_paths(arguments.search),
         arguments.search_ignore_file_regex,
     );
 

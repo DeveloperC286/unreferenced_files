@@ -73,21 +73,23 @@ fn get_file_stem(path: &Path) -> String {
 }
 
 pub fn get_file_path_variants(
-    path: &Path,
+    paths: Vec<PathBuf>,
     ignore_file_regexes: Vec<String>,
 ) -> HashSet<FilePathVariants> {
     let compiled_ignore_file_regexes = crate::regex_utilities::get_regexes(ignore_file_regexes);
     let mut files_path_variants = HashSet::new();
 
-    if path.is_dir() {
-        files_path_variants.extend(get_file_path_variants_in_directory(
-            path,
-            &compiled_ignore_file_regexes,
-        ));
-    } else if let Some(file_path_variants) =
-        get_file_path_variants_in_file(path.to_path_buf(), &compiled_ignore_file_regexes)
-    {
-        files_path_variants.insert(file_path_variants);
+    for path in paths {
+        if path.is_dir() {
+            files_path_variants.extend(get_file_path_variants_in_directory(
+                &path,
+                &compiled_ignore_file_regexes,
+            ));
+        } else if let Some(file_path_variants) =
+            get_file_path_variants_in_file(path.to_path_buf(), &compiled_ignore_file_regexes)
+        {
+            files_path_variants.insert(file_path_variants);
+        }
     }
 
     files_path_variants
