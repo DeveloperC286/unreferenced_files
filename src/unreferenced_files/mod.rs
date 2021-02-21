@@ -6,21 +6,21 @@ use crate::model::file_path_variants::FilePathVariants;
 use crate::model::raw_file::RawFile;
 
 pub fn get_unreferenced_files(
-    searching_for: HashSet<FilePathVariants>,
+    search_for: HashSet<FilePathVariants>,
     searching: HashSet<RawFile>,
     search_for_relative_path: bool,
     search_for_file_name: bool,
     search_for_file_stem: bool,
 ) -> HashSet<FilePathVariants> {
     let searching_for_regex_map = crate::regex_utilities::get_regex_map(
-        &searching_for,
+        &search_for,
         search_for_relative_path,
         search_for_file_name,
         search_for_file_stem,
     );
 
     get_unreferenced_files_in_directory(
-        searching_for,
+        search_for,
         searching_for_regex_map,
         searching,
         search_for_relative_path,
@@ -30,16 +30,16 @@ pub fn get_unreferenced_files(
 }
 
 fn get_unreferenced_files_in_directory(
-    mut searching_for: HashSet<FilePathVariants>,
-    searching_for_regex_map: HashMap<String, Regex>,
+    mut search_for: HashSet<FilePathVariants>,
+    search_for_regex_map: HashMap<String, Regex>,
     searching: HashSet<RawFile>,
     search_for_relative_path: bool,
     search_for_file_name: bool,
     search_for_file_stem: bool,
 ) -> HashSet<FilePathVariants> {
     for raw_file in searching {
-        if searching_for.is_empty() {
-            return searching_for;
+        if search_for.is_empty() {
+            return search_for;
         }
 
         info!(
@@ -47,7 +47,7 @@ fn get_unreferenced_files_in_directory(
             raw_file.file_path_variants.file_relative_path
         );
 
-        searching_for.retain(|unreferenced_file| {
+        search_for.retain(|unreferenced_file| {
             if unreferenced_file.file_canonicalize_path
                 == raw_file.file_path_variants.file_canonicalize_path
             {
@@ -63,7 +63,7 @@ fn get_unreferenced_files_in_directory(
                 && crate::regex_utilities::contains(
                     &raw_file,
                     &unreferenced_file.file_relative_path,
-                    &searching_for_regex_map,
+                    &search_for_regex_map,
                 )
             {
                 return false;
@@ -73,7 +73,7 @@ fn get_unreferenced_files_in_directory(
                 && crate::regex_utilities::contains(
                     &raw_file,
                     &unreferenced_file.file_name,
-                    &searching_for_regex_map,
+                    &search_for_regex_map,
                 )
             {
                 return false;
@@ -83,7 +83,7 @@ fn get_unreferenced_files_in_directory(
                 && crate::regex_utilities::contains(
                     &raw_file,
                     &unreferenced_file.file_stem,
-                    &searching_for_regex_map,
+                    &search_for_regex_map,
                 )
             {
                 return false;
@@ -93,7 +93,7 @@ fn get_unreferenced_files_in_directory(
         });
     }
 
-    searching_for
+    search_for
 }
 
 #[cfg(test)]

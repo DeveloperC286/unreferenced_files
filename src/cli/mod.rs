@@ -8,11 +8,10 @@ use structopt::{clap::ArgGroup, StructOpt};
 )]
 pub struct Arguments {
     #[structopt(
-        short,
         long,
-        help = "Determine if the files in this directory are referenced."
+        help = "Search for references of this file or if it is a directory all resources within, multiple resources can be provided."
     )]
-    pub from: Vec<String>,
+    pub search_for: Vec<String>,
 
     #[structopt(
         long,
@@ -21,9 +20,8 @@ pub struct Arguments {
     pub from_ignore_file_regex: Vec<String>,
 
     #[structopt(
-        short,
         long,
-        help = "The directory of files to scan for references to the files."
+        help = "Search this file or if it is a directory all resources within for references, multiple resources can be provided."
     )]
     pub search: Vec<String>,
 

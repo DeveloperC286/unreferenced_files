@@ -9,9 +9,9 @@ def set_assert_no_unreferenced_files(context):
     context.arguments += " --assert-no-unreferenced-files "
 
 
-@when('the argument --from is provided as "{from_dir}".')
-def set_from(context, from_dir):
-    context.arguments += " --from " + from_dir + " "
+@when('the argument --search-for is provided as "{search_for}".')
+def set_from(context, search_for):
+    context.arguments += " --search-for " + search_for + " "
 
 
 @when('the argument --search is provided as "{search_dir}".')

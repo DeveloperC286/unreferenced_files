@@ -25,8 +25,8 @@ fn main() {
     let search_for_file_name = !arguments.only_relative_path && !arguments.only_file_stem;
     let search_for_file_stem = !arguments.only_relative_path && !arguments.only_file_name;
 
-    let searching_for = crate::model::file_path_variants::get_file_path_variants(
-        file_utilities::get_paths(arguments.from),
+    let search_for = crate::model::file_path_variants::get_file_path_variants(
+        file_utilities::get_paths(arguments.search_for),
         arguments.from_ignore_file_regex,
     );
     let searching = crate::model::raw_file::get_raw_files(
@@ -35,7 +35,7 @@ fn main() {
     );
 
     let unreferenced_files = crate::unreferenced_files::get_unreferenced_files(
-        searching_for,
+        search_for,
         searching,
         search_for_relative_path,
         search_for_file_name,
