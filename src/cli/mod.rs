@@ -9,6 +9,8 @@ use structopt::{clap::ArgGroup, StructOpt};
 pub struct Arguments {
     #[structopt(
         long,
+        required = true,
+        min_values = 1,
         help = "Search for references of this file or if it is a directory all resources within, multiple resources can be provided."
     )]
     pub search_for: Vec<String>,
@@ -21,6 +23,8 @@ pub struct Arguments {
 
     #[structopt(
         long,
+        required = true,
+        min_values = 1,
         help = "Search this file or if it is a directory all resources within for references, multiple resources can be provided."
     )]
     pub search: Vec<String>,

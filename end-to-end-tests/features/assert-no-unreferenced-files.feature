@@ -8,6 +8,7 @@ Feature: Unreferenced Files can detect unused and unreferenced files.
     And the argument --search-for is provided as "<search_for>".
     And the flag --assert-no-unreferenced-files is set.
     Then the unreferenced files are "<unreferenced_files>".
+    And the status code is non-zero.
 
     Examples:
       | repository                             | checkout_commit                          | searching          | search_for   | unreferenced_files                                                                                                                                                                                                                                                                                                                                                         |
