@@ -2,8 +2,6 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
-use regex::Regex;
-
 #[derive(Debug, Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
 pub struct FilePathVariants {
     pub file_canonicalize_path: String,
@@ -72,21 +70,13 @@ fn get_file_stem(path: &Path) -> String {
     }
 }
 
-pub fn get_file_path_variants(
-    paths: Vec<PathBuf>,
-    ignore_file_regexes: Vec<String>,
-) -> HashSet<FilePathVariants> {
-    let compiled_ignore_file_regexes = crate::regex_utilities::get_regexes(ignore_file_regexes);
+pub fn get_file_path_variants(paths: Vec<PathBuf>) -> HashSet<FilePathVariants> {
     let mut files_path_variants = HashSet::new();
 
     for path in paths {
         if path.is_dir() {
-            files_path_variants.extend(get_file_path_variants_in_directory(
-                &path,
-                &compiled_ignore_file_regexes,
-            ));
-        } else if let Some(file_path_variants) =
-            get_file_path_variants_in_file(path.to_path_buf(), &compiled_ignore_file_regexes)
+            files_path_variants.extend(get_file_path_variants_in_directory(&path));
+        } else if let Some(file_path_variants) = get_file_path_variants_in_file(path.to_path_buf())
         {
             files_path_variants.insert(file_path_variants);
         }
@@ -95,10 +85,7 @@ pub fn get_file_path_variants(
     files_path_variants
 }
 
-fn get_file_path_variants_in_directory(
-    path: &Path,
-    ignore_file_regexes: &[Regex],
-) -> HashSet<FilePathVariants> {
+fn get_file_path_variants_in_directory(path: &Path) -> HashSet<FilePathVariants> {
     let mut files_path_variants = HashSet::new();
     trace!(
         "Searching the directory {:?} for files to search for.",
@@ -111,16 +98,11 @@ fn get_file_path_variants_in_directory(
                 let path = dir_entry.path();
 
                 if path.is_file() {
-                    if let Some(file_path_variants) =
-                        get_file_path_variants_in_file(path, ignore_file_regexes)
-                    {
+                    if let Some(file_path_variants) = get_file_path_variants_in_file(path) {
                         files_path_variants.insert(file_path_variants);
                     }
                 } else {
-                    files_path_variants.extend(get_file_path_variants_in_directory(
-                        path.as_path(),
-                        ignore_file_regexes,
-                    ));
+                    files_path_variants.extend(get_file_path_variants_in_directory(path.as_path()));
                 }
             }
             Err(error) => {
@@ -133,29 +115,12 @@ fn get_file_path_variants_in_directory(
     files_path_variants
 }
 
-fn get_file_path_variants_in_file(
-    path: PathBuf,
-    ignore_file_regexes: &[Regex],
-) -> Option<FilePathVariants> {
+fn get_file_path_variants_in_file(path: PathBuf) -> Option<FilePathVariants> {
     if path.is_file() {
-        let file_canonicalize_path = get_file_canonicalize_path(&path);
-
-        if crate::regex_utilities::does_not_match_any(
-            &file_canonicalize_path,
-            &*ignore_file_regexes,
-        ) {
-            trace!("Adding {:?} to the files searching for.", path.display());
-            return Some(FilePathVariants::new(path));
-        } else {
-            debug!(
-                "Ignoring the file {:?} and not searching for it.",
-                file_canonicalize_path
-            );
-        }
+        trace!("Adding {:?} to the files searching for.", path.display());
+        return Some(FilePathVariants::new(path));
     } else {
         error!("{:?} is not a file.", path);
         exit(crate::ERROR_EXIT_CODE);
     }
-
-    None
 }

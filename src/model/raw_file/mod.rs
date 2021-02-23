@@ -2,8 +2,6 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
-use regex::Regex;
-
 use crate::model::file_path_variants::FilePathVariants;
 
 pub type FileContent = String;
@@ -27,19 +25,13 @@ impl RawFile {
     }
 }
 
-pub fn get_raw_files(paths: Vec<PathBuf>, ignore_file_regexes: Vec<String>) -> HashSet<RawFile> {
-    let compiled_ignore_file_regexes = crate::regex_utilities::get_regexes(ignore_file_regexes);
+pub fn get_raw_files(paths: Vec<PathBuf>) -> HashSet<RawFile> {
     let mut raw_files = HashSet::new();
 
     for path in paths {
         if path.is_dir() {
-            raw_files.extend(get_raw_files_in_directory(
-                &path,
-                &compiled_ignore_file_regexes,
-            ));
-        } else if let Some(raw_file) =
-            get_raw_files_in_file(path.to_path_buf(), &compiled_ignore_file_regexes)
-        {
+            raw_files.extend(get_raw_files_in_directory(&path));
+        } else if let Some(raw_file) = get_raw_files_in_file(path.to_path_buf()) {
             raw_files.insert(raw_file);
         }
     }
@@ -47,7 +39,7 @@ pub fn get_raw_files(paths: Vec<PathBuf>, ignore_file_regexes: Vec<String>) -> H
     raw_files
 }
 
-fn get_raw_files_in_directory(path: &Path, ignore_file_regexes: &[Regex]) -> HashSet<RawFile> {
+fn get_raw_files_in_directory(path: &Path) -> HashSet<RawFile> {
     let mut raw_files = HashSet::new();
     trace!(
         "Searching the directory {:?} for files to search.",
@@ -60,14 +52,11 @@ fn get_raw_files_in_directory(path: &Path, ignore_file_regexes: &[Regex]) -> Has
                 let path = dir_entry.path();
 
                 if path.is_file() {
-                    if let Some(raw_file) = get_raw_files_in_file(path, ignore_file_regexes) {
+                    if let Some(raw_file) = get_raw_files_in_file(path) {
                         raw_files.insert(raw_file);
                     }
                 } else {
-                    raw_files.extend(get_raw_files_in_directory(
-                        path.as_path(),
-                        ignore_file_regexes,
-                    ));
+                    raw_files.extend(get_raw_files_in_directory(path.as_path()));
                 }
             }
             Err(error) => {
@@ -80,26 +69,14 @@ fn get_raw_files_in_directory(path: &Path, ignore_file_regexes: &[Regex]) -> Has
     raw_files
 }
 
-fn get_raw_files_in_file(path: PathBuf, ignore_file_regexes: &[Regex]) -> Option<RawFile> {
+fn get_raw_files_in_file(path: PathBuf) -> Option<RawFile> {
     if path.is_file() {
         if let Some(raw_file) = RawFile::new(path) {
-            let file_canonicalize_path = &raw_file.file_path_variants.file_canonicalize_path;
-
-            if crate::regex_utilities::does_not_match_any(
-                &file_canonicalize_path,
-                &*ignore_file_regexes,
-            ) {
-                trace!(
-                    "Adding {:?} to the files searching.",
-                    raw_file.file_path_variants.file_relative_path
-                );
-                return Some(raw_file);
-            } else {
-                debug!(
-                    "Ignoring the file {:?} and not searching it.",
-                    raw_file.file_path_variants.file_relative_path
-                );
-            }
+            trace!(
+                "Adding {:?} to the files searching.",
+                raw_file.file_path_variants.file_relative_path
+            );
+            return Some(raw_file);
         }
     } else {
         error!("{:?} is not a file.", path);

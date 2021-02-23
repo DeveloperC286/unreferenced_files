@@ -17,12 +17,6 @@ pub struct Arguments {
 
     #[structopt(
         long,
-        help = "Ignore every file in the from directory that matches any of these regexes."
-    )]
-    pub from_ignore_file_regex: Vec<String>,
-
-    #[structopt(
-        long,
         required = true,
         min_values = 1,
         help = "Search this file or if it is a directory all resources within for references, multiple resources can be provided."
@@ -31,28 +25,22 @@ pub struct Arguments {
 
     #[structopt(
         long,
-        help = "Ignore every file in the search directory that matches any of these regexes."
-    )]
-    pub search_ignore_file_regex: Vec<String>,
-
-    #[structopt(
         group = "only",
-        long,
-        help = "Only search for unreferenced files via their file name."
+        help = "Only search for unreferenced files via their file name. Mutual exclusive with other only flags."
     )]
     pub only_file_name: bool,
 
     #[structopt(
-        group = "only",
         long,
-        help = "Only search for unreferenced files via their file name without the extension."
+        group = "only",
+        help = "Only search for unreferenced files via their file name without the extension. Mutual exclusive with other only flags."
     )]
     pub only_file_stem: bool,
 
     #[structopt(
-        group = "only",
         long,
-        help = "Only search for unreferenced files via their relative path."
+        group = "only",
+        help = "Only search for unreferenced files via their relative path. Mutual exclusive with other only flags."
     )]
     pub only_relative_path: bool,
 
