@@ -1,8 +1,7 @@
-use std::collections::{HashMap, HashSet};
-
-use regex::Regex;
+use std::collections::HashSet;
 
 use crate::model::file_path_variants::FilePathVariants;
+use crate::model::file_path_variants_regexes::FilePathVariantsRegexes;
 use crate::model::raw_file::RawFile;
 
 pub fn get_unreferenced_files(
@@ -12,7 +11,7 @@ pub fn get_unreferenced_files(
     search_for_file_name: bool,
     search_for_file_stem: bool,
 ) -> HashSet<FilePathVariants> {
-    let searching_for_regex_map = crate::regex_utilities::get_regex_map(
+    let file_path_variants_regexes = FilePathVariantsRegexes::new(
         &search_for,
         search_for_relative_path,
         search_for_file_name,
@@ -21,7 +20,7 @@ pub fn get_unreferenced_files(
 
     get_unreferenced_files_in_directory(
         search_for,
-        searching_for_regex_map,
+        file_path_variants_regexes,
         searching,
         search_for_relative_path,
         search_for_file_name,
@@ -31,7 +30,7 @@ pub fn get_unreferenced_files(
 
 fn get_unreferenced_files_in_directory(
     mut search_for: HashSet<FilePathVariants>,
-    search_for_regex_map: HashMap<String, Regex>,
+    file_path_variants_regexes: FilePathVariantsRegexes,
     searching: HashSet<RawFile>,
     search_for_relative_path: bool,
     search_for_file_name: bool,
@@ -60,31 +59,22 @@ fn get_unreferenced_files_in_directory(
             }
 
             if search_for_relative_path
-                && crate::regex_utilities::contains(
-                    &raw_file,
-                    &unreferenced_file.file_relative_path,
-                    &search_for_regex_map,
-                )
+                && file_path_variants_regexes
+                    .is_file_path_in_file(&unreferenced_file.file_relative_path, &raw_file)
             {
                 return false;
             }
 
             if search_for_file_name
-                && crate::regex_utilities::contains(
-                    &raw_file,
-                    &unreferenced_file.file_name,
-                    &search_for_regex_map,
-                )
+                && file_path_variants_regexes
+                    .is_file_path_in_file(&unreferenced_file.file_name, &raw_file)
             {
                 return false;
             }
 
             if search_for_file_stem
-                && crate::regex_utilities::contains(
-                    &raw_file,
-                    &unreferenced_file.file_stem,
-                    &search_for_regex_map,
-                )
+                && file_path_variants_regexes
+                    .is_file_path_in_file(&unreferenced_file.file_stem, &raw_file)
             {
                 return false;
             }
