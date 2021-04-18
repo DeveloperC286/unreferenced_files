@@ -2,6 +2,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
+use crate::model::filters::Filters;
 use crate::model::raw_file::RawFile;
 
 pub struct RawFiles {
@@ -9,8 +10,8 @@ pub struct RawFiles {
 }
 
 impl RawFiles {
-    pub fn new(paths: Vec<PathBuf>) -> Self {
-        fn get_raw_files_in_directory(path: &Path) -> HashSet<RawFile> {
+    pub fn new(paths: Vec<PathBuf>, filters: Filters) -> Self {
+        fn get_raw_files_in_directory(path: &Path, filters: &Filters) -> HashSet<RawFile> {
             let mut raw_files = HashSet::new();
             trace!(
                 "Searching the directory {:?} for files to search.",
@@ -23,11 +24,11 @@ impl RawFiles {
                         let path = dir_entry.path();
 
                         if path.is_file() {
-                            if let Some(raw_file) = get_raw_files_in_file(path) {
+                            if let Some(raw_file) = get_raw_file(path, filters) {
                                 raw_files.insert(raw_file);
                             }
                         } else {
-                            raw_files.extend(get_raw_files_in_directory(path.as_path()));
+                            raw_files.extend(get_raw_files_in_directory(path.as_path(), filters));
                         }
                     }
                     Err(error) => {
@@ -40,14 +41,22 @@ impl RawFiles {
             raw_files
         }
 
-        fn get_raw_files_in_file(path: PathBuf) -> Option<RawFile> {
+        fn get_raw_file(path: PathBuf, filters: &Filters) -> Option<RawFile> {
             if path.is_file() {
                 if let Some(raw_file) = RawFile::new(path) {
-                    trace!(
-                        "Adding {:?} to the files searching.",
-                        raw_file.file_path_variants.file_relative_path
-                    );
-                    return Some(raw_file);
+                    if filters.is_filtered_out(&&raw_file.file_path_variants.file_canonicalize_path)
+                    {
+                        debug!(
+                            "Ignoring the file {:?} and not searching it.",
+                            raw_file.file_path_variants.file_relative_path
+                        );
+                    } else {
+                        trace!(
+                            "Adding {:?} to the files searching.",
+                            raw_file.file_path_variants.file_relative_path
+                        );
+                        return Some(raw_file);
+                    }
                 }
             } else {
                 error!("{:?} is not a file.", path);
@@ -61,8 +70,8 @@ impl RawFiles {
 
         for path in paths {
             if path.is_dir() {
-                raw_files.extend(get_raw_files_in_directory(&path));
-            } else if let Some(raw_file) = get_raw_files_in_file(path.to_path_buf()) {
+                raw_files.extend(get_raw_files_in_directory(&path, &filters));
+            } else if let Some(raw_file) = get_raw_file(path.to_path_buf(), &filters) {
                 raw_files.insert(raw_file);
             }
         }

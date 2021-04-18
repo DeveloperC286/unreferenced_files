@@ -71,7 +71,7 @@ impl UnreferencedFiles {
 
     pub fn remove_referenced_files(
         &mut self,
-        searching: RawFiles,
+        search: RawFiles,
         search_for_relative_path: bool,
         search_for_file_name: bool,
         search_for_file_stem: bool,
@@ -83,7 +83,7 @@ impl UnreferencedFiles {
             search_for_file_stem,
         );
 
-        for raw_file in searching.raw_files {
+        for raw_file in search.raw_files {
             if !self.unreferenced_files.is_empty() {
                 info!(
                     "Searching the file {:?}.",

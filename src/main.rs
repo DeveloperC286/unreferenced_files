@@ -27,11 +27,15 @@ fn main() {
     let mut unreferenced_files = crate::model::unreferenced_files::UnreferencedFiles::new(
         file_utilities::get_paths(arguments.search_for),
     );
-    let searching =
-        crate::model::raw_files::RawFiles::new(file_utilities::get_paths(arguments.search));
+
+    let search_filters = crate::model::filters::Filters::new(arguments.only_search);
+    let search = crate::model::raw_files::RawFiles::new(
+        file_utilities::get_paths(arguments.search),
+        search_filters,
+    );
 
     unreferenced_files.remove_referenced_files(
-        searching,
+        search,
         search_for_relative_path,
         search_for_file_name,
         search_for_file_stem,

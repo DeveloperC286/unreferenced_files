@@ -4,7 +4,8 @@ use structopt::{clap::ArgGroup, StructOpt};
 #[structopt(
     name = "unreferenced_files",
     about = "A utility for finding unused and unreferenced files.",
-    group = ArgGroup::with_name("only").required(false)
+    group = ArgGroup::with_name("only").required(false),
+    group = ArgGroup::with_name("search_regex").required(false),
 )]
 pub struct Arguments {
     #[structopt(
@@ -22,6 +23,13 @@ pub struct Arguments {
         help = "Search this file or if it is a directory all resources within for references, multiple resources can be provided."
     )]
     pub search: Vec<String>,
+
+    #[structopt(
+        long,
+        group = "search_regex",
+        help = "Only search files that match any of these regexes, mutual exclusive with ignore search."
+    )]
+    pub only_search: Vec<String>,
 
     #[structopt(
         long,
