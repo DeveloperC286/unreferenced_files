@@ -1,6 +1,0 @@
----
-source: src/unreferenced_files/tests/multiple_searching/mod.rs
-expression: sorted_unreferenced_files
-
----
-[]

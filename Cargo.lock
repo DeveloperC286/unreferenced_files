@@ -397,6 +397,7 @@ name = "unreferenced_files"
 version = "2.0.0"
 dependencies = [
  "insta",
+ "lazy_static",
  "log",
  "pretty_env_logger",
  "regex",

@@ -12,7 +12,6 @@ mod file_utilities;
 mod model;
 mod regex_utilities;
 mod reporter;
-mod unreferenced_files;
 
 const ERROR_EXIT_CODE: i32 = 1;
 
@@ -25,19 +24,19 @@ fn main() {
     let search_for_file_name = !arguments.only_relative_path && !arguments.only_file_stem;
     let search_for_file_stem = !arguments.only_relative_path && !arguments.only_file_name;
 
-    let search_for = crate::model::file_path_variants::get_file_path_variants(
+    let mut unreferenced_files = crate::model::unreferenced_files::UnreferencedFiles::new(
         file_utilities::get_paths(arguments.search_for),
     );
     let searching =
         crate::model::raw_files::RawFiles::new(file_utilities::get_paths(arguments.search));
 
-    let unreferenced_files = crate::unreferenced_files::get_unreferenced_files(
-        search_for,
+    unreferenced_files.remove_referenced_files(
         searching,
         search_for_relative_path,
         search_for_file_name,
         search_for_file_stem,
     );
+
     let is_not_empty = !unreferenced_files.is_empty();
 
     crate::reporter::print(unreferenced_files, arguments.print_full_path);
@@ -46,3 +45,7 @@ fn main() {
         exit(ERROR_EXIT_CODE);
     }
 }
+
+#[cfg(test)]
+#[macro_use]
+extern crate lazy_static;
