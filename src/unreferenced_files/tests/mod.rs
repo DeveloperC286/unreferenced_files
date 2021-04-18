@@ -1,5 +1,6 @@
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::raw_file::RawFile;
+use crate::model::raw_files::RawFiles;
 
 use super::*;
 

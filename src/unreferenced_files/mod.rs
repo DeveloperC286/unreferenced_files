@@ -2,11 +2,11 @@ use std::collections::HashSet;
 
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::file_path_variants_regexes::FilePathVariantsRegexes;
-use crate::model::raw_file::RawFile;
+use crate::model::raw_files::RawFiles;
 
 pub fn get_unreferenced_files(
     search_for: HashSet<FilePathVariants>,
-    searching: HashSet<RawFile>,
+    searching: RawFiles,
     search_for_relative_path: bool,
     search_for_file_name: bool,
     search_for_file_stem: bool,
@@ -31,12 +31,12 @@ pub fn get_unreferenced_files(
 fn get_unreferenced_files_in_directory(
     mut search_for: HashSet<FilePathVariants>,
     file_path_variants_regexes: FilePathVariantsRegexes,
-    searching: HashSet<RawFile>,
+    searching: RawFiles,
     search_for_relative_path: bool,
     search_for_file_name: bool,
     search_for_file_stem: bool,
 ) -> HashSet<FilePathVariants> {
-    for raw_file in searching {
+    for raw_file in searching.raw_files {
         if search_for.is_empty() {
             return search_for;
         }

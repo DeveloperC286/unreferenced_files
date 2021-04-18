@@ -16,7 +16,9 @@ fn test_file_stem_searching_for_relative_path_found() {
     .iter()
     .cloned()
     .collect();
-    let searching = [RawFile {
+
+    let mut raw_files = HashSet::new();
+    raw_files.insert(RawFile {
         file_path_variants: FilePathVariants {
             file_canonicalize_path: "/tmp/test.java".to_string(),
             file_relative_path: "./test.java".to_string(),
@@ -25,10 +27,8 @@ fn test_file_stem_searching_for_relative_path_found() {
         },
         file_content: "@test\npublic void testImporting() {\n  import(\"./folder/file1.txt\");\n}"
             .to_string(),
-    }]
-    .iter()
-    .cloned()
-    .collect();
+    });
+    let searching = RawFiles { raw_files };
 
     // When
     let unreferenced_files = get_unreferenced_files(
@@ -55,7 +55,9 @@ fn test_file_stem_searching_for_file_name_found() {
     .iter()
     .cloned()
     .collect();
-    let searching = [RawFile {
+
+    let mut raw_files = HashSet::new();
+    raw_files.insert(RawFile {
         file_path_variants: FilePathVariants {
             file_canonicalize_path: "/tmp/test.java".to_string(),
             file_relative_path: "./test.java".to_string(),
@@ -64,10 +66,8 @@ fn test_file_stem_searching_for_file_name_found() {
         },
         file_content: "@test\npublic void testImporting() {\n  import(\"file1.txt\");\n}"
             .to_string(),
-    }]
-    .iter()
-    .cloned()
-    .collect();
+    });
+    let searching = RawFiles { raw_files };
 
     // When
     let unreferenced_files = get_unreferenced_files(
@@ -94,7 +94,9 @@ fn test_file_stem_searching_for_file_stem_found() {
     .iter()
     .cloned()
     .collect();
-    let searching = [RawFile {
+
+    let mut raw_files = HashSet::new();
+    raw_files.insert(RawFile {
         file_path_variants: FilePathVariants {
             file_canonicalize_path: "/tmp/test.java".to_string(),
             file_relative_path: "./test.java".to_string(),
@@ -102,10 +104,8 @@ fn test_file_stem_searching_for_file_stem_found() {
             file_stem: "test".to_string(),
         },
         file_content: "@test\npublic void testImporting() {\n  import(\"file1\");\n}".to_string(),
-    }]
-    .iter()
-    .cloned()
-    .collect();
+    });
+    let searching = RawFiles { raw_files };
 
     // When
     let unreferenced_files = get_unreferenced_files(
@@ -132,7 +132,9 @@ fn test_file_stem_searching_for_not_found() {
     .iter()
     .cloned()
     .collect();
-    let searching = [RawFile {
+
+    let mut raw_files = HashSet::new();
+    raw_files.insert(RawFile {
         file_path_variants: FilePathVariants {
             file_canonicalize_path: "/tmp/test.java".to_string(),
             file_relative_path: "./test.java".to_string(),
@@ -142,10 +144,8 @@ fn test_file_stem_searching_for_not_found() {
         file_content:
             "@test\npublic void testImporting() {\n  import(\"/tmp/folder/file2.txt\");\n}"
                 .to_string(),
-    }]
-    .iter()
-    .cloned()
-    .collect();
+    });
+    let searching = RawFiles { raw_files };
 
     // When
     let unreferenced_files = get_unreferenced_files(

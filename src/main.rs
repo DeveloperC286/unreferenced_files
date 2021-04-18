@@ -29,7 +29,7 @@ fn main() {
         file_utilities::get_paths(arguments.search_for),
     );
     let searching =
-        crate::model::raw_file::get_raw_files(file_utilities::get_paths(arguments.search));
+        crate::model::raw_files::RawFiles::new(file_utilities::get_paths(arguments.search));
 
     let unreferenced_files = crate::unreferenced_files::get_unreferenced_files(
         search_for,
