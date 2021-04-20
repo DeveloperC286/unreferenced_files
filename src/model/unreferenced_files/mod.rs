@@ -4,6 +4,7 @@ use std::process::exit;
 
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::file_path_variants_regexes::FilePathVariantsRegexes;
+use crate::model::filters::Filters;
 use crate::model::raw_files::RawFiles;
 
 #[derive(Clone)]
@@ -12,8 +13,11 @@ pub struct UnreferencedFiles {
 }
 
 impl UnreferencedFiles {
-    pub fn new(search_for: Vec<PathBuf>) -> Self {
-        fn get_file_path_variants_in_directory(path: &Path) -> HashSet<FilePathVariants> {
+    pub fn new(search_for: Vec<PathBuf>, filters: Filters) -> Self {
+        fn get_file_path_variants_in_directory(
+            path: &Path,
+            filters: &Filters,
+        ) -> HashSet<FilePathVariants> {
             let mut files_path_variants = HashSet::new();
             trace!(
                 "Searching the directory {:?} for files to search for.",
@@ -26,10 +30,15 @@ impl UnreferencedFiles {
                         let path = dir_entry.path();
 
                         if path.is_file() {
-                            files_path_variants.insert(get_file_path_variants_in_file(path));
+                            if let Some(file_path_variants) = get_file_path_variants(path, filters)
+                            {
+                                files_path_variants.insert(file_path_variants);
+                            }
                         } else {
-                            files_path_variants
-                                .extend(get_file_path_variants_in_directory(path.as_path()));
+                            files_path_variants.extend(get_file_path_variants_in_directory(
+                                path.as_path(),
+                                filters,
+                            ));
                         }
                     }
                     Err(error) => {
@@ -42,23 +51,41 @@ impl UnreferencedFiles {
             files_path_variants
         }
 
-        fn get_file_path_variants_in_file(path: PathBuf) -> FilePathVariants {
+        fn get_file_path_variants(path: PathBuf, filters: &Filters) -> Option<FilePathVariants> {
             if path.is_file() {
-                trace!("Adding {:?} to the files searching for.", path.display());
-                FilePathVariants::new(path)
+                let file_path_variants = FilePathVariants::new(path);
+
+                if filters.is_filtered_out(&&file_path_variants.file_canonicalize_path) {
+                    debug!(
+                        "Ignoring the file {:?} and not searching for it.",
+                        file_path_variants.file_relative_path
+                    );
+                } else {
+                    trace!(
+                        "Adding {:?} to the files searching for.",
+                        file_path_variants.file_relative_path
+                    );
+                    return Some(file_path_variants);
+                }
             } else {
                 error!("{:?} is not a file.", path);
                 exit(crate::ERROR_EXIT_CODE);
             }
+
+            None
         }
 
         let mut unreferenced_files = HashSet::new();
 
         for path in search_for {
             if path.is_file() {
-                unreferenced_files.insert(get_file_path_variants_in_file(path.to_path_buf()));
+                if let Some(file_path_variants) =
+                    get_file_path_variants(path.to_path_buf(), &filters)
+                {
+                    unreferenced_files.insert(file_path_variants);
+                }
             } else {
-                unreferenced_files.extend(get_file_path_variants_in_directory(&path));
+                unreferenced_files.extend(get_file_path_variants_in_directory(&path, &filters));
             }
         }
 

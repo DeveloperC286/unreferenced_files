@@ -1,5 +1,6 @@
 Feature: Only search files that match any of the provided only-search regexes.
 
+
   Scenario Outline: The only reference for the singular file being searched for does not match any of the only search regexes, so it is now an unreferenced files.
     Given the repository "<repository>" is cloned and checked out at the commit "<checkout_commit>".
     When the argument --search is provided as "<search>".
