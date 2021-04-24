@@ -26,6 +26,13 @@ pub struct Arguments {
 
     #[structopt(
         long,
+        group = "search_for_regexes",
+        help = "Ignore and do not search for any files that match any of these regexes, mutual exclusive with only search for."
+    )]
+    pub ignore_search_for: Vec<String>,
+
+    #[structopt(
+        long,
         required = true,
         min_values = 1,
         help = "Search this file or if it is a directory all resources within for references, multiple resources can be provided."
