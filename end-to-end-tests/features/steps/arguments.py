@@ -29,3 +29,8 @@ def set_search(context, search):
 @when('the argument --only-search is provided as "{only_search}".')
 def set_only_search(context, only_search):
     context.arguments += " --only-search " + only_search + " "
+
+
+@when('the argument --ignore-search is provided as "{ignore_search}".')
+def set_only_search(context, ignore_search):
+    context.arguments += " --ignore-search " + ignore_search + " "

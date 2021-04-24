@@ -24,13 +24,14 @@ fn main() {
     let search_for_file_name = !arguments.only_relative_path && !arguments.only_file_stem;
     let search_for_file_stem = !arguments.only_relative_path && !arguments.only_file_name;
 
-    let search_for_filters = crate::model::filters::Filters::new(arguments.only_search_for);
+    let search_for_filters = crate::model::filters::Filters::new(arguments.only_search_for, vec![]);
     let mut unreferenced_files = crate::model::unreferenced_files::UnreferencedFiles::new(
         file_utilities::get_paths(arguments.search_for),
         search_for_filters,
     );
 
-    let search_filters = crate::model::filters::Filters::new(arguments.only_search);
+    let search_filters =
+        crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search);
     let search = crate::model::raw_files::RawFiles::new(
         file_utilities::get_paths(arguments.search),
         search_filters,

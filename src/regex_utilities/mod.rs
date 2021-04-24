@@ -1,5 +1,6 @@
-use regex::Regex;
 use std::process::exit;
+
+use regex::Regex;
 
 pub fn get_regex(regex_string: &str) -> Regex {
     match Regex::new(regex_string) {
