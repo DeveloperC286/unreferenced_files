@@ -1,4 +1,4 @@
-Feature: Unreferenced Files can handle file being passed as parameters to search and search for.
+Feature: Unreferenced Files can handle files being passed as parameters to search and search for.
 
 
   Scenario Outline:
