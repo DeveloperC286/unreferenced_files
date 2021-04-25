@@ -1,4 +1,4 @@
-Feature: Unreferenced Files can detect unused and unreferenced files.
+Feature: When using the --assert-no-unreferenced-files flag if unreferenced files are found then a non-zero status code is returned.
 
 
   Scenario Outline:
