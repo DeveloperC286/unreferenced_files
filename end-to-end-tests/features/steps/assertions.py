@@ -26,8 +26,8 @@ def then_unreferenced_files_found(context, unreferenced_files):
     assert context.stdout == unreferenced_files
 
 
-@then('the status code is non-zero.')
-def then_non_zero_status_code(context):
+@then('the status code is nonzero.')
+def then_nonzero_status_code(context):
     if not hasattr(context, 'exit_code'):
         execute_unreferenced_files(context)
     assert int(context.exit_code) != 0
@@ -37,14 +37,14 @@ def then_non_zero_status_code(context):
 def then_search_argument_missing_error(context):
     execute_unreferenced_files(context)
     assert starts_with(context.stdout, MISSING_SEARCH)
-    then_non_zero_status_code(context)
+    then_nonzero_status_code(context)
 
 
 @then('printed is an error message detailing that the argument search for is missing.')
 def then_search_for_argument_missing_error(context):
     execute_unreferenced_files(context)
     assert starts_with(context.stdout, MISSING_SEARCH_FOR)
-    then_non_zero_status_code(context)
+    then_nonzero_status_code(context)
 
 
 @then('printed is an error message detailing that the arguments ignore and only search are mutually exclusive.')
@@ -55,7 +55,7 @@ def then_only_and_ignore_search_mutually_exclusive(context):
         ONLY_SEARCH_MUTUALLY_EXCLUSIVE) or starts_with(
         context.stdout,
         IGNORE_SEARCH_MUTUALLY_EXCLUSIVE)
-    then_non_zero_status_code(context)
+    then_nonzero_status_code(context)
 
 
 @then('printed is an error message detailing that the arguments ignore and only search for are mutually exclusive.')
@@ -66,7 +66,7 @@ def then_only_and_ignore_search_for_mutually_exclusive(context):
         ONLY_SEARCH_FOR_MUTUALLY_EXCLUSIVE) or starts_with(
         context.stdout,
         IGNORE_SEARCH_FOR_MUTUALLY_EXCLUSIVE)
-    then_non_zero_status_code(context)
+    then_nonzero_status_code(context)
 
 
 def execute_unreferenced_files(context):

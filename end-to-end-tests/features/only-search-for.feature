@@ -8,7 +8,7 @@ Feature: Only search for files that match any of the provided only-search-for re
     And the flag --assert-no-unreferenced-files is set.
     And the flag --only-file-name is set.
     Then the unreferenced files are "<unreferenced_files>".
-    And the status code is non-zero.
+    And the status code is nonzero.
     When the argument --only-search-for is provided as "<only_search_for>".
     Then unreferenced files are not found.
 
@@ -24,10 +24,10 @@ Feature: Only search for files that match any of the provided only-search-for re
     And the argument --search-for is provided as "<search_for>".
     And the flag --assert-no-unreferenced-files is set.
     Then the unreferenced files are "<unreferenced_files_1>".
-    And the status code is non-zero.
+    And the status code is nonzero.
     When the argument --only-search-for is provided as "<only_search_for>".
     Then the unreferenced files are "<unreferenced_files_2>".
-    And the status code is non-zero.
+    And the status code is nonzero.
 
 
     Examples:

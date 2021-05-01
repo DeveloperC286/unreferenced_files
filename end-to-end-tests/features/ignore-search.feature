@@ -9,7 +9,7 @@ Feature: Ignore and do not search any files that match any of the provided ignor
     Then unreferenced files are not found.
     When the argument --ignore-search is provided as "<ignore_search>".
     Then the unreferenced files are "<unreferenced_files>".
-    And the status code is non-zero.
+    And the status code is nonzero.
 
 
     Examples:
@@ -40,10 +40,10 @@ Feature: Ignore and do not search any files that match any of the provided ignor
     And the flag --assert-no-unreferenced-files is set.
     And the flag --only-file-name is set.
     Then the unreferenced files are "<unreferenced_files_1>".
-    And the status code is non-zero.
+    And the status code is nonzero.
     When the argument --ignore-search is provided as "<ignore_search>".
     Then the unreferenced files are "<unreferenced_files_2>".
-    And the status code is non-zero.
+    And the status code is nonzero.
 
 
     Examples:

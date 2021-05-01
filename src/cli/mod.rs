@@ -82,7 +82,7 @@ pub struct Arguments {
 
     #[structopt(
         long,
-        help = "Return a non zero exit code if there are any unreferenced files."
+        help = "Return a nonzero exit code if there are any unreferenced files."
     )]
     pub assert_no_unreferenced_files: bool,
 }

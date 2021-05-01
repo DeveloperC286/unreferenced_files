@@ -7,7 +7,7 @@ A utility for finding unused and unreferenced files.
 
 ## Content
  * [Usage](#usage)
-    + [Usage - Additional Flags](#usage-additional-flags)
+    + [Usage - Additional Arguments](#usage-additional-arguments)
     + [Usage - Example](#usage-example)
     + [Usage - Logging](#usage-logging)
  * [Compiling via Local Repository](#compiling-via-local-repository)
@@ -17,11 +17,11 @@ A utility for finding unused and unreferenced files.
 
 ## Usage
 `unreferenced_files` is a very simple and fast tool.
-All files inside a directory provided via the argument `--from <from>` are recorded.
-The referencing of these files are searched for inside the directory provided via the argument `--search <search>`.
+All files inside any of the directories or files provided via the arguments `--search-for <search-for>` are recorded.
+The referencing of these files are searched for inside the directories or files provided by the arguments `--search <search>`.
 
-By default the referencing of a file is search for via looking for the relative path of the file, the file name and the file stem inside each file in the searched directory.
-If the from directory and search directory overlap then a file will not be searched to see if it references itself.
+By default, the referencing of a file is search for via looking for the relative path of the file, the file name, and the file stem inside each file.
+If the search for and search files overlap then a file will not search itself to finds self references.
 
 e.g.
 
@@ -34,22 +34,25 @@ parent/
 └── file1.txt
 ```
 
-For the example directory above, if the argument was `--from parent/` then for the file `parent/file1.txt` the relative path of `parent/file1.txt`, the file name `file1.txt` and the file stem `file1` would be searched for.
+For the example directory above, if the argument was `--search-for parent/` then for the file `parent/file1.txt` the relative path of `parent/file1.txt`, the file name `file1.txt`, and the file stem `file1` would be searched for.
 For the file `parent/child/file2.txt` the relative path of `parent/child/file2.txt`, the file name `file2.txt` and file stem `file2` would be searched for.
 
 
-## Usage - Additional Flags
+## Usage - Additional Arguments
 
 Additional command line flags can be passed to alter what is searched for to determine if a file is referenced.
 
 | Flag                      | |
 |---------------------------|-|
+| --only-search-for | Only search for files that match any of these regexes, mutually exclusive with ignore search for. |
+| --ignore-search-for | Ignore and do not search for any files that match any of these regexes, mutually exclusive with only search for. |
+| --only-search | Only search files that match any of these regexes, mutual exclusive with ignore search. |
+| --ignore-search | Ignore and do not search any files that match any of these regexes, mutually exclusive with only search. |
 | --only-file-name | Only search for unreferenced files via their file name. |
 | --only-file-stem | Only search for unreferenced files via their file name without the extension. |
 | --only-relative-path | Only search for unreferenced files via their relative path. |
 | --print-full-path | Output the full path of each unreferenced file, instead of the relative path. |
-| --from-ignore-file-regex | Ignore every file in the from directory that matches any of these regexes. |
-| --search-ignore-file-regex | Ignore every file in the search directory that matches any of these regexes. |
+| --assert-no-unreferenced-files | Return a nonzero exit code if there are any unreferenced files. |
 
 
 ### Usage - Example
@@ -70,7 +73,7 @@ You can find all the unreferenced files inside `src/test/resources/` via
 
 ```
 cd src/test/resources/
-unreferenced_files --from ./ --search ../java/
+unreferenced_files --search-for ./ --search ../java/
 ```
 
 

@@ -7,7 +7,7 @@ Feature: Unreferenced Files can handle files being passed as parameters to searc
     And the argument --search-for is provided as "<search_for>".
     And the flag --assert-no-unreferenced-files is set.
     Then the unreferenced files are "<unreferenced_files>".
-    And the status code is non-zero.
+    And the status code is nonzero.
 
     Examples:
       | repository                             | checkout_commit                          | search         | search_for               | unreferenced_files           |

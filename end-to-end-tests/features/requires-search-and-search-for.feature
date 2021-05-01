@@ -5,7 +5,7 @@ Feature: Unreferenced Files requires the parameters --search and --search-for.
     Given the repository "<repository>" is cloned and checked out at the commit "<checkout_commit>".
     When the argument --search-for is provided as "<search_for>".
     Then printed is an error message detailing that the argument search is missing.
-    And the status code is non-zero.
+    And the status code is nonzero.
 
     Examples:
       | repository                             | checkout_commit                          | search_for   |
@@ -16,7 +16,7 @@ Feature: Unreferenced Files requires the parameters --search and --search-for.
     Given the repository "<repository>" is cloned and checked out at the commit "<checkout_commit>".
     When the argument --search is provided as "<search>".
     Then printed is an error message detailing that the argument search for is missing.
-    And the status code is non-zero.
+    And the status code is nonzero.
 
     Examples:
       | repository                                               | checkout_commit                          | search |

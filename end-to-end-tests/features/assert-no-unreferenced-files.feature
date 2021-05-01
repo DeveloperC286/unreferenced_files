@@ -1,4 +1,4 @@
-Feature: When using the --assert-no-unreferenced-files flag if unreferenced files are found then a non-zero status code is returned.
+Feature: When using the --assert-no-unreferenced-files flag if unreferenced files are found then a nonzero status code is returned.
 
 
   Scenario Outline:
@@ -7,7 +7,7 @@ Feature: When using the --assert-no-unreferenced-files flag if unreferenced file
     And the argument --search-for is provided as "<search_for>".
     And the flag --assert-no-unreferenced-files is set.
     Then the unreferenced files are "<unreferenced_files>".
-    And the status code is non-zero.
+    And the status code is nonzero.
 
     Examples:
       | repository                             | checkout_commit                          | search             | search_for   | unreferenced_files                                                                                                                                                                                                                                                                                                                                                         |
