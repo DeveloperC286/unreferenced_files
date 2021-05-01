@@ -5,8 +5,8 @@ use structopt::{clap::ArgGroup, StructOpt};
     name = "unreferenced_files",
     about = "A utility for finding unused and unreferenced files.",
     group = ArgGroup::with_name("only").required(false),
-    group = ArgGroup::with_name("search_regexes").required(false),
-    group = ArgGroup::with_name("search_for_regexes").required(false),
+    group = ArgGroup::with_name("search_filters").required(false),
+    group = ArgGroup::with_name("search_for_filters").required(false),
 )]
 pub struct Arguments {
     #[structopt(
@@ -19,15 +19,15 @@ pub struct Arguments {
 
     #[structopt(
         long,
-        group = "search_for_regexes",
-        help = "Only search for files that match any of these regexes, mutual exclusive with ignore search for."
+        group = "search_for_filters",
+        help = "Only search for files that match any of these regexes, mutually exclusive with ignore search for."
     )]
     pub only_search_for: Vec<String>,
 
     #[structopt(
         long,
-        group = "search_for_regexes",
-        help = "Ignore and do not search for any files that match any of these regexes, mutual exclusive with only search for."
+        group = "search_for_filters",
+        help = "Ignore and do not search for any files that match any of these regexes, mutually exclusive with only search for."
     )]
     pub ignore_search_for: Vec<String>,
 
@@ -41,36 +41,36 @@ pub struct Arguments {
 
     #[structopt(
         long,
-        group = "search_regexes",
+        group = "search_filters",
         help = "Only search files that match any of these regexes, mutual exclusive with ignore search."
     )]
     pub only_search: Vec<String>,
 
     #[structopt(
         long,
-        group = "search_regexes",
-        help = "Ignore and do not search any files that match any of these regexes, mutual exclusive with only search."
+        group = "search_filters",
+        help = "Ignore and do not search any files that match any of these regexes, mutually exclusive with only search."
     )]
     pub ignore_search: Vec<String>,
 
     #[structopt(
         long,
         group = "only",
-        help = "Only search for unreferenced files via their file name. Mutual exclusive with other only flags."
+        help = "Only search for unreferenced files via their file name, mutually exclusive with other only flags."
     )]
     pub only_file_name: bool,
 
     #[structopt(
         long,
         group = "only",
-        help = "Only search for unreferenced files via their file name without the extension. Mutual exclusive with other only flags."
+        help = "Only search for unreferenced files via their file name without the extension, mutually exclusive with other only flags."
     )]
     pub only_file_stem: bool,
 
     #[structopt(
         long,
         group = "only",
-        help = "Only search for unreferenced files via their relative path. Mutual exclusive with other only flags."
+        help = "Only search for unreferenced files via their relative path, mutually exclusive with other only flags."
     )]
     pub only_relative_path: bool,
 
