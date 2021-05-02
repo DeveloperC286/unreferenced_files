@@ -8,12 +8,12 @@ use crate::model::filters::Filters;
 use crate::model::raw_files::RawFiles;
 
 #[derive(Clone)]
-pub struct UnreferencedFiles {
-    pub unreferenced_files: HashSet<FilePathVariants>,
+pub struct SearchFor {
+    search_for: HashSet<FilePathVariants>,
 }
 
-impl UnreferencedFiles {
-    pub fn new(search_for: Vec<PathBuf>, filters: Filters) -> Self {
+impl SearchFor {
+    pub fn new(initial_search_for: Vec<PathBuf>, filters: Filters) -> Self {
         fn get_file_path_variants_in_directory(
             path: &Path,
             filters: &Filters,
@@ -75,49 +75,47 @@ impl UnreferencedFiles {
             None
         }
 
-        let mut unreferenced_files = HashSet::new();
+        let mut search_for = HashSet::new();
 
-        for path in search_for {
+        for path in initial_search_for {
             if path.is_file() {
                 if let Some(file_path_variants) =
                     get_file_path_variants(path.to_path_buf(), &filters)
                 {
-                    unreferenced_files.insert(file_path_variants);
+                    search_for.insert(file_path_variants);
                 }
             } else {
-                unreferenced_files.extend(get_file_path_variants_in_directory(&path, &filters));
+                search_for.extend(get_file_path_variants_in_directory(&path, &filters));
             }
         }
 
-        UnreferencedFiles { unreferenced_files }
+        SearchFor { search_for }
     }
 
-    pub fn is_empty(&self) -> bool {
-        self.unreferenced_files.is_empty()
-    }
-
-    pub fn remove_referenced_files(
-        &mut self,
+    pub fn get_unreferenced_files(
+        &self,
         search: RawFiles,
         search_for_relative_path: bool,
         search_for_file_name: bool,
         search_for_file_stem: bool,
-    ) {
+    ) -> HashSet<FilePathVariants> {
         let file_path_variants_regexes = FilePathVariantsRegexes::new(
-            &self.unreferenced_files,
+            &self.search_for,
             search_for_relative_path,
             search_for_file_name,
             search_for_file_stem,
         );
 
+        let mut unreferenced_files = self.search_for.clone();
+
         for raw_file in search.raw_files {
-            if !self.unreferenced_files.is_empty() {
+            if !unreferenced_files.is_empty() {
                 info!(
                     "Searching the file {:?}.",
                     raw_file.file_path_variants.file_relative_path
                 );
 
-                self.unreferenced_files.retain(|unreferenced_file| {
+                unreferenced_files.retain(|unreferenced_file| {
                     if unreferenced_file.file_canonicalize_path
                         == raw_file.file_path_variants.file_canonicalize_path
                     {
@@ -154,6 +152,8 @@ impl UnreferencedFiles {
                 });
             }
         }
+
+        unreferenced_files
     }
 }
 

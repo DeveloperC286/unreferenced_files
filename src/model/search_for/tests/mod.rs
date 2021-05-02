@@ -27,16 +27,16 @@ lazy_static! {
         file_name: "file2.txt".to_string(),
         file_stem: "file2".to_string(),
     };
-    static ref UNREFERENCED_FILE1: UnreferencedFiles = {
-        let mut unreferenced_files = HashSet::new();
-        unreferenced_files.insert(FILE1_TXT.clone());
-        UnreferencedFiles { unreferenced_files }
+    static ref UNREFERENCED_FILE1: SearchFor = {
+        let mut search_for = HashSet::new();
+        search_for.insert(FILE1_TXT.clone());
+        SearchFor { search_for }
     };
-    static ref UNREFERENCED_FILE1_AND_FILE2: UnreferencedFiles = {
-        let mut unreferenced_files = HashSet::new();
-        unreferenced_files.insert(FILE1_TXT.clone());
-        unreferenced_files.insert(FILE2_TXT.clone());
-        UnreferencedFiles { unreferenced_files }
+    static ref UNREFERENCED_FILE1_AND_FILE2: SearchFor = {
+        let mut search_for = HashSet::new();
+        search_for.insert(FILE1_TXT.clone());
+        search_for.insert(FILE2_TXT.clone());
+        SearchFor { search_for }
     };
 }
 
@@ -74,12 +74,11 @@ macro_rules! raw_files_with_content {
     };
 }
 
-macro_rules! assert_sorted_unreferenced_files_snapshot {
-    ($snapshot_name:expr, $unreferenced_files:expr) => {
-        let mut sorted_unreferenced_files: Vec<_> =
-            $unreferenced_files.unreferenced_files.iter().collect();
-        sorted_unreferenced_files.sort();
-        insta::assert_debug_snapshot!($snapshot_name, sorted_unreferenced_files);
+macro_rules! assert_unreferenced_files_snapshot {
+    ($snapshot_name:expr, $search_for:expr) => {
+        let mut sorted_search_for: Vec<_> = $search_for.iter().collect();
+        sorted_search_for.sort();
+        insta::assert_debug_snapshot!($snapshot_name, sorted_search_for);
     };
 }
 

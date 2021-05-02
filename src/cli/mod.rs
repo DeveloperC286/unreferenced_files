@@ -2,7 +2,7 @@ use structopt::{clap::ArgGroup, StructOpt};
 
 #[derive(Debug, StructOpt)]
 #[structopt(
-    name = "unreferenced_files",
+    name = "search_for",
     about = "A utility for finding unused and unreferenced files.",
     group = ArgGroup::with_name("only").required(false),
     group = ArgGroup::with_name("search_filters").required(false),

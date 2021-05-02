@@ -1,0 +1,6 @@
+---
+source: src/model/search_for/tests/multiple_searching/mod.rs
+expression: sorted_search_for
+
+---
+[]
