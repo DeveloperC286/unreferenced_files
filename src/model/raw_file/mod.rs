@@ -12,13 +12,9 @@ pub struct RawFile {
 
 impl RawFile {
     pub fn new(path: PathBuf) -> Option<Self> {
-        if let Some(file_content) = crate::file_utilities::get_file_content(&path) {
-            Some(RawFile {
-                file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),
-                file_content,
-            })
-        } else {
-            None
-        }
+        crate::file_utilities::get_file_content(&path).map(|file_content| RawFile {
+            file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),
+            file_content,
+        })
     }
 }
