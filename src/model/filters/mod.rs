@@ -41,7 +41,7 @@ impl Filters {
         };
     }
 
-    pub fn is_filtered_out(&self, file_canonicalize_path: &str) -> bool {
+    pub fn should_ignore(&self, file_canonicalize_path: &str) -> bool {
         fn matches_any(checking: &str, regexes: &[Regex]) -> bool {
             for regex in regexes {
                 if regex.is_match(checking) {

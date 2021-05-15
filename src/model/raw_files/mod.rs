@@ -44,8 +44,7 @@ impl RawFiles {
         fn get_raw_file(path: PathBuf, filters: &Filters) -> Option<RawFile> {
             if path.is_file() {
                 if let Some(raw_file) = RawFile::new(path) {
-                    if filters.is_filtered_out(&&raw_file.file_path_variants.file_canonicalize_path)
-                    {
+                    if filters.should_ignore(&&raw_file.file_path_variants.file_canonicalize_path) {
                         debug!(
                             "Ignoring the file {:?} and not searching it.",
                             raw_file.file_path_variants.file_relative_path

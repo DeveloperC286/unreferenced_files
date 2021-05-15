@@ -1,5 +1,6 @@
-use crate::model::file_path_variants::FilePathVariants;
 use std::collections::HashSet;
+
+use crate::model::file_path_variants::FilePathVariants;
 
 pub fn print(unreferenced_files: HashSet<FilePathVariants>, print_full_path: bool) {
     let mut sorted_unreferenced_files: Vec<&FilePathVariants> = unreferenced_files.iter().collect();
