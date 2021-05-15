@@ -67,4 +67,8 @@ impl FilePathVariants {
             file_stem: get_file_stem(&path),
         }
     }
+
+    pub fn is_same_file(&self, other: &FilePathVariants) -> bool {
+        self.file_canonicalize_path == other.file_canonicalize_path
+    }
 }

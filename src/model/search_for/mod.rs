@@ -94,7 +94,7 @@ impl SearchFor {
 
     pub fn get_unreferenced_files(
         &self,
-        search: RawFiles,
+        searching: RawFiles,
         search_for_relative_path: bool,
         search_for_file_name: bool,
         search_for_file_stem: bool,
@@ -108,45 +108,39 @@ impl SearchFor {
 
         let mut unreferenced_files = self.search_for.clone();
 
-        for raw_file in search.raw_files {
+        for search in searching.raw_files {
             if !unreferenced_files.is_empty() {
                 info!(
                     "Searching the file {:?}.",
-                    raw_file.file_path_variants.file_relative_path
+                    search.file_path_variants.file_relative_path
                 );
 
                 unreferenced_files.retain(|unreferenced_file| {
-                    if unreferenced_file.file_canonicalize_path
-                        == raw_file.file_path_variants.file_canonicalize_path
-                    {
-                        warn!(
-                            "Not searching {:?} for {:?} as they are the same file.",
-                            raw_file.file_path_variants.file_relative_path,
-                            unreferenced_file.file_relative_path
-                        );
-                        return true;
-                    }
+                    if !unreferenced_file.is_same_file(&search.file_path_variants) {
+                        if search_for_relative_path
+                            && search.is_match(
+                                file_path_variants_regexes
+                                    .get(&unreferenced_file.file_relative_path),
+                            )
+                        {
+                            return false;
+                        }
 
-                    if search_for_relative_path
-                        && raw_file.is_match(
-                            file_path_variants_regexes.get(&unreferenced_file.file_relative_path),
-                        )
-                    {
-                        return false;
-                    }
+                        if search_for_file_name
+                            && search.is_match(
+                                file_path_variants_regexes.get(&unreferenced_file.file_name),
+                            )
+                        {
+                            return false;
+                        }
 
-                    if search_for_file_name
-                        && raw_file
-                            .is_match(file_path_variants_regexes.get(&unreferenced_file.file_name))
-                    {
-                        return false;
-                    }
-
-                    if search_for_file_stem
-                        && raw_file
-                            .is_match(file_path_variants_regexes.get(&unreferenced_file.file_stem))
-                    {
-                        return false;
+                        if search_for_file_stem
+                            && search.is_match(
+                                file_path_variants_regexes.get(&unreferenced_file.file_stem),
+                            )
+                        {
+                            return false;
+                        }
                     }
 
                     true
