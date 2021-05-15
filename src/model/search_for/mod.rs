@@ -128,22 +128,23 @@ impl SearchFor {
                     }
 
                     if search_for_relative_path
-                        && file_path_variants_regexes
-                            .is_file_path_in_file(&unreferenced_file.file_relative_path, &raw_file)
+                        && raw_file.is_match(
+                            file_path_variants_regexes.get(&unreferenced_file.file_relative_path),
+                        )
                     {
                         return false;
                     }
 
                     if search_for_file_name
-                        && file_path_variants_regexes
-                            .is_file_path_in_file(&unreferenced_file.file_name, &raw_file)
+                        && raw_file
+                            .is_match(file_path_variants_regexes.get(&unreferenced_file.file_name))
                     {
                         return false;
                     }
 
                     if search_for_file_stem
-                        && file_path_variants_regexes
-                            .is_file_path_in_file(&unreferenced_file.file_stem, &raw_file)
+                        && raw_file
+                            .is_match(file_path_variants_regexes.get(&unreferenced_file.file_stem))
                     {
                         return false;
                     }

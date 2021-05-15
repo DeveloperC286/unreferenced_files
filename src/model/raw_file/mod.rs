@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 use crate::model::file_path_variants::FilePathVariants;
+use regex::Regex;
 
 pub type FileContent = String;
 
@@ -16,5 +17,9 @@ impl RawFile {
             file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),
             file_content,
         })
+    }
+
+    pub fn is_match(&self, regex: &Regex) -> bool {
+        regex.is_match(&self.file_content)
     }
 }

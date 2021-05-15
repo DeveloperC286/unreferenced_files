@@ -3,7 +3,6 @@ use std::collections::{HashMap, HashSet};
 use regex::Regex;
 
 use crate::model::file_path_variants::FilePathVariants;
-use crate::model::raw_file::RawFile;
 use crate::regex_utilities::get_regex;
 
 pub struct FilePathVariantsRegexes {
@@ -42,26 +41,7 @@ impl FilePathVariantsRegexes {
         }
     }
 
-    pub fn is_file_path_in_file(
-        &self,
-        file_path_variant_searching_for: &str,
-        searching: &RawFile,
-    ) -> bool {
-        match self
-            .file_path_variants_regexes
-            .get(file_path_variant_searching_for)
-            .unwrap()
-            .is_match(&searching.file_content)
-        {
-            true => {
-                trace!(
-                    "Found the text {:?} inside the file {:?}.",
-                    file_path_variant_searching_for,
-                    searching.file_path_variants.file_relative_path
-                );
-                true
-            }
-            false => false,
-        }
+    pub fn get(&self, file_path: &str) -> &Regex {
+        self.file_path_variants_regexes.get(file_path).unwrap()
     }
 }
