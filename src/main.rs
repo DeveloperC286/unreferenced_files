@@ -33,7 +33,7 @@ fn main() {
 
     let search_filters =
         crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search);
-    let search = crate::model::raw_files::RawFiles::new(
+    let search = crate::model::search::Search::new(
         file_utilities::get_paths(arguments.search),
         search_filters,
     );

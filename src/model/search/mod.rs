@@ -5,11 +5,11 @@ use std::process::exit;
 use crate::model::filters::Filters;
 use crate::model::raw_file::RawFile;
 
-pub struct RawFiles {
+pub struct Search {
     pub raw_files: HashSet<RawFile>,
 }
 
-impl RawFiles {
+impl Search {
     pub fn new(paths: Vec<PathBuf>, filters: Filters) -> Self {
         fn get_raw_files_in_directory(path: &Path, filters: &Filters) -> HashSet<RawFile> {
             let mut raw_files = HashSet::new();
@@ -75,6 +75,6 @@ impl RawFiles {
             }
         }
 
-        RawFiles { raw_files }
+        Search { raw_files }
     }
 }

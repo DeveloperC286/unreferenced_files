@@ -1,6 +1,6 @@
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::raw_file::RawFile;
-use crate::model::raw_files::RawFiles;
+use crate::model::search::Search;
 
 use super::*;
 
@@ -42,7 +42,7 @@ lazy_static! {
 
 macro_rules! raw_file_with_content {
     ($file_content:expr) => {
-        RawFiles {
+        Search {
             raw_files: {
                 let mut raw_files = HashSet::new();
                 raw_files.insert(RawFile {
@@ -57,7 +57,7 @@ macro_rules! raw_file_with_content {
 
 macro_rules! raw_files_with_content {
     ($file1_content:expr, $file2_content:expr) => {
-        RawFiles {
+        Search {
             raw_files: {
                 let mut raw_files = HashSet::new();
                 raw_files.insert(RawFile {

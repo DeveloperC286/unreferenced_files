@@ -5,7 +5,7 @@ use std::process::exit;
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::file_path_variants_regexes::FilePathVariantsRegexes;
 use crate::model::filters::Filters;
-use crate::model::raw_files::RawFiles;
+use crate::model::search::Search;
 
 #[derive(Clone)]
 pub struct SearchFor {
@@ -94,7 +94,7 @@ impl SearchFor {
 
     pub fn get_unreferenced_files(
         &self,
-        searching: RawFiles,
+        searching: Search,
         search_for_relative_path: bool,
         search_for_file_name: bool,
         search_for_file_stem: bool,
