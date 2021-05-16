@@ -3,7 +3,7 @@ use std::collections::{HashMap, HashSet};
 use regex::Regex;
 
 use crate::model::file_path_variants::FilePathVariants;
-use crate::regex_utilities::get_regex;
+use crate::utilities::regex::get_regex;
 
 pub struct FilePathVariantsRegexes {
     file_path_variants_regexes: HashMap<String, Regex>,

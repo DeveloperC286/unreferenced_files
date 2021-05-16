@@ -2,6 +2,8 @@ use std::process::exit;
 
 use regex::Regex;
 
+use crate::utilities::regex::get_regex;
+
 pub struct Filters {
     filters: Vec<Regex>,
     filtering_on: FilteringOn,
@@ -21,17 +23,11 @@ impl Filters {
                 filtering_on: FilteringOn::None,
             },
             (_, 0) => Filters {
-                filters: only_search
-                    .iter()
-                    .map(|regex| crate::regex_utilities::get_regex(regex))
-                    .collect(),
+                filters: only_search.iter().map(|regex| get_regex(regex)).collect(),
                 filtering_on: FilteringOn::Only,
             },
             (0, _) => Filters {
-                filters: ignore_search
-                    .iter()
-                    .map(|regex| crate::regex_utilities::get_regex(regex))
-                    .collect(),
+                filters: ignore_search.iter().map(|regex| get_regex(regex)).collect(),
                 filtering_on: FilteringOn::Ignore,
             },
             _ => {

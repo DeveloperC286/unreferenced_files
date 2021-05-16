@@ -8,10 +8,9 @@ use std::process::exit;
 use structopt::StructOpt;
 
 mod cli;
-mod file_utilities;
 mod model;
-mod regex_utilities;
 mod reporter;
+mod utilities;
 
 const ERROR_EXIT_CODE: i32 = 1;
 
@@ -27,14 +26,14 @@ fn main() {
     let search_for_filters =
         crate::model::filters::Filters::new(arguments.only_search_for, arguments.ignore_search_for);
     let search_for = crate::model::search_for::SearchFor::new(
-        file_utilities::get_paths(arguments.search_for),
+        utilities::file::get_paths(arguments.search_for),
         search_for_filters,
     );
 
     let search_filters =
         crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search);
     let search = crate::model::search::Search::new(
-        file_utilities::get_paths(arguments.search),
+        utilities::file::get_paths(arguments.search),
         search_filters,
     );
 
