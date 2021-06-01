@@ -9,7 +9,7 @@ pub type FileContent = String;
 #[derive(Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
 pub struct RawFile {
     pub file_path_variants: FilePathVariants,
-    pub file_content: FileContent,
+    file_content: FileContent,
 }
 
 impl RawFile {
