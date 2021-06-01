@@ -4,12 +4,19 @@ use regex::Regex;
 
 use crate::model::file_path_variants::FilePathVariants;
 
-pub type FileContent = String;
-
+#[cfg(not(test))]
 #[derive(Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
 pub struct RawFile {
     pub file_path_variants: FilePathVariants,
-    file_content: FileContent,
+    file_content: String,
+}
+
+// For unit testing.
+#[cfg(test)]
+#[derive(Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
+pub struct RawFile {
+    pub file_path_variants: FilePathVariants,
+    pub file_content: String,
 }
 
 impl RawFile {
@@ -22,5 +29,11 @@ impl RawFile {
 
     pub fn is_match(&self, regex: &Regex) -> bool {
         regex.is_match(&self.file_content)
+    }
+}
+
+impl std::fmt::Debug for RawFile {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.file_path_variants.file_relative_path)
     }
 }
