@@ -12,8 +12,13 @@ categories = ["command-line-utilities", "development-tools"]
 
 
 [dependencies]
-structopt = "0.3.21"
+# For searching for references in files.
 regex = "1.5.4"
+
+# CLI parsing
+structopt = "0.3.21"
+
+# Logging
 log = "0.4.14"
 pretty_env_logger = "0.4.0"
 
