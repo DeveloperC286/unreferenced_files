@@ -3,7 +3,13 @@ use std::path::{Path, PathBuf};
 use std::process::exit;
 
 use crate::model::filters::Filters;
-use crate::model::raw_file::RawFile;
+use crate::model::search::raw_file::RawFile;
+
+#[cfg(not(test))]
+mod raw_file;
+
+#[cfg(test)]
+pub mod raw_file;
 
 pub struct Search {
     pub raw_files: HashSet<RawFile>,

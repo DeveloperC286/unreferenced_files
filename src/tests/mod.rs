@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use crate::model::file_path_variants::FilePathVariants;
-use crate::model::raw_file::RawFile;
+use crate::model::search::raw_file::RawFile;
 use crate::model::search::Search;
 use crate::model::search_for::SearchFor;
 
