@@ -1,8 +1,9 @@
+use std::collections::HashSet;
+
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::raw_file::RawFile;
 use crate::model::search::Search;
-
-use super::*;
+use crate::model::search_for::SearchFor;
 
 const FOUND: &str = "found";
 const NOT_FOUND: &str = "not_found";

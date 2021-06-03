@@ -7,9 +7,16 @@ use crate::model::file_path_variants_regexes::FilePathVariantsRegexes;
 use crate::model::filters::Filters;
 use crate::model::search::Search;
 
-#[derive(Clone)]
+#[cfg(not(test))]
 pub struct SearchFor {
     search_for: HashSet<FilePathVariants>,
+}
+
+// For unit testing.
+#[cfg(test)]
+#[derive(Clone)]
+pub struct SearchFor {
+    pub search_for: HashSet<FilePathVariants>,
 }
 
 impl SearchFor {
@@ -151,7 +158,3 @@ impl SearchFor {
         unreferenced_files
     }
 }
-
-#[cfg(test)]
-#[macro_use]
-mod tests;

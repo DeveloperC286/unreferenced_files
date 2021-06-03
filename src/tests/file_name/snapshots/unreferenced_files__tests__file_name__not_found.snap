@@ -1,5 +1,5 @@
 ---
-source: src/model/search_for/tests/file_name/mod.rs
+source: src/tests/file_name/mod.rs
 expression: sorted_search_for
 
 ---
