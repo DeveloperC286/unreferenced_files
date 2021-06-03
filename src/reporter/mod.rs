@@ -7,10 +7,6 @@ pub fn print(unreferenced_files: HashSet<FilePathVariants>, print_full_path: boo
     sorted_unreferenced_files.sort();
 
     for unreferenced_file in sorted_unreferenced_files {
-        if print_full_path {
-            println!("{}", unreferenced_file.file_canonicalize_path);
-        } else {
-            println!("{}", unreferenced_file.file_relative_path);
-        }
+        unreferenced_file.print(print_full_path);
     }
 }

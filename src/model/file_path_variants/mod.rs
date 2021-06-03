@@ -69,6 +69,14 @@ impl FilePathVariants {
             file_stem: get_file_stem(&path),
         }
     }
+
+    pub fn print(&self, print_full_path: bool) {
+        if print_full_path {
+            println!("{}", self.file_canonicalize_path);
+        } else {
+            println!("{}", self.file_relative_path);
+        }
+    }
 }
 
 impl PartialEq for FilePathVariants {
