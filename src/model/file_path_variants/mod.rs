@@ -1,8 +1,9 @@
+use std::cmp::Ordering;
 use std::hash::{Hash, Hasher};
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
-#[derive(Debug, Clone, PartialOrd, Ord, Eq)]
+#[derive(Debug, Clone, Eq)]
 pub struct FilePathVariants {
     pub file_canonicalize_path: String,
     pub file_relative_path: String,
@@ -71,13 +72,31 @@ impl FilePathVariants {
 }
 
 impl PartialEq for FilePathVariants {
+    #[inline]
     fn eq(&self, other: &Self) -> bool {
         self.file_canonicalize_path == other.file_canonicalize_path
     }
 }
 
 impl Hash for FilePathVariants {
+    #[inline]
     fn hash<H: Hasher>(&self, hasher: &mut H) {
         self.file_canonicalize_path.hash(hasher);
+    }
+}
+
+impl PartialOrd for FilePathVariants {
+    #[inline]
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.file_canonicalize_path
+            .partial_cmp(&other.file_canonicalize_path)
+    }
+}
+
+impl Ord for FilePathVariants {
+    #[inline]
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.file_canonicalize_path
+            .cmp(&other.file_canonicalize_path)
     }
 }
