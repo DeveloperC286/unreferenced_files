@@ -1,7 +1,8 @@
+use std::hash::{Hash, Hasher};
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
-#[derive(Debug, Hash, Clone, PartialOrd, Ord, Eq)]
+#[derive(Debug, Clone, PartialOrd, Ord, Eq)]
 pub struct FilePathVariants {
     pub file_canonicalize_path: String,
     pub file_relative_path: String,
@@ -72,5 +73,11 @@ impl FilePathVariants {
 impl PartialEq for FilePathVariants {
     fn eq(&self, other: &Self) -> bool {
         self.file_canonicalize_path == other.file_canonicalize_path
+    }
+}
+
+impl Hash for FilePathVariants {
+    fn hash<H: Hasher>(&self, hasher: &mut H) {
+        self.file_canonicalize_path.hash(hasher);
     }
 }
