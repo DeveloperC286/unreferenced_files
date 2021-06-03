@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
-#[derive(Debug, Hash, Clone, PartialOrd, PartialEq, Ord, Eq)]
+#[derive(Debug, Hash, Clone, PartialOrd, Ord, Eq)]
 pub struct FilePathVariants {
     pub file_canonicalize_path: String,
     pub file_relative_path: String,
@@ -67,8 +67,10 @@ impl FilePathVariants {
             file_stem: get_file_stem(&path),
         }
     }
+}
 
-    pub fn is_same_file(&self, other: &FilePathVariants) -> bool {
+impl PartialEq for FilePathVariants {
+    fn eq(&self, other: &Self) -> bool {
         self.file_canonicalize_path == other.file_canonicalize_path
     }
 }

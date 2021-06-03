@@ -123,7 +123,7 @@ impl SearchFor {
                 );
 
                 unreferenced_files.retain(|unreferenced_file| {
-                    if !unreferenced_file.is_same_file(&search.file_path_variants) {
+                    if unreferenced_file != &search.file_path_variants {
                         if search_for_relative_path
                             && search.is_match(
                                 file_path_variants_regexes
