@@ -62,7 +62,7 @@ impl SearchFor {
             if path.is_file() {
                 let file_path_variants = FilePathVariants::new(path);
 
-                if filters.should_ignore(&&file_path_variants.file_canonicalize_path) {
+                if filters.should_ignore(&file_path_variants.file_canonicalize_path) {
                     debug!(
                         "Ignoring the file {:?} and not searching for it.",
                         file_path_variants.file_relative_path
