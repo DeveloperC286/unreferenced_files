@@ -9,7 +9,6 @@ Feature: Only search files that match any of the provided only-search regexes.
     Then unreferenced files are not found.
     When the argument --only-search is provided as "<only_search>".
     Then the unreferenced files are "<unreferenced_files>".
-    And the status code is nonzero.
 
 
     Examples:
@@ -40,10 +39,8 @@ Feature: Only search files that match any of the provided only-search regexes.
     And the flag --assert-no-unreferenced-files is set.
     And the flag --only-file-name is set.
     Then the unreferenced files are "<unreferenced_files_1>".
-    And the status code is nonzero.
     When the argument --only-search is provided as "<only_search>".
     Then the unreferenced files are "<unreferenced_files_2>".
-    And the status code is nonzero.
 
 
     Examples:

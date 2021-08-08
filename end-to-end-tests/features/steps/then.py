@@ -24,6 +24,7 @@ def then_unreferenced_files_found(context, unreferenced_files):
     unreferenced_files = unreferenced_files.strip() \
         .strip('\"').replace("\\n", '\n').encode('utf-8')
     assert context.stdout == unreferenced_files
+    then_nonzero_status_code(context)
 
 
 @then('the status code is nonzero.')

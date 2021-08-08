@@ -8,7 +8,6 @@ Feature: Ignore and do not search for any files that match any of the provided i
     And the flag --assert-no-unreferenced-files is set.
     And the flag --only-file-name is set.
     Then the unreferenced files are "<unreferenced_files>".
-    And the status code is nonzero.
     When the argument --ignore-search-for is provided as "<ignore_search_for>".
     Then unreferenced files are not found.
 
@@ -24,10 +23,8 @@ Feature: Ignore and do not search for any files that match any of the provided i
     And the argument --search-for is provided as "<search_for>".
     And the flag --assert-no-unreferenced-files is set.
     Then the unreferenced files are "<unreferenced_files_1>".
-    And the status code is nonzero.
     When the argument --ignore-search-for is provided as "<ignore_search_for>".
     Then the unreferenced files are "<unreferenced_files_2>".
-    And the status code is nonzero.
 
 
     Examples:

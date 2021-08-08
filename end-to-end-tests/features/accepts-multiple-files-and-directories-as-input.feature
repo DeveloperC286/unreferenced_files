@@ -8,7 +8,6 @@ Feature: Unreferenced Files can handle multiple files and directories being pass
     And the argument --search-for is provided as "<search_for_file_2>".
     And the flag --assert-no-unreferenced-files is set.
     Then the unreferenced files are "<unreferenced_files>".
-    And the status code is nonzero.
 
     Examples:
       | repository                             | checkout_commit                          | search_file    | search_for_file_1        | search_for_file_2          | unreferenced_files                                       |
