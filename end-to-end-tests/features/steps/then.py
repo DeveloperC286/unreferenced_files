@@ -14,15 +14,16 @@ IGNORE_SEARCH_FOR_MUTUALLY_EXCLUSIVE = "error: The argument '--ignore-search-for
 @then('unreferenced files are not found.')
 def then_unreferenced_files_not_found(context):
     execute_unreferenced_files(context)
+    assert context.stdout == ""
+    assert context.stderr == ""
     assert int(context.exit_code) == 0
-    assert context.stdout == "".encode('utf-8')
 
 
 @then('the unreferenced files are "{unreferenced_files}".')
 def then_unreferenced_files_found(context, unreferenced_files):
     execute_unreferenced_files(context)
     unreferenced_files = unreferenced_files.strip() \
-        .strip('\"').replace("\\n", '\n').encode('utf-8')
+        .strip('\"').replace("\\n", '\n')
     assert context.stdout == unreferenced_files
     then_nonzero_status_code(context)
 
@@ -37,14 +38,14 @@ def then_nonzero_status_code(context):
 @then('printed is an error message detailing that the argument search is missing.')
 def then_search_argument_missing_error(context):
     execute_unreferenced_files(context)
-    assert starts_with(context.stdout, MISSING_SEARCH)
+    assert starts_with(context.stderr, MISSING_SEARCH)
     then_nonzero_status_code(context)
 
 
 @then('printed is an error message detailing that the argument search for is missing.')
 def then_search_for_argument_missing_error(context):
     execute_unreferenced_files(context)
-    assert starts_with(context.stdout, MISSING_SEARCH_FOR)
+    assert starts_with(context.stderr, MISSING_SEARCH_FOR)
     then_nonzero_status_code(context)
 
 
@@ -52,9 +53,9 @@ def then_search_for_argument_missing_error(context):
 def then_only_and_ignore_search_mutually_exclusive(context):
     execute_unreferenced_files(context)
     assert starts_with(
-        context.stdout,
+        context.stderr,
         ONLY_SEARCH_MUTUALLY_EXCLUSIVE) or starts_with(
-        context.stdout,
+        context.stderr,
         IGNORE_SEARCH_MUTUALLY_EXCLUSIVE)
     then_nonzero_status_code(context)
 
@@ -63,19 +64,12 @@ def then_only_and_ignore_search_mutually_exclusive(context):
 def then_only_and_ignore_search_for_mutually_exclusive(context):
     execute_unreferenced_files(context)
     assert starts_with(
-        context.stdout,
+        context.stderr,
         ONLY_SEARCH_FOR_MUTUALLY_EXCLUSIVE) or starts_with(
-        context.stdout,
+        context.stderr,
         IGNORE_SEARCH_FOR_MUTUALLY_EXCLUSIVE)
     then_nonzero_status_code(context)
 
 
-def execute_unreferenced_files(context):
-    os.chdir(context.temporary_directory.name)
-    (context.exit_code, context.stdout) = execute_command(
-        context.pre_command + context.unreferenced_files_path + context.arguments)
-    os.chdir(context.behave_directory)
-
-
-def starts_with(stdout, error_message):
-    return stdout.strip().startswith(bytes(error_message.strip(), 'utf-8'))
+def starts_with(searching, searching_for):
+    return searching.strip().startswith(searching_for.strip())
