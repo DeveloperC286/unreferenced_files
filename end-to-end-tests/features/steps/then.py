@@ -1,7 +1,7 @@
 import os
 from behave import *
 
-from util import execute_command
+from utilities import execute_unreferenced_files
 
 MISSING_SEARCH = "error: The following required arguments were not provided:\n    --search <search>...\n\n"
 MISSING_SEARCH_FOR = "error: The following required arguments were not provided:\n    --search-for <search-for>...\n\n"

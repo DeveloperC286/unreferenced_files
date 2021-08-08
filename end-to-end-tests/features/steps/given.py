@@ -1,7 +1,8 @@
 import os
 import tempfile
 from behave import given
-from util import execute_command
+
+from utilities import execute_command
 
 
 def reset_context(context):
