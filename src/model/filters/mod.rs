@@ -4,7 +4,7 @@ use regex::Regex;
 
 use crate::utilities::regex::get_regex;
 
-pub struct Filters {
+pub(crate) struct Filters {
     filters: Vec<Regex>,
     filtering_on: FilteringOn,
 }
@@ -16,7 +16,7 @@ enum FilteringOn {
 }
 
 impl Filters {
-    pub fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Self {
+    pub(crate) fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Self {
         return match (only_search.len(), ignore_search.len()) {
             (0, 0) => Filters {
                 filters: vec![],
@@ -37,7 +37,7 @@ impl Filters {
         };
     }
 
-    pub fn should_ignore(&self, file_canonicalize_path: &str) -> bool {
+    pub(crate) fn should_ignore(&self, file_canonicalize_path: &str) -> bool {
         fn matches_any(checking: &str, regexes: &[Regex]) -> bool {
             for regex in regexes {
                 if regex.is_match(checking) {

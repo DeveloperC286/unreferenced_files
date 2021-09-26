@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::process::exit;
 
-pub fn get_paths(paths: Vec<String>) -> Vec<PathBuf> {
+pub(crate) fn get_paths(paths: Vec<String>) -> Vec<PathBuf> {
     fn get_path(path: &str) -> PathBuf {
         let path = Path::new(path);
 
@@ -16,7 +16,7 @@ pub fn get_paths(paths: Vec<String>) -> Vec<PathBuf> {
     paths.iter().map(|path| get_path(path)).collect()
 }
 
-pub fn get_file_content(path: &Path) -> Option<String> {
+pub(crate) fn get_file_content(path: &Path) -> Option<String> {
     match std::fs::read_to_string(path) {
         Ok(file_content) => Some(file_content),
         Err(error) => {
@@ -30,7 +30,7 @@ pub fn get_file_content(path: &Path) -> Option<String> {
     }
 }
 
-pub fn get_directory_entries(path: &Path) -> std::fs::ReadDir {
+pub(crate) fn get_directory_entries(path: &Path) -> std::fs::ReadDir {
     match std::fs::read_dir(path) {
         Ok(entries) => entries,
         Err(error) => {

@@ -9,14 +9,14 @@ use crate::model::search::raw_file::RawFile;
 mod raw_file;
 
 #[cfg(test)]
-pub mod raw_file;
+pub(crate) mod raw_file;
 
-pub struct Search {
-    pub raw_files: HashSet<RawFile>,
+pub(crate) struct Search {
+    pub(crate) raw_files: HashSet<RawFile>,
 }
 
 impl Search {
-    pub fn new(paths: Vec<PathBuf>, filters: Filters) -> Self {
+    pub(crate) fn new(paths: Vec<PathBuf>, filters: Filters) -> Self {
         fn get_raw_files_in_directory(path: &Path, filters: &Filters) -> HashSet<RawFile> {
             let mut raw_files = HashSet::new();
             trace!(

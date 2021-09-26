@@ -1,2 +1,2 @@
-pub mod file;
-pub mod regex;
+pub(crate) mod file;
+pub(crate) mod regex;

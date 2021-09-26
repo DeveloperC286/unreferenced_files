@@ -8,19 +8,19 @@ use crate::model::filters::Filters;
 use crate::model::search::Search;
 
 #[cfg(not(test))]
-pub struct SearchFor {
+pub(crate) struct SearchFor {
     search_for: HashSet<FilePathVariants>,
 }
 
 // For unit testing.
 #[cfg(test)]
 #[derive(Clone)]
-pub struct SearchFor {
-    pub search_for: HashSet<FilePathVariants>,
+pub(crate) struct SearchFor {
+    pub(crate) search_for: HashSet<FilePathVariants>,
 }
 
 impl SearchFor {
-    pub fn new(initial_search_for: Vec<PathBuf>, filters: Filters) -> Self {
+    pub(crate) fn new(initial_search_for: Vec<PathBuf>, filters: Filters) -> Self {
         fn get_file_path_variants_in_directory(
             path: &Path,
             filters: &Filters,
@@ -99,7 +99,7 @@ impl SearchFor {
         SearchFor { search_for }
     }
 
-    pub fn get_unreferenced_files(
+    pub(crate) fn get_unreferenced_files(
         &self,
         searching: Search,
         search_for_relative_path: bool,

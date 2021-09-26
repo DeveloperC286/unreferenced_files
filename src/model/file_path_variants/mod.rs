@@ -4,15 +4,15 @@ use std::path::{Path, PathBuf};
 use std::process::exit;
 
 #[derive(Debug, Clone, Eq)]
-pub struct FilePathVariants {
-    pub file_canonicalize_path: String,
-    pub file_relative_path: String,
-    pub file_name: String,
-    pub file_stem: String,
+pub(crate) struct FilePathVariants {
+    pub(crate) file_canonicalize_path: String,
+    pub(crate) file_relative_path: String,
+    pub(crate) file_name: String,
+    pub(crate) file_stem: String,
 }
 
 impl FilePathVariants {
-    pub fn new(path: PathBuf) -> Self {
+    pub(crate) fn new(path: PathBuf) -> Self {
         fn get_file_canonicalize_path(path: &Path) -> String {
             match path.canonicalize() {
                 Ok(canonicalized_path) => canonicalized_path.display().to_string(),
@@ -70,7 +70,7 @@ impl FilePathVariants {
         }
     }
 
-    pub fn print(&self, print_full_path: bool) {
+    pub(crate) fn print(&self, print_full_path: bool) {
         if print_full_path {
             println!("{}", self.file_canonicalize_path);
         } else {

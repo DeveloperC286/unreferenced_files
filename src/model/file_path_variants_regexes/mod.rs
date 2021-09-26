@@ -5,12 +5,12 @@ use regex::Regex;
 use crate::model::file_path_variants::FilePathVariants;
 use crate::utilities::regex::get_regex;
 
-pub struct FilePathVariantsRegexes {
+pub(crate) struct FilePathVariantsRegexes {
     file_path_variants_regexes: HashMap<String, Regex>,
 }
 
 impl FilePathVariantsRegexes {
-    pub fn new(
+    pub(crate) fn new(
         files: &HashSet<FilePathVariants>,
         search_for_relative_path: bool,
         search_for_file_name: bool,
@@ -41,7 +41,7 @@ impl FilePathVariantsRegexes {
         }
     }
 
-    pub fn get(&self, file_path: &str) -> &Regex {
+    pub(crate) fn get(&self, file_path: &str) -> &Regex {
         self.file_path_variants_regexes.get(file_path).unwrap()
     }
 }
