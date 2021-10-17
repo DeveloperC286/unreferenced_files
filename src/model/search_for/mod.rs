@@ -20,7 +20,7 @@ pub(crate) struct SearchFor {
 }
 
 impl SearchFor {
-    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Self {
+    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> SearchFor {
         fn get_file_path_variants_in_directory(
             path: &Path,
             filters: &Filters,

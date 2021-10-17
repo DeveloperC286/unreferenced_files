@@ -12,7 +12,7 @@ pub(crate) struct FilePathVariants {
 }
 
 impl FilePathVariants {
-    pub(crate) fn new(path: PathBuf) -> Self {
+    pub(crate) fn new(path: PathBuf) -> FilePathVariants {
         fn get_file_canonicalize_path(path: &Path) -> String {
             match path.canonicalize() {
                 Ok(canonicalized_path) => canonicalized_path.display().to_string(),
@@ -81,7 +81,7 @@ impl FilePathVariants {
 
 impl PartialEq for FilePathVariants {
     #[inline]
-    fn eq(&self, other: &Self) -> bool {
+    fn eq(&self, other: &FilePathVariants) -> bool {
         self.file_canonicalize_path == other.file_canonicalize_path
     }
 }
@@ -95,7 +95,7 @@ impl Hash for FilePathVariants {
 
 impl PartialOrd for FilePathVariants {
     #[inline]
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+    fn partial_cmp(&self, other: &FilePathVariants) -> Option<Ordering> {
         self.file_canonicalize_path
             .partial_cmp(&other.file_canonicalize_path)
     }
@@ -103,7 +103,7 @@ impl PartialOrd for FilePathVariants {
 
 impl Ord for FilePathVariants {
     #[inline]
-    fn cmp(&self, other: &Self) -> Ordering {
+    fn cmp(&self, other: &FilePathVariants) -> Ordering {
         self.file_canonicalize_path
             .cmp(&other.file_canonicalize_path)
     }

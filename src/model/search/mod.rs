@@ -16,7 +16,7 @@ pub(crate) struct Search {
 }
 
 impl Search {
-    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Self {
+    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Search {
         fn get_raw_files_in_directory(path: &Path, filters: &Filters) -> HashSet<RawFile> {
             let mut raw_files = HashSet::new();
             trace!(

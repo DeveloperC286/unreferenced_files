@@ -20,7 +20,7 @@ pub(crate) struct RawFile {
 }
 
 impl RawFile {
-    pub(crate) fn new(path: PathBuf) -> Option<Self> {
+    pub(crate) fn new(path: PathBuf) -> Option<RawFile> {
         match std::fs::read_to_string(&path) {
             Ok(file_content) => Some(RawFile {
                 file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),

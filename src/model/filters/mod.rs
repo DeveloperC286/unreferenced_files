@@ -12,7 +12,7 @@ enum FilteringOn {
 }
 
 impl Filters {
-    pub(crate) fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Result<Self, ()> {
+    pub(crate) fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Result<Filters, ()> {
         fn to_regexes(to_regexes: Vec<String>) -> Result<Vec<Regex>, ()> {
             let mut regexes = vec![];
 
