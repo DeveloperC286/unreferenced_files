@@ -1,7 +1,5 @@
 use regex::Regex;
 
-use crate::utilities::regex::get_regex;
-
 pub(crate) struct Filters {
     filters: Vec<Regex>,
     filtering_on: FilteringOn,
@@ -15,19 +13,42 @@ enum FilteringOn {
 
 impl Filters {
     pub(crate) fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Result<Self, ()> {
+        fn to_regexes(to_regexes: Vec<String>) -> Result<Vec<Regex>, ()> {
+            let mut regexes = vec![];
+
+            for to_regex in to_regexes {
+                match Regex::new(&to_regex) {
+                    Ok(regex) => regexes.push(regex),
+                    Err(_) => {
+                        error!("Unable to convert {:?} to a regex.", to_regex);
+                        return Err(());
+                    }
+                }
+            }
+
+            Ok(regexes)
+        }
+
         return match (only_search.len(), ignore_search.len()) {
             (0, 0) => Ok(Filters {
                 filters: vec![],
                 filtering_on: FilteringOn::None,
             }),
-            (_, 0) => Ok(Filters {
-                filters: only_search.iter().map(|regex| get_regex(regex)).collect(),
-                filtering_on: FilteringOn::Only,
-            }),
-            (0, _) => Ok(Filters {
-                filters: ignore_search.iter().map(|regex| get_regex(regex)).collect(),
-                filtering_on: FilteringOn::Ignore,
-            }),
+            (_, 0) => match to_regexes(only_search) {
+                Ok(filters) => Ok(Filters {
+                    filters,
+                    filtering_on: FilteringOn::Only,
+                }),
+                Err(_) => Err(()),
+            },
+
+            (0, _) => match to_regexes(ignore_search) {
+                Ok(filters) => Ok(Filters {
+                    filters,
+                    filtering_on: FilteringOn::Ignore,
+                }),
+                Err(_) => Err(()),
+            },
             _ => {
                 error!("Only and ignore filters are mutually exclusive.");
                 Err(())

@@ -24,7 +24,7 @@ impl Search {
                 path.display()
             );
 
-            for dir_entry in crate::utilities::file::get_directory_entries(path) {
+            for dir_entry in crate::utilities::get_directory_entries(path) {
                 match dir_entry {
                     Ok(dir_entry) => {
                         let path = dir_entry.path();

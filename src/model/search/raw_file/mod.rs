@@ -21,7 +21,7 @@ pub(crate) struct RawFile {
 
 impl RawFile {
     pub(crate) fn new(path: PathBuf) -> Option<Self> {
-        crate::utilities::file::get_file_content(&path).map(|file_content| RawFile {
+        crate::utilities::get_file_content(&path).map(|file_content| RawFile {
             file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),
             file_content,
         })

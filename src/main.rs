@@ -29,7 +29,7 @@ fn main() {
         arguments.ignore_search_for,
     ) {
         Ok(filters) => crate::model::search_for::SearchFor::new(
-            crate::utilities::file::get_paths(arguments.search_for),
+            crate::utilities::get_paths(arguments.search_for),
             filters,
         ),
         Err(_) => {
@@ -40,7 +40,7 @@ fn main() {
     let search =
         match crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search) {
             Ok(filters) => crate::model::search::Search::new(
-                crate::utilities::file::get_paths(arguments.search),
+                crate::utilities::get_paths(arguments.search),
                 filters,
             ),
             Err(_) => {
