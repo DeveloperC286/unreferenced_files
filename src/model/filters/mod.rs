@@ -1,5 +1,3 @@
-use std::process::exit;
-
 use regex::Regex;
 
 use crate::utilities::regex::get_regex;
@@ -16,23 +14,23 @@ enum FilteringOn {
 }
 
 impl Filters {
-    pub(crate) fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Self {
+    pub(crate) fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Result<Self, ()> {
         return match (only_search.len(), ignore_search.len()) {
-            (0, 0) => Filters {
+            (0, 0) => Ok(Filters {
                 filters: vec![],
                 filtering_on: FilteringOn::None,
-            },
-            (_, 0) => Filters {
+            }),
+            (_, 0) => Ok(Filters {
                 filters: only_search.iter().map(|regex| get_regex(regex)).collect(),
                 filtering_on: FilteringOn::Only,
-            },
-            (0, _) => Filters {
+            }),
+            (0, _) => Ok(Filters {
                 filters: ignore_search.iter().map(|regex| get_regex(regex)).collect(),
                 filtering_on: FilteringOn::Ignore,
-            },
+            }),
             _ => {
                 error!("Only and ignore filters are mutually exclusive.");
-                exit(crate::ERROR_EXIT_CODE);
+                Err(())
             }
         };
     }

@@ -12,6 +12,7 @@ mod model;
 mod reporter;
 mod utilities;
 
+// TODO Assert failed vs failed to do something error status codes.
 const ERROR_EXIT_CODE: i32 = 1;
 
 fn main() {
@@ -23,15 +24,29 @@ fn main() {
     let search_for_file_name = !arguments.only_relative_path && !arguments.only_file_stem;
     let search_for_file_stem = !arguments.only_relative_path && !arguments.only_file_name;
 
-    let search_for = crate::model::search_for::SearchFor::new(
-        crate::utilities::file::get_paths(arguments.search_for),
-        crate::model::filters::Filters::new(arguments.only_search_for, arguments.ignore_search_for),
-    );
+    let search_for = match crate::model::filters::Filters::new(
+        arguments.only_search_for,
+        arguments.ignore_search_for,
+    ) {
+        Ok(filters) => crate::model::search_for::SearchFor::new(
+            crate::utilities::file::get_paths(arguments.search_for),
+            filters,
+        ),
+        Err(_) => {
+            exit(ERROR_EXIT_CODE);
+        }
+    };
 
-    let search = crate::model::search::Search::new(
-        crate::utilities::file::get_paths(arguments.search),
-        crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search),
-    );
+    let search =
+        match crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search) {
+            Ok(filters) => crate::model::search::Search::new(
+                crate::utilities::file::get_paths(arguments.search),
+                filters,
+            ),
+            Err(_) => {
+                exit(ERROR_EXIT_CODE);
+            }
+        };
 
     let unreferenced_files = search_for.get_unreferenced_files(
         search,
