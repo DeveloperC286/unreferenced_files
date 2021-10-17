@@ -128,7 +128,8 @@ impl SearchFor {
             search_for_relative_path,
             search_for_file_name,
             search_for_file_stem,
-        );
+        )
+        .unwrap();
 
         let mut unreferenced_files = self.search_for.clone();
 

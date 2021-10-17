@@ -1,5 +1,4 @@
 use std::collections::{HashMap, HashSet};
-use std::process::exit;
 
 use regex::Regex;
 
@@ -15,7 +14,7 @@ impl FilePathVariantsRegexes {
         search_for_relative_path: bool,
         search_for_file_name: bool,
         search_for_file_steam: bool,
-    ) -> FilePathVariantsRegexes {
+    ) -> Result<FilePathVariantsRegexes, ()> {
         let mut file_path_variants_regexes = HashMap::new();
 
         for file in files {
@@ -30,7 +29,7 @@ impl FilePathVariantsRegexes {
                             "Unable to create a regex from the file relative path {:?}.",
                             file.file_relative_path
                         );
-                        exit(crate::ERROR_EXIT_CODE);
+                        return Err(());
                     }
                 }
             }
@@ -45,7 +44,7 @@ impl FilePathVariantsRegexes {
                             "Unable to create a regex from the file name {:?}.",
                             file.file_relative_path
                         );
-                        exit(crate::ERROR_EXIT_CODE);
+                        return Err(());
                     }
                 }
             }
@@ -60,15 +59,15 @@ impl FilePathVariantsRegexes {
                             "Unable to create a regex from the file stem {:?}.",
                             file.file_relative_path
                         );
-                        exit(crate::ERROR_EXIT_CODE);
+                        return Err(());
                     }
                 }
             }
         }
 
-        FilePathVariantsRegexes {
+        Ok(FilePathVariantsRegexes {
             file_path_variants_regexes,
-        }
+        })
     }
 
     pub(crate) fn get(&self, file_path: &str) -> &Regex {
