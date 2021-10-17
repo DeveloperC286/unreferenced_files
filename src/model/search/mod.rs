@@ -16,7 +16,7 @@ pub(crate) struct Search {
 }
 
 impl Search {
-    pub(crate) fn new(paths: Vec<PathBuf>, filters: Filters) -> Self {
+    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Self {
         fn get_raw_files_in_directory(path: &Path, filters: &Filters) -> HashSet<RawFile> {
             let mut raw_files = HashSet::new();
             trace!(
@@ -80,11 +80,18 @@ impl Search {
 
         let mut raw_files = HashSet::new();
 
-        for path in paths {
-            if path.is_dir() {
-                raw_files.extend(get_raw_files_in_directory(&path, &filters));
-            } else if let Some(raw_file) = get_raw_file(path.to_path_buf(), &filters) {
-                raw_files.insert(raw_file);
+        match crate::model::utilities::to_pathbufs(paths) {
+            Ok(pathbufs) => {
+                for pathbuf in pathbufs {
+                    if pathbuf.is_dir() {
+                        raw_files.extend(get_raw_files_in_directory(&pathbuf, &filters));
+                    } else if let Some(raw_file) = get_raw_file(pathbuf, &filters) {
+                        raw_files.insert(raw_file);
+                    }
+                }
+            }
+            Err(_) => {
+                exit(crate::ERROR_EXIT_CODE);
             }
         }
 

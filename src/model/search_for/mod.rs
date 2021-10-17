@@ -20,7 +20,7 @@ pub(crate) struct SearchFor {
 }
 
 impl SearchFor {
-    pub(crate) fn new(initial_search_for: Vec<PathBuf>, filters: Filters) -> Self {
+    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Self {
         fn get_file_path_variants_in_directory(
             path: &Path,
             filters: &Filters,
@@ -95,15 +95,21 @@ impl SearchFor {
 
         let mut search_for = HashSet::new();
 
-        for path in initial_search_for {
-            if path.is_file() {
-                if let Some(file_path_variants) =
-                    get_file_path_variants(path.to_path_buf(), &filters)
-                {
-                    search_for.insert(file_path_variants);
+        match crate::model::utilities::to_pathbufs(paths) {
+            Ok(pathbufs) => {
+                for pathbuf in pathbufs {
+                    if pathbuf.is_file() {
+                        if let Some(file_path_variants) = get_file_path_variants(pathbuf, &filters)
+                        {
+                            search_for.insert(file_path_variants);
+                        }
+                    } else {
+                        search_for.extend(get_file_path_variants_in_directory(&pathbuf, &filters));
+                    }
                 }
-            } else {
-                search_for.extend(get_file_path_variants_in_directory(&path, &filters));
+            }
+            Err(_) => {
+                exit(crate::ERROR_EXIT_CODE);
             }
         }
 

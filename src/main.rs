@@ -10,7 +10,6 @@ use structopt::StructOpt;
 mod cli;
 mod model;
 mod reporter;
-mod utilities;
 
 // TODO Assert failed vs failed to do something error status codes.
 const ERROR_EXIT_CODE: i32 = 1;
@@ -28,10 +27,7 @@ fn main() {
         arguments.only_search_for,
         arguments.ignore_search_for,
     ) {
-        Ok(filters) => crate::model::search_for::SearchFor::new(
-            crate::utilities::get_paths(arguments.search_for),
-            filters,
-        ),
+        Ok(filters) => crate::model::search_for::SearchFor::new(&arguments.search_for, filters),
         Err(_) => {
             exit(ERROR_EXIT_CODE);
         }
@@ -39,10 +35,7 @@ fn main() {
 
     let search =
         match crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search) {
-            Ok(filters) => crate::model::search::Search::new(
-                crate::utilities::get_paths(arguments.search),
-                filters,
-            ),
+            Ok(filters) => crate::model::search::Search::new(&arguments.search, filters),
             Err(_) => {
                 exit(ERROR_EXIT_CODE);
             }
