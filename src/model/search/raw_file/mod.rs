@@ -21,10 +21,20 @@ pub(crate) struct RawFile {
 
 impl RawFile {
     pub(crate) fn new(path: PathBuf) -> Option<Self> {
-        crate::utilities::get_file_content(&path).map(|file_content| RawFile {
-            file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),
-            file_content,
-        })
+        match std::fs::read_to_string(&path) {
+            Ok(file_content) => Some(RawFile {
+                file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),
+                file_content,
+            }),
+            Err(error) => {
+                warn!(
+                    "Encountered {} while trying to read the file {:?}.",
+                    error,
+                    path.display()
+                );
+                None
+            }
+        }
     }
 
     pub(crate) fn is_match(&self, regex: &Regex) -> bool {
