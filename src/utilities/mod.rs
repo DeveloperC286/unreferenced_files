@@ -29,13 +29,3 @@ pub(crate) fn get_file_content(path: &Path) -> Option<String> {
         }
     }
 }
-
-pub(crate) fn get_directory_entries(path: &Path) -> std::fs::ReadDir {
-    match std::fs::read_dir(path) {
-        Ok(entries) => entries,
-        Err(error) => {
-            error!("{:?}", error);
-            exit(crate::ERROR_EXIT_CODE);
-        }
-    }
-}

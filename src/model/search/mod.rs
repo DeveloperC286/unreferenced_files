@@ -24,26 +24,39 @@ impl Search {
                 path.display()
             );
 
-            for dir_entry in crate::utilities::get_directory_entries(path) {
-                match dir_entry {
-                    Ok(dir_entry) => {
-                        let path = dir_entry.path();
+            match std::fs::read_dir(path) {
+                Ok(entries) => {
+                    for dir_entry in entries {
+                        match dir_entry {
+                            Ok(dir_entry) => {
+                                let path = dir_entry.path();
 
-                        if path.is_file() {
-                            if let Some(raw_file) = get_raw_file(path, filters) {
-                                raw_files.insert(raw_file);
+                                if path.is_file() {
+                                    if let Some(raw_file) = get_raw_file(path, filters) {
+                                        raw_files.insert(raw_file);
+                                    }
+                                } else {
+                                    raw_files.extend(get_raw_files_in_directory(
+                                        path.as_path(),
+                                        filters,
+                                    ));
+                                }
                             }
-                        } else {
-                            raw_files.extend(get_raw_files_in_directory(path.as_path(), filters));
+                            Err(error) => {
+                                error!("{:?}", error);
+                                exit(crate::ERROR_EXIT_CODE);
+                            }
                         }
                     }
-                    Err(error) => {
-                        error!("{:?}", error);
-                        exit(crate::ERROR_EXIT_CODE);
-                    }
+                }
+                Err(_) => {
+                    error!(
+                        "Unable to read the directory entries for the path {:?}.",
+                        path
+                    );
+                    exit(crate::ERROR_EXIT_CODE);
                 }
             }
-
             raw_files
         }
 

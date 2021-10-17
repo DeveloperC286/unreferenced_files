@@ -31,27 +31,38 @@ impl SearchFor {
                 path.display()
             );
 
-            for dir_entry in crate::utilities::get_directory_entries(path) {
-                match dir_entry {
-                    Ok(dir_entry) => {
-                        let path = dir_entry.path();
+            match std::fs::read_dir(path) {
+                Ok(entries) => {
+                    for dir_entry in entries {
+                        match dir_entry {
+                            Ok(dir_entry) => {
+                                let path = dir_entry.path();
 
-                        if path.is_file() {
-                            if let Some(file_path_variants) = get_file_path_variants(path, filters)
-                            {
-                                files_path_variants.insert(file_path_variants);
+                                if path.is_file() {
+                                    if let Some(file_path_variants) =
+                                        get_file_path_variants(path, filters)
+                                    {
+                                        files_path_variants.insert(file_path_variants);
+                                    }
+                                } else {
+                                    files_path_variants.extend(
+                                        get_file_path_variants_in_directory(
+                                            path.as_path(),
+                                            filters,
+                                        ),
+                                    );
+                                }
                             }
-                        } else {
-                            files_path_variants.extend(get_file_path_variants_in_directory(
-                                path.as_path(),
-                                filters,
-                            ));
+                            Err(error) => {
+                                error!("{:?}", error);
+                                exit(crate::ERROR_EXIT_CODE);
+                            }
                         }
                     }
-                    Err(error) => {
-                        error!("{:?}", error);
-                        exit(crate::ERROR_EXIT_CODE);
-                    }
+                }
+                Err(error) => {
+                    error!("{:?}", error);
+                    exit(crate::ERROR_EXIT_CODE);
                 }
             }
 
