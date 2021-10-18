@@ -1,6 +1,5 @@
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
-use std::process::exit;
 
 use crate::model::filters::Filters;
 use crate::model::search::raw_file::RawFile;
@@ -16,8 +15,11 @@ pub(crate) struct Search {
 }
 
 impl Search {
-    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Search {
-        fn get_raw_files_in_directory(path: &Path, filters: &Filters) -> HashSet<RawFile> {
+    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Result<Search, ()> {
+        fn get_raw_files_in_directory(
+            path: &Path,
+            filters: &Filters,
+        ) -> Result<HashSet<RawFile>, ()> {
             let mut raw_files = HashSet::new();
             trace!(
                 "Searching the directory {:?} for files to search.",
@@ -32,19 +34,18 @@ impl Search {
                                 let path = dir_entry.path();
 
                                 if path.is_file() {
-                                    if let Some(raw_file) = get_raw_file(path, filters) {
+                                    if let Ok(raw_file) = get_raw_file(path, filters) {
                                         raw_files.insert(raw_file);
                                     }
                                 } else {
                                     raw_files.extend(get_raw_files_in_directory(
                                         path.as_path(),
                                         filters,
-                                    ));
+                                    )?);
                                 }
                             }
                             Err(error) => {
                                 error!("{:?}", error);
-                                exit(crate::ERROR_EXIT_CODE);
                             }
                         }
                     }
@@ -54,28 +55,27 @@ impl Search {
                         "Unable to read the directory entries for the path {:?}.",
                         path
                     );
-                    exit(crate::ERROR_EXIT_CODE);
+                    return Err(());
                 }
             }
-            raw_files
+            Ok(raw_files)
         }
 
-        fn get_raw_file(path: PathBuf, filters: &Filters) -> Option<RawFile> {
+        fn get_raw_file(path: PathBuf, filters: &Filters) -> Result<RawFile, ()> {
             if path.is_file() {
                 if let Ok(raw_file) = RawFile::new(path) {
                     if filters.should_ignore(&raw_file.file_path_variants.file_canonicalize_path) {
                         debug!("Ignoring the file {:?} and not searching it.", raw_file);
                     } else {
                         trace!("Adding {:?} to the files searching.", raw_file);
-                        return Some(raw_file);
+                        return Ok(raw_file);
                     }
                 }
             } else {
                 error!("{:?} is not a file.", path);
-                exit(crate::ERROR_EXIT_CODE);
             }
 
-            None
+            Err(())
         }
 
         let mut raw_files = HashSet::new();
@@ -84,17 +84,17 @@ impl Search {
             Ok(pathbufs) => {
                 for pathbuf in pathbufs {
                     if pathbuf.is_dir() {
-                        raw_files.extend(get_raw_files_in_directory(&pathbuf, &filters));
-                    } else if let Some(raw_file) = get_raw_file(pathbuf, &filters) {
+                        raw_files.extend(get_raw_files_in_directory(&pathbuf, &filters)?);
+                    } else if let Ok(raw_file) = get_raw_file(pathbuf, &filters) {
                         raw_files.insert(raw_file);
                     }
                 }
             }
             Err(_) => {
-                exit(crate::ERROR_EXIT_CODE);
+                return Err(());
             }
         }
 
-        Search { raw_files }
+        Ok(Search { raw_files })
     }
 }

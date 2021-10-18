@@ -35,7 +35,12 @@ fn main() {
 
     let search =
         match crate::model::filters::Filters::new(arguments.only_search, arguments.ignore_search) {
-            Ok(filters) => crate::model::search::Search::new(&arguments.search, filters),
+            Ok(filters) => match crate::model::search::Search::new(&arguments.search, filters) {
+                Ok(search) => search,
+                Err(_) => {
+                    exit(ERROR_EXIT_CODE);
+                }
+            },
             Err(_) => {
                 exit(ERROR_EXIT_CODE);
             }
