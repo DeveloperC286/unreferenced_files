@@ -1,6 +1,5 @@
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
-use std::process::exit;
 
 use crate::model::file_path_variants::FilePathVariants;
 use crate::model::file_path_variants_regexes::FilePathVariantsRegexes;
@@ -20,11 +19,11 @@ pub(crate) struct SearchFor {
 }
 
 impl SearchFor {
-    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> SearchFor {
+    pub(crate) fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Result<SearchFor, ()> {
         fn get_file_path_variants_in_directory(
             path: &Path,
             filters: &Filters,
-        ) -> HashSet<FilePathVariants> {
+        ) -> Result<HashSet<FilePathVariants>, ()> {
             let mut files_path_variants = HashSet::new();
             trace!(
                 "Searching the directory {:?} for files to search for.",
@@ -39,7 +38,7 @@ impl SearchFor {
                                 let path = dir_entry.path();
 
                                 if path.is_file() {
-                                    if let Some(file_path_variants) =
+                                    if let Ok(file_path_variants) =
                                         get_file_path_variants(path, filters)
                                     {
                                         files_path_variants.insert(file_path_variants);
@@ -49,27 +48,30 @@ impl SearchFor {
                                         get_file_path_variants_in_directory(
                                             path.as_path(),
                                             filters,
-                                        ),
+                                        )?,
                                     );
                                 }
                             }
                             Err(error) => {
                                 error!("{:?}", error);
-                                exit(crate::ERROR_EXIT_CODE);
+                                return Err(());
                             }
                         }
                     }
                 }
                 Err(error) => {
                     error!("{:?}", error);
-                    exit(crate::ERROR_EXIT_CODE);
+                    return Err(());
                 }
             }
 
-            files_path_variants
+            Ok(files_path_variants)
         }
 
-        fn get_file_path_variants(path: PathBuf, filters: &Filters) -> Option<FilePathVariants> {
+        fn get_file_path_variants(
+            path: PathBuf,
+            filters: &Filters,
+        ) -> Result<FilePathVariants, ()> {
             if path.is_file() {
                 let file_path_variants = FilePathVariants::new(path).unwrap();
 
@@ -83,14 +85,13 @@ impl SearchFor {
                         "Adding {:?} to the files searching for.",
                         file_path_variants.file_relative_path
                     );
-                    return Some(file_path_variants);
+                    return Ok(file_path_variants);
                 }
             } else {
                 error!("{:?} is not a file.", path);
-                exit(crate::ERROR_EXIT_CODE);
             }
 
-            None
+            Err(())
         }
 
         let mut search_for = HashSet::new();
@@ -99,21 +100,20 @@ impl SearchFor {
             Ok(pathbufs) => {
                 for pathbuf in pathbufs {
                     if pathbuf.is_file() {
-                        if let Some(file_path_variants) = get_file_path_variants(pathbuf, &filters)
-                        {
+                        if let Ok(file_path_variants) = get_file_path_variants(pathbuf, &filters) {
                             search_for.insert(file_path_variants);
                         }
                     } else {
-                        search_for.extend(get_file_path_variants_in_directory(&pathbuf, &filters));
+                        search_for.extend(get_file_path_variants_in_directory(&pathbuf, &filters)?);
                     }
                 }
             }
             Err(_) => {
-                exit(crate::ERROR_EXIT_CODE);
+                return Err(());
             }
         }
 
-        SearchFor { search_for }
+        Ok(SearchFor { search_for })
     }
 
     pub(crate) fn get_unreferenced_files(

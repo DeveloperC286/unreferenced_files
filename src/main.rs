@@ -27,7 +27,14 @@ fn main() {
         arguments.only_search_for,
         arguments.ignore_search_for,
     ) {
-        Ok(filters) => crate::model::search_for::SearchFor::new(&arguments.search_for, filters),
+        Ok(filters) => {
+            match crate::model::search_for::SearchFor::new(&arguments.search_for, filters) {
+                Ok(search_for) => search_for,
+                Err(_) => {
+                    exit(ERROR_EXIT_CODE);
+                }
+            }
+        }
         Err(_) => {
             exit(ERROR_EXIT_CODE);
         }
