@@ -1,7 +1,6 @@
 use std::cmp::Ordering;
 use std::hash::{Hash, Hasher};
 use std::path::{Path, PathBuf};
-use std::process::exit;
 
 #[derive(Debug, Clone, Eq)]
 pub(crate) struct FilePathVariants {
@@ -12,13 +11,13 @@ pub(crate) struct FilePathVariants {
 }
 
 impl FilePathVariants {
-    pub(crate) fn new(path: PathBuf) -> FilePathVariants {
-        fn get_file_canonicalize_path(path: &Path) -> String {
+    pub(crate) fn new(path: PathBuf) -> Result<FilePathVariants, ()> {
+        fn get_file_canonicalize_path(path: &Path) -> Result<String, ()> {
             match path.canonicalize() {
-                Ok(canonicalized_path) => canonicalized_path.display().to_string(),
+                Ok(canonicalized_path) => Ok(canonicalized_path.display().to_string()),
                 Err(error) => {
                     error!("{:?}", error);
-                    exit(crate::ERROR_EXIT_CODE);
+                    Err(())
                 }
             }
         }
@@ -30,44 +29,48 @@ impl FilePathVariants {
                 .to_string()
         }
 
-        fn get_file_name(path: &Path) -> String {
+        fn get_file_name(path: &Path) -> Result<String, ()> {
             match path.file_name() {
                 Some(file_name) => match file_name.to_str() {
-                    Some(str) => str.to_string(),
+                    Some(str) => Ok(str.to_string()),
                     None => {
                         error!("Can not convert {:?} to str.", file_name);
-                        exit(crate::ERROR_EXIT_CODE);
+                        Err(())
                     }
                 },
                 None => {
                     error!("{:?} has no file name.", path.display());
-                    exit(crate::ERROR_EXIT_CODE);
+                    Err(())
                 }
             }
         }
 
-        fn get_file_stem(path: &Path) -> String {
+        fn get_file_stem(path: &Path) -> Result<String, ()> {
             match path.file_stem() {
                 Some(file_stem) => match file_stem.to_str() {
-                    Some(str) => str.to_string(),
+                    Some(str) => Ok(str.to_string()),
                     None => {
                         error!("Can not convert {:?} to str.", file_stem);
-                        exit(crate::ERROR_EXIT_CODE);
+                        Err(())
                     }
                 },
                 None => {
                     error!("{:?} has no file steam.", path.display());
-                    exit(crate::ERROR_EXIT_CODE);
+                    Err(())
                 }
             }
         }
 
-        FilePathVariants {
-            file_canonicalize_path: get_file_canonicalize_path(&path),
+        let file_canonicalize_path = get_file_canonicalize_path(&path)?;
+        let file_name = get_file_name(&path)?;
+        let file_stem = get_file_stem(&path)?;
+
+        Ok(FilePathVariants {
+            file_canonicalize_path,
             file_relative_path: get_file_relative_path(&path),
-            file_name: get_file_name(&path),
-            file_stem: get_file_stem(&path),
-        }
+            file_name,
+            file_stem,
+        })
     }
 
     pub(crate) fn print(&self, print_full_path: bool) {

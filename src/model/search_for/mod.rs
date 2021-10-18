@@ -71,7 +71,7 @@ impl SearchFor {
 
         fn get_file_path_variants(path: PathBuf, filters: &Filters) -> Option<FilePathVariants> {
             if path.is_file() {
-                let file_path_variants = FilePathVariants::new(path);
+                let file_path_variants = FilePathVariants::new(path).unwrap();
 
                 if filters.should_ignore(&file_path_variants.file_canonicalize_path) {
                     debug!(

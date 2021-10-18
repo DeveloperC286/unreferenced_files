@@ -20,19 +20,24 @@ pub(crate) struct RawFile {
 }
 
 impl RawFile {
-    pub(crate) fn new(path: PathBuf) -> Option<RawFile> {
+    pub(crate) fn new(path: PathBuf) -> Result<RawFile, ()> {
         match std::fs::read_to_string(&path) {
-            Ok(file_content) => Some(RawFile {
-                file_path_variants: crate::model::file_path_variants::FilePathVariants::new(path),
-                file_content,
-            }),
+            Ok(file_content) => {
+                let file_path_variants =
+                    crate::model::file_path_variants::FilePathVariants::new(path)?;
+
+                Ok(RawFile {
+                    file_path_variants,
+                    file_content,
+                })
+            }
             Err(error) => {
                 warn!(
                     "Encountered {} while trying to read the file {:?}.",
                     error,
                     path.display()
                 );
-                None
+                Err(())
             }
         }
     }
