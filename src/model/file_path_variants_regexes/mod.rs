@@ -1,6 +1,5 @@
-use std::collections::{HashMap, HashSet};
-
 use regex::Regex;
+use std::collections::{HashMap, HashSet};
 
 use crate::model::file_path_variants::FilePathVariants;
 

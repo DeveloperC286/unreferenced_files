@@ -1,10 +1,12 @@
+#[cfg(test)]
+#[macro_use]
+extern crate lazy_static;
 #[macro_use]
 extern crate log;
 extern crate pretty_env_logger;
 extern crate regex;
 
 use std::process::exit;
-
 use structopt::StructOpt;
 
 mod cli;
@@ -68,10 +70,6 @@ fn main() {
         exit(ERROR_EXIT_CODE);
     }
 }
-
-#[cfg(test)]
-#[macro_use]
-extern crate lazy_static;
 
 #[cfg(test)]
 mod tests;
