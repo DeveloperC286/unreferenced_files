@@ -1,4 +1,3 @@
-import os
 from behave import *
 
 from utilities import execute_unreferenced_files
