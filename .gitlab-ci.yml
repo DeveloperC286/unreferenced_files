@@ -119,10 +119,10 @@ unit-testing:
 
 end-to-end-testing:
   stage: end-to-end-testing
-  image: python:3-slim
+  image: rust
   before_script:
     - apt update
-    - apt install git cargo -y
+    - apt install python3-minimal python3-pip git -y
     - cargo build
     - cd end-to-end-tests/
     - pip3 install -r requirements.txt
