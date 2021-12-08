@@ -1,5 +1,6 @@
-use regex::Regex;
 use std::path::PathBuf;
+
+use regex::Regex;
 
 use crate::model::file_path_variants::FilePathVariants;
 

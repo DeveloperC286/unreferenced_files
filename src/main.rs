@@ -7,6 +7,7 @@ extern crate pretty_env_logger;
 extern crate regex;
 
 use std::process::exit;
+
 use structopt::StructOpt;
 
 mod cli;
