@@ -101,7 +101,7 @@ The compiled binary is present in `target/release/unreferenced_files`.
 
 ## Compiling via Cargo
 Cargo is the Rust package manager, using the `install` sub-command it pulls the crate from `crates.io` and then compiles the binary locally.
-`cargo install` places the produced binary at `$HOME/.cargo/bin/unreferenced_files`.
+`cargo install` places the produced binary at `${HOME}/.cargo/bin/unreferenced_files`.
 
 ```
 cargo install unreferenced_files
