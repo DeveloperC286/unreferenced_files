@@ -1,32 +1,13 @@
-[package]
-name = "unreferenced_files"
-description = "A utility for finding unused and unreferenced files."
-version = "2.0.0"
-authors = ["C <DeveloperC@protonmail.com>"]
-edition = "2021"
-license = "AGPL-3.0"
-repository = "https://gitlab.com/DeveloperC/unreferenced_files"
-readme = "README.md"
-keywords = ["find", "unreferenced", "files", "unused"]
-categories = ["command-line-utilities", "development-tools"]
+[workspace]
+
+members = [
+    "unreferenced_files",
+	"unreferenced_files_lib",
+]
 
 
-[dependencies]
-# For searching for references in files.
-regex = "1.5.4"
-
-# For CLI parsing.
-structopt = "0.3.25"
-
-# For logging.
-log = "0.4.14"
-pretty_env_logger = "0.4.0"
-
-
-[dev-dependencies]
-# For snapshot testing.
-insta = "1.8.0"
-lazy_static = "1.4.0"
+[patch.crates-io]
+unreferenced_files_lib = { path = "unreferenced_files_lib" }
 
 
 [profile.release]

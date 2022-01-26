@@ -1,0 +1,25 @@
+[package]
+name = "unreferenced_files_lib"
+description = "A utility for finding unused and unreferenced files."
+version = "0.1.0"
+authors = ["C <DeveloperC@protonmail.com>"]
+edition = "2021"
+license = "AGPL-3.0"
+repository = "https://gitlab.com/DeveloperC/unreferenced_files"
+readme = "README.md"
+keywords = ["find", "unreferenced", "files", "unused"]
+categories = ["command-line-utilities", "development-tools"]
+
+
+[dependencies]
+# For searching for references in files.
+regex = "1.5.4"
+
+# For logging.
+log = "0.4.14"
+
+
+[dev-dependencies]
+# For snapshot testing.
+insta = "1.11.0"
+lazy_static = "1.4.0"

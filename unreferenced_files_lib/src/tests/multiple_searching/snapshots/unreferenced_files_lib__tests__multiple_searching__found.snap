@@ -1,0 +1,7 @@
+---
+source: unreferenced_files_lib/src/tests/multiple_searching/mod.rs
+assertion_line: 25
+expression: sorted_search_for
+
+---
+[]

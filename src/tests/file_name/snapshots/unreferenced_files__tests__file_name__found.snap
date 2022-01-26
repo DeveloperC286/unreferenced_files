@@ -1,6 +1,0 @@
----
-source: src/tests/file_name/mod.rs
-expression: sorted_search_for
-
----
-[]
