@@ -17,7 +17,7 @@ def execute_command(command):
 
 
 def execute_unreferenced_files(context):
-    os.chdir(context.temporary_directory.name)
+    os.chdir(context.remote_repository_cache)
     (context.exit_code, context.stdout, context.stderr) = execute_command(
         context.pre_command + context.unreferenced_files_path + context.arguments)
     os.chdir(context.behave_directory)
