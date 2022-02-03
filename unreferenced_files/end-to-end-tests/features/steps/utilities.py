@@ -17,7 +17,11 @@ def execute_command(command):
 
 
 def execute_unreferenced_files(context):
-    os.chdir(context.remote_repository_cache)
+    if "GIT_DIR" not in os.environ:
+        os.chdir(context.remote_repository_cache)
+
     (context.exit_code, context.stdout, context.stderr) = execute_command(
         context.pre_command + context.unreferenced_files_path + context.arguments)
-    os.chdir(context.behave_directory)
+
+    if "GIT_DIR" not in os.environ:
+        os.chdir(context.behave_directory)
