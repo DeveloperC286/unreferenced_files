@@ -16,14 +16,13 @@ def then_unreferenced_files_not_found(context):
 
 @then('the unreferenced files are "{unreferenced_files}".')
 def then_unreferenced_files_found(context, unreferenced_files):
-    # When
-    execute_unreferenced_files(context)
+    # When/Then
+    then_nonzero_status_code(context)
 
     # Then
     unreferenced_files = unreferenced_files.strip() \
         .strip('\"').replace("\\n", '\n')
     assert context.stdout == unreferenced_files
-    assert int(context.exit_code) != 0
 
 
 def then_nonzero_status_code(context):
@@ -71,7 +70,7 @@ def then_search_for_argument_missing_error(context):
 
 
 @then('printed is an error message detailing that the arguments ignore and only search are mutually exclusive.')
-def then_only_and_ignore_search_mutually_exclusive(context):
+def then_only_and_ignore_search_mutually_exclusive_error(context):
     # Given
     mutually_exclusive_end = "\n" + \
         "USAGE:\n" + \
@@ -92,7 +91,7 @@ def then_only_and_ignore_search_mutually_exclusive(context):
 
 
 @then('printed is an error message detailing that the arguments ignore and only search for are mutually exclusive.')
-def then_only_and_ignore_search_for_mutually_exclusive(context):
+def then_only_and_ignore_search_for_mutually_exclusive_error(context):
     # Given
     mutually_exclusive_end = "\n" + \
         "USAGE:\n" + \
