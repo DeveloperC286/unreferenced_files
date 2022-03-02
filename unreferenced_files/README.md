@@ -101,12 +101,31 @@ The compiled binary is present in `target/release/unreferenced_files`.
 
 
 ## Compiling via Cargo
-Cargo is the Rust package manager, using the `install` sub-command it pulls the crate from `crates.io` and then compiles the binary locally.
-`cargo install` places the produced binary at `${HOME}/.cargo/bin/unreferenced_files`.
+Cargo is the Rust package manager, the `install` sub-command pulls from [crates.io](https://crates.io/crates/clean_git_history) and then compiles the binary locally, placing the compiled binary at `${HOME}/.cargo/bin/clean_git_history`.
 
 ```
 cargo install unreferenced_files
 ```
+
+By default it installs the latest version at the time of execution.
+You can specify a specific version to install using the `--version` argument.
+For certain environments such as CICD etc you may want to pin the version.
+
+e.g.
+
+```
+cargo install clean_git_history --version 2.0.0
+```
+
+Rather than pinning to a specific version you can specify the major or minor version.
+
+e.g.
+
+```
+cargo install clean_git_history --version ^2
+```
+
+Will download the latest `2.*` release whether that is `2.0.0` or `2.7.0`.
 
 
 ## End-to-End Testing
