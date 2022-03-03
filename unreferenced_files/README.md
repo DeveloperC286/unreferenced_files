@@ -42,7 +42,7 @@ For the example directory above, if the argument was `--search-for parent/` then
 For the file `parent/child/file2.txt` the relative path of `parent/child/file2.txt`, the file name `file2.txt` and file stem `file2` would be searched for.
 
 
-## Usage - Additional Arguments
+### Usage - Additional Arguments
 
 Additional command line flags can be passed to alter what is searched for to determine if a file is referenced.
 
@@ -114,7 +114,7 @@ For certain environments such as CICD etc you may want to pin the version.
 e.g.
 
 ```
-cargo install clean_git_history --version 2.0.0
+cargo install unreferenced_files --version 2.0.0
 ```
 
 Rather than pinning to a specific version you can specify the major or minor version.
@@ -122,7 +122,7 @@ Rather than pinning to a specific version you can specify the major or minor ver
 e.g.
 
 ```
-cargo install clean_git_history --version ^2
+cargo install unreferenced_files --version ^2
 ```
 
 Will download the latest `2.*` release whether that is `2.0.0` or `2.7.0`.
@@ -130,7 +130,12 @@ Will download the latest `2.*` release whether that is `2.0.0` or `2.7.0`.
 
 ## End-to-End Testing
 To ensure correctness as there are a variety of out of process dependencies the project has an End-to-End behaviour driven test suite using the behave framework (https://github.com/behave/behave).
-To run the test suite you need to first build a binary, install Python3, install behave and then execute behave to run the behaviour driven test suite.
+
+To run the test suite you need to
+ - Compile the Unreferenced Files binary.
+ - Install Python3.
+ - Install Behave.
+ - Execute Behave.
 
 __Note - You can't use --release as the test suite uses `target/debug/unreferenced_files`.__
 
