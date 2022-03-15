@@ -8,7 +8,7 @@ license = "AGPL-3.0"
 repository = "https://gitlab.com/DeveloperC/unreferenced_files"
 readme = "README.md"
 keywords = ["find", "unreferenced", "files", "unused"]
-categories = ["command-line-utilities", "development-tools"]
+categories = ["parsing", "development-tools", "parser-implementations", "text-processing", "data-structures"]
 
 
 [dependencies]
