@@ -78,8 +78,8 @@ def then_only_and_ignore_search_mutually_exclusive_error(context):
         "\n" + \
         "For more information try --help\n"
 
-    only_search_mutually_exclusive_error = "error: The argument '--only-search <only-search>...' cannot be used with one or more of the other specified arguments\n" + mutually_exclusive_end
-    ignore_search_mutually_exclusive_error = "error: The argument '--ignore-search <ignore-search>...' cannot be used with one or more of the other specified arguments\n" + mutually_exclusive_end
+    only_search_mutually_exclusive_error = f"error: The argument '--only-search <only-search>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
+    ignore_search_mutually_exclusive_error = f"error: The argument '--ignore-search <ignore-search>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
 
     # When/Then
     then_nonzero_status_code(context)
@@ -99,8 +99,8 @@ def then_only_and_ignore_search_for_mutually_exclusive_error(context):
         "\n" + \
         "For more information try --help\n"
 
-    only_search_for_mutually_exclusive_error = "error: The argument '--only-search-for <only-search-for>...' cannot be used with one or more of the other specified arguments\n" + mutually_exclusive_end
-    ignore_search_for_mutually_exclusive_error = "error: The argument '--ignore-search-for <ignore-search-for>...' cannot be used with one or more of the other specified arguments\n" + mutually_exclusive_end
+    only_search_for_mutually_exclusive_error = f"error: The argument '--only-search-for <only-search-for>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
+    ignore_search_for_mutually_exclusive_error = f"error: The argument '--ignore-search-for <ignore-search-for>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
 
     # When/Then
     then_nonzero_status_code(context)
