@@ -29,7 +29,7 @@ impl Filters {
             Ok(regexes)
         }
 
-        return match (only_search.len(), ignore_search.len()) {
+        match (only_search.len(), ignore_search.len()) {
             (0, 0) => Ok(Filters {
                 filters: vec![],
                 filtering_on: FilteringOn::None,
@@ -53,7 +53,7 @@ impl Filters {
                 error!("Only and ignore filters are mutually exclusive.");
                 Err(())
             }
-        };
+        }
     }
 
     pub(crate) fn should_ignore(&self, file_canonicalize_path: &str) -> bool {
