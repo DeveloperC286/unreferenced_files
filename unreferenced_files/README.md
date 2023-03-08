@@ -29,8 +29,8 @@ If the search for and search files overlap then a file will not search itself to
 
 e.g.
 
-```
-> tree parent
+```sh
+tree parent
 
 parent/
 ├── child
@@ -62,7 +62,7 @@ Additional command line flags can be passed to alter what is searched for to det
 ### Usage - Example
 For an example Java project with tests referencing files  inside `src/test/resources/` where the tests are calling the files by name e.g.
 
-```
+```java
 @Test
 public void testImportingFile() {
     ...
@@ -75,7 +75,7 @@ public void testImportingFile() {
 
 You can find all the unreferenced files inside `src/test/resources/` via
 
-```
+```sh
 cd src/test/resources/
 unreferenced_files --search-for ./ --search ../java/
 ```
@@ -91,7 +91,7 @@ See [https://crates.io/crates/pretty_env_logger](https://crates.io/crates/pretty
 Checkout the code repository locally, change into the repository's directory and then build via cargo.
 Using the `--release` flag produces an optimised binary but takes longer to compile.
 
-```
+```sh
 git clone git@gitlab.com:DeveloperC/unreferenced_files.git
 cd unreferenced_files/
 cargo build --release
@@ -103,7 +103,7 @@ The compiled binary is present in `target/release/unreferenced_files`.
 ## Compiling via Cargo
 Cargo is the Rust package manager, the `install` sub-command pulls from [crates.io](https://crates.io/crates/clean_git_history) and then compiles the binary locally, placing the compiled binary at `${HOME}/.cargo/bin/clean_git_history`.
 
-```
+```sh
 cargo install unreferenced_files
 ```
 
@@ -113,7 +113,7 @@ For certain environments such as CICD etc you may want to pin the version.
 
 e.g.
 
-```
+```sh
 cargo install unreferenced_files --version 2.0.0
 ```
 
@@ -121,7 +121,7 @@ Rather than pinning to a specific version you can specify the major or minor ver
 
 e.g.
 
-```
+```sh
 cargo install unreferenced_files --version ^2
 ```
 
@@ -139,7 +139,7 @@ To run the test suite you need to
 
 __Note - You can't use --release as the test suite uses `target/debug/unreferenced_files`.__
 
-```
+```sh
 cargo build
 cd unreferenced_files/end-to-end-tests/
 virtualenv -p python3 .venv
