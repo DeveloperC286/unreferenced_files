@@ -37,13 +37,7 @@ def assert_unreferenced_files_fails(context):
 @then('printed is an error message detailing that the argument search is missing.')
 def assert_search_argument_missing_error(context):
     # Given
-    search_argument_missing_error = "error: The following required arguments were not provided:\n" + \
-        "    --search <search>...\n" + \
-        "\n" + \
-        "USAGE:\n" + \
-        "    unreferenced_files [FLAGS] [OPTIONS] --search <search>... --search-for <search-for>...\n" + \
-        "\n" + \
-        "For more information try --help\n"
+    search_argument_missing_error = "error: the following required arguments were not provided:\n  --search <SEARCH>\n\nUsage: unreferenced_files --search-for <SEARCH_FOR> --search <SEARCH>\n\nFor more information, try '--help'.\n"
 
     # When/Then
     result = assert_unreferenced_files_fails(context)
@@ -55,13 +49,7 @@ def assert_search_argument_missing_error(context):
 @then('printed is an error message detailing that the argument search for is missing.')
 def assert_search_for_argument_missing_error(context):
     # Given
-    search_for_argument_missing_error = "error: The following required arguments were not provided:\n" + \
-        "    --search-for <search-for>...\n" + \
-        "\n" + \
-        "USAGE:\n" + \
-        "    unreferenced_files [FLAGS] [OPTIONS] --search <search>... --search-for <search-for>...\n" + \
-        "\n" + \
-        "For more information try --help\n"
+    search_for_argument_missing_error = "error: the following required arguments were not provided:\n  --search-for <SEARCH_FOR>\n\nUsage: unreferenced_files --search-for <SEARCH_FOR> --search <SEARCH>\n\nFor more information, try '--help'.\n"
 
     # When/Then
     result = assert_unreferenced_files_fails(context)
@@ -73,14 +61,8 @@ def assert_search_for_argument_missing_error(context):
 @then('printed is an error message detailing that the arguments ignore and only search are mutually exclusive.')
 def assert_only_and_ignore_search_mutually_exclusive_error(context):
     # Given
-    mutually_exclusive_end = "\n" + \
-        "USAGE:\n" + \
-        "    unreferenced_files --search <search>... --search-for <search-for>... <--only-search <only-search>...|--ignore-search <ignore-search>...>\n" + \
-        "\n" + \
-        "For more information try --help\n"
-
-    only_search_mutually_exclusive_error = f"error: The argument '--only-search <only-search>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
-    ignore_search_mutually_exclusive_error = f"error: The argument '--ignore-search <ignore-search>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
+    only_search_mutually_exclusive_error = "error: the argument '--only-search <ONLY_SEARCH>' cannot be used with '--ignore-search <IGNORE_SEARCH>'\n\nUsage: unreferenced_files --search-for <SEARCH_FOR> --search <SEARCH> --only-search <ONLY_SEARCH>\n\nFor more information, try '--help'.\n"
+    ignore_search_mutually_exclusive_error = "error: the argument '--ignore-search <IGNORE_SEARCH>' cannot be used with '--only-search <ONLY_SEARCH>'\n\nUsage: unreferenced_files --search-for <SEARCH_FOR> --search <SEARCH> --ignore-search <IGNORE_SEARCH>\n\nFor more information, try '--help'.\n"
 
     # When/Then
     result = assert_unreferenced_files_fails(context)
@@ -94,14 +76,8 @@ def assert_only_and_ignore_search_mutually_exclusive_error(context):
 @then('printed is an error message detailing that the arguments ignore and only search for are mutually exclusive.')
 def assert_only_and_ignore_search_for_mutually_exclusive_error(context):
     # Given
-    mutually_exclusive_end = "\n" + \
-        "USAGE:\n" + \
-        "    unreferenced_files --search <search>... --search-for <search-for>... <--only-search-for <only-search-for>...|--ignore-search-for <ignore-search-for>...>\n" + \
-        "\n" + \
-        "For more information try --help\n"
-
-    only_search_for_mutually_exclusive_error = f"error: The argument '--only-search-for <only-search-for>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
-    ignore_search_for_mutually_exclusive_error = f"error: The argument '--ignore-search-for <ignore-search-for>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
+    only_search_for_mutually_exclusive_error = "error: the argument '--only-search-for <ONLY_SEARCH_FOR>' cannot be used with '--ignore-search-for <IGNORE_SEARCH_FOR>'\n\nUsage: unreferenced_files --search-for <SEARCH_FOR> --search <SEARCH> --only-search-for <ONLY_SEARCH_FOR>\n\nFor more information, try '--help'.\n"
+    ignore_search_for_mutually_exclusive_error = "error: the argument '--ignore-search-for <IGNORE_SEARCH_FOR>' cannot be used with '--only-search-for <ONLY_SEARCH_FOR>'\n\nUsage: unreferenced_files --search-for <SEARCH_FOR> --search <SEARCH> --ignore-search-for <IGNORE_SEARCH_FOR>\n\nFor more information, try '--help'.\n"
 
     # When/Then
     result = assert_unreferenced_files_fails(context)

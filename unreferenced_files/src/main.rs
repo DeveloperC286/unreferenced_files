@@ -4,7 +4,7 @@ extern crate pretty_env_logger;
 
 use std::process::exit;
 
-use structopt::StructOpt;
+use clap::Parser;
 use unreferenced_files_lib::filters::Filters;
 use unreferenced_files_lib::search::Search;
 use unreferenced_files_lib::search_for::SearchFor;
@@ -17,7 +17,7 @@ const ERROR_EXIT_CODE: i32 = 1;
 
 fn main() {
     pretty_env_logger::init();
-    let arguments = crate::cli::Arguments::from_args();
+    let arguments = crate::cli::Arguments::parse();
     debug!("The command line arguments provided are {:?}.", arguments);
 
     let search_for_relative_path = !arguments.only_file_name && !arguments.only_file_stem;
