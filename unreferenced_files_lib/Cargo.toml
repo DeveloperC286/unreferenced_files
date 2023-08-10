@@ -13,13 +13,13 @@ categories = ["parsing", "development-tools", "parser-implementations", "text-pr
 
 [dependencies]
 # For searching for references in files.
-regex = "1.5.4"
+regex = "1.9.3"
 
 # For logging.
-log = "0.4.14"
+log = "0.4.19"
 
 
 [dev-dependencies]
 # For snapshot testing.
-insta = "1.11.0"
+insta = "1.31.0"
 lazy_static = "1.4.0"
