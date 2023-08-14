@@ -5,7 +5,7 @@ from assertions import *
 
 
 @then('unreferenced files are not found.')
-def then_unreferenced_files_not_found(context):
+def assert_unreferenced_files_not_found(context):
     # When
     execute_unreferenced_files(context)
 
@@ -16,9 +16,9 @@ def then_unreferenced_files_not_found(context):
 
 
 @then('the unreferenced files are "{unreferenced_files}".')
-def then_unreferenced_files_found(context, unreferenced_files):
+def assert_unreferenced_files_found(context, unreferenced_files):
     # When/Then
-    then_nonzero_status_code(context)
+    assert_unreferenced_files_fails(context)
 
     # Then
     unreferenced_files = unreferenced_files.strip() \
@@ -26,7 +26,7 @@ def then_unreferenced_files_found(context, unreferenced_files):
     assert context.stdout == unreferenced_files
 
 
-def then_nonzero_status_code(context):
+def assert_unreferenced_files_fails(context):
     # When
     execute_unreferenced_files(context)
 
@@ -35,7 +35,7 @@ def then_nonzero_status_code(context):
 
 
 @then('printed is an error message detailing that the argument search is missing.')
-def then_search_argument_missing_error(context):
+def assert_search_argument_missing_error(context):
     # Given
     search_argument_missing_error = "error: The following required arguments were not provided:\n" + \
         "    --search <search>...\n" + \
@@ -46,14 +46,14 @@ def then_search_argument_missing_error(context):
         "For more information try --help\n"
 
     # When/Then
-    then_nonzero_status_code(context)
+    assert_unreferenced_files_fails(context)
 
     # Then
     assert_error_equals(context, search_argument_missing_error)
 
 
 @then('printed is an error message detailing that the argument search for is missing.')
-def then_search_for_argument_missing_error(context):
+def assert_search_for_argument_missing_error(context):
     # Given
     search_for_argument_missing_error = "error: The following required arguments were not provided:\n" + \
         "    --search-for <search-for>...\n" + \
@@ -64,14 +64,14 @@ def then_search_for_argument_missing_error(context):
         "For more information try --help\n"
 
     # When/Then
-    then_nonzero_status_code(context)
+    assert_unreferenced_files_fails(context)
 
     # Then
     assert_error_equals(context, search_for_argument_missing_error)
 
 
 @then('printed is an error message detailing that the arguments ignore and only search are mutually exclusive.')
-def then_only_and_ignore_search_mutually_exclusive_error(context):
+def assert_only_and_ignore_search_mutually_exclusive_error(context):
     # Given
     mutually_exclusive_end = "\n" + \
         "USAGE:\n" + \
@@ -83,7 +83,7 @@ def then_only_and_ignore_search_mutually_exclusive_error(context):
     ignore_search_mutually_exclusive_error = f"error: The argument '--ignore-search <ignore-search>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
 
     # When/Then
-    then_nonzero_status_code(context)
+    assert_unreferenced_files_fails(context)
 
     # Then
     assert_error_is_one_of(context,
@@ -92,7 +92,7 @@ def then_only_and_ignore_search_mutually_exclusive_error(context):
 
 
 @then('printed is an error message detailing that the arguments ignore and only search for are mutually exclusive.')
-def then_only_and_ignore_search_for_mutually_exclusive_error(context):
+def assert_only_and_ignore_search_for_mutually_exclusive_error(context):
     # Given
     mutually_exclusive_end = "\n" + \
         "USAGE:\n" + \
@@ -104,7 +104,7 @@ def then_only_and_ignore_search_for_mutually_exclusive_error(context):
     ignore_search_for_mutually_exclusive_error = f"error: The argument '--ignore-search-for <ignore-search-for>...' cannot be used with one or more of the other specified arguments\n{mutually_exclusive_end}"
 
     # When/Then
-    then_nonzero_status_code(context)
+    assert_unreferenced_files_fails(context)
 
     # Then
     assert_error_is_one_of(context,
