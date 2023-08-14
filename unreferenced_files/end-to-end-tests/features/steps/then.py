@@ -31,7 +31,7 @@ def then_nonzero_status_code(context):
     execute_unreferenced_files(context)
 
     # Then
-    assert int(context.exit_code) != 0
+    assert_command_unsuccessful(context)
 
 
 @then('printed is an error message detailing that the argument search is missing.')
