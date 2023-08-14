@@ -16,3 +16,7 @@ def assert_no_errors(context):
 
 def assert_error_equals(context, error):
     assert context.stderr == error, f"Expected standard error to equal the error.\nStandard error = {context.stderr.encode()}.\nError          = {error.encode()}.\n"
+
+
+def assert_error_is_one_of(context, errors):
+    assert context.stderr in errors, f"Expected standard error to equal one of these errors.\nStandard error = {context.stderr.encode()}.\nErrors         = {errors}.\n"

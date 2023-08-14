@@ -86,9 +86,9 @@ def then_only_and_ignore_search_mutually_exclusive_error(context):
     then_nonzero_status_code(context)
 
     # Then
-    assert context.stderr in [
-        only_search_mutually_exclusive_error,
-        ignore_search_mutually_exclusive_error]
+    assert_error_is_one_of(context,
+                           [only_search_mutually_exclusive_error,
+                            ignore_search_mutually_exclusive_error])
 
 
 @then('printed is an error message detailing that the arguments ignore and only search for are mutually exclusive.')
@@ -107,6 +107,6 @@ def then_only_and_ignore_search_for_mutually_exclusive_error(context):
     then_nonzero_status_code(context)
 
     # Then
-    assert context.stderr in [
-        only_search_for_mutually_exclusive_error,
-        ignore_search_for_mutually_exclusive_error]
+    assert_error_is_one_of(context,
+                           [only_search_for_mutually_exclusive_error,
+                            ignore_search_for_mutually_exclusive_error])
