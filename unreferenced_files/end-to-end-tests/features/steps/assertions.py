@@ -20,3 +20,9 @@ def assert_error_equals(context, error):
 
 def assert_error_is_one_of(context, errors):
     assert context.stderr in errors, f"Expected standard error to equal one of these errors.\nStandard error = {context.stderr.encode()}.\nErrors         = {errors}.\n"
+
+
+def assert_unreferenced_files(context, unreferenced_files):
+    unreferenced_files = unreferenced_files.strip() \
+        .strip('\"').replace("\\n", '\n')
+    assert context.stdout == unreferenced_files, f"The unreferenced files was not what was expected.\nExpected =\n {unreferenced_files}.\nActual   = \n {context.stdout}\n"

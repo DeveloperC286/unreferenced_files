@@ -21,9 +21,7 @@ def assert_unreferenced_files_found(context, unreferenced_files):
     assert_unreferenced_files_fails(context)
 
     # Then
-    unreferenced_files = unreferenced_files.strip() \
-        .strip('\"').replace("\\n", '\n')
-    assert context.stdout == unreferenced_files
+    assert_unreferenced_files(context, unreferenced_files)
 
 
 def assert_unreferenced_files_fails(context):
