@@ -11,7 +11,7 @@ def then_unreferenced_files_not_found(context):
 
     # Then
     assert_no_output(context)
-    assert context.stderr == ""
+    assert_no_errors(context)
     assert_command_successful(context)
 
 
