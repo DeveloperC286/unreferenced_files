@@ -49,7 +49,7 @@ def then_search_argument_missing_error(context):
     then_nonzero_status_code(context)
 
     # Then
-    assert context.stderr == search_argument_missing_error
+    assert_error_equals(context, search_argument_missing_error)
 
 
 @then('printed is an error message detailing that the argument search for is missing.')
@@ -67,7 +67,7 @@ def then_search_for_argument_missing_error(context):
     then_nonzero_status_code(context)
 
     # Then
-    assert context.stderr == search_for_argument_missing_error
+    assert_error_equals(context, search_for_argument_missing_error)
 
 
 @then('printed is an error message detailing that the arguments ignore and only search are mutually exclusive.')
