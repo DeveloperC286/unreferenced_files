@@ -1,6 +1,7 @@
 from behave import *
 
 from utilities import execute_unreferenced_files
+from assertions import *
 
 
 @then('unreferenced files are not found.')
@@ -11,7 +12,7 @@ def then_unreferenced_files_not_found(context):
     # Then
     assert context.stdout == ""
     assert context.stderr == ""
-    assert int(context.exit_code) == 0
+    assert_command_successful(context)
 
 
 @then('the unreferenced files are "{unreferenced_files}".')
