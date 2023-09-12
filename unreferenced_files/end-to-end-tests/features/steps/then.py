@@ -19,7 +19,7 @@ def assert_unreferenced_files_not_found(context):
 @then('the unreferenced files are "{unreferenced_files}".')
 def assert_unreferenced_files_found(context, unreferenced_files):
     # When/Then
-    result = result = assert_unreferenced_files_fails(context)
+    result = assert_unreferenced_files_fails(context)
 
     # Then
     assert_unreferenced_files(result, unreferenced_files)
