@@ -150,4 +150,4 @@ behave
 
 
 ## Issues/Feature Requests
-To report an issue or request a new feature use [https://gitlab.com/DeveloperC/unreferenced_files/-/issues](https://gitlab.com/DeveloperC/unreferenced_files/-/issues).
+To report an issue or request a new feature use [https://github.com/DeveloperC286/unreferenced_files/issues](https://github.com/DeveloperC286/unreferenced_files/issues).
