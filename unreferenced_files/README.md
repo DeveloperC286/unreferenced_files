@@ -92,7 +92,7 @@ Checkout the code repository locally, change into the repository's directory and
 Using the `--release` flag produces an optimised binary but takes longer to compile.
 
 ```sh
-git clone git@gitlab.com:DeveloperC/unreferenced_files.git
+git clone https://github.com/DeveloperC286/unreferenced_files.git
 cd unreferenced_files/
 cargo build --release
 ```
