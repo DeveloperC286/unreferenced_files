@@ -1,3 +1,7 @@
+> 🚧 Archived 🚧
+> Please use the binary version instead, it should contain all functionality you were going to implement with the library.
+> * https://github.com/DeveloperC286/clean_git_history
+
 # Unreferenced Files Library
 [![Documentation](https://docs.rs/unreferenced_files_lib/badge.svg)](https://docs.rs/unreferenced_files_lib)
 [![crates.io](https://img.shields.io/crates/v/unreferenced_files_lib)](https://crates.io/crates/unreferenced_files_lib)
