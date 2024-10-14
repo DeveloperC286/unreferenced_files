@@ -1,0 +1,18 @@
+---
+source: src/tests/singular_searching/mod.rs
+expression: sorted_search_for
+---
+[
+    FilePathVariants {
+        file_canonicalize_path: "/tmp/folder/file1.txt",
+        file_relative_path: "./folder/file1.txt",
+        file_name: "file1.txt",
+        file_stem: "file1",
+    },
+    FilePathVariants {
+        file_canonicalize_path: "/tmp/folder/file2.txt",
+        file_relative_path: "./folder/file2.txt",
+        file_name: "file2.txt",
+        file_stem: "file2",
+    },
+]

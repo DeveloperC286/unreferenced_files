@@ -1,7 +1,0 @@
----
-source: unreferenced_files_lib/src/tests/file_name/mod.rs
-assertion_line: 24
-expression: sorted_search_for
-
----
-[]

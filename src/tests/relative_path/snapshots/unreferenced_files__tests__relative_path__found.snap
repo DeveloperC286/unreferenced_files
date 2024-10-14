@@ -1,0 +1,5 @@
+---
+source: src/tests/relative_path/mod.rs
+expression: sorted_search_for
+---
+[]
