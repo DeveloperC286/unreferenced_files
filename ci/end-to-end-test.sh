@@ -3,5 +3,5 @@
 set -o errexit
 set -o xtrace
 
-cd "unreferenced_files/end-to-end-tests/"
+cd "end-to-end-tests/"
 behave
