@@ -1,6 +1,8 @@
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
+use anyhow::Result;
+
 use crate::file_path_variants::FilePathVariants;
 use crate::file_path_variants_regexes::FilePathVariantsRegexes;
 use crate::filters::Filters;
@@ -19,97 +21,66 @@ pub struct SearchFor {
 }
 
 impl SearchFor {
-    pub fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Result<SearchFor, ()> {
+    pub fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Result<SearchFor> {
         fn get_file_path_variants_in_directory(
             path: &Path,
             filters: &Filters,
-        ) -> Result<HashSet<FilePathVariants>, ()> {
+        ) -> Result<HashSet<FilePathVariants>> {
             let mut files_path_variants = HashSet::new();
             trace!(
                 "Searching the directory {:?} for files to search for.",
                 path.display()
             );
 
-            match std::fs::read_dir(path) {
-                Ok(entries) => {
-                    for dir_entry in entries {
-                        match dir_entry {
-                            Ok(dir_entry) => {
-                                let path = dir_entry.path();
+            let entries = std::fs::read_dir(path)?;
+            for dir_entry in entries {
+                let dir_entry = dir_entry?;
+                let path = dir_entry.path();
 
-                                if path.is_file() {
-                                    if let Ok(file_path_variants) =
-                                        get_file_path_variants(path, filters)
-                                    {
-                                        files_path_variants.insert(file_path_variants);
-                                    }
-                                } else {
-                                    files_path_variants.extend(
-                                        get_file_path_variants_in_directory(
-                                            path.as_path(),
-                                            filters,
-                                        )?,
-                                    );
-                                }
-                            }
-                            Err(error) => {
-                                error!("{:?}", error);
-                                return Err(());
-                            }
-                        }
+                if path.is_file() {
+                    if let Some(file_path_variants) = get_file_path_variants(path, filters) {
+                        files_path_variants.insert(file_path_variants);
                     }
-                }
-                Err(error) => {
-                    error!("{:?}", error);
-                    return Err(());
+                } else {
+                    files_path_variants.extend(get_file_path_variants_in_directory(
+                        path.as_path(),
+                        filters,
+                    )?);
                 }
             }
 
             Ok(files_path_variants)
         }
 
-        fn get_file_path_variants(
-            path: PathBuf,
-            filters: &Filters,
-        ) -> Result<FilePathVariants, ()> {
-            if path.is_file() {
-                let file_path_variants = FilePathVariants::new(path).unwrap();
+        fn get_file_path_variants(path: PathBuf, filters: &Filters) -> Option<FilePathVariants> {
+            let file_path_variants = FilePathVariants::new(path).unwrap();
 
-                if filters.should_ignore(&file_path_variants.file_canonicalize_path) {
-                    debug!(
-                        "Ignoring the file {:?} and not searching for it.",
-                        file_path_variants.file_relative_path
-                    );
-                } else {
-                    trace!(
-                        "Adding {:?} to the files searching for.",
-                        file_path_variants.file_relative_path
-                    );
-                    return Ok(file_path_variants);
-                }
+            if filters.should_ignore(&file_path_variants.file_canonicalize_path) {
+                debug!(
+                    "Ignoring the file {:?} and not searching for it.",
+                    file_path_variants.file_relative_path
+                );
             } else {
-                error!("{:?} is not a file.", path);
+                trace!(
+                    "Adding {:?} to the files searching for.",
+                    file_path_variants.file_relative_path
+                );
+                return Some(file_path_variants);
             }
 
-            Err(())
+            None
         }
 
         let mut search_for = HashSet::new();
 
-        match crate::utilities::to_pathbufs(paths) {
-            Ok(pathbufs) => {
-                for pathbuf in pathbufs {
-                    if pathbuf.is_file() {
-                        if let Ok(file_path_variants) = get_file_path_variants(pathbuf, &filters) {
-                            search_for.insert(file_path_variants);
-                        }
-                    } else {
-                        search_for.extend(get_file_path_variants_in_directory(&pathbuf, &filters)?);
-                    }
+        let pathbufs = crate::utilities::to_pathbufs(paths)?;
+        for pathbuf in pathbufs {
+            if pathbuf.is_file() {
+                if let Some(file_path_variants) = get_file_path_variants(pathbuf, &filters) {
+                    search_for.insert(file_path_variants);
                 }
-            }
-            Err(_) => {
-                return Err(());
+            } else {
+                search_for.extend(get_file_path_variants_in_directory(&pathbuf, &filters)?);
             }
         }
 

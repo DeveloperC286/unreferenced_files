@@ -1,12 +1,13 @@
 use std::path::{Path, PathBuf};
 
-pub(crate) fn to_pathbufs<T: AsRef<str>>(paths: &[T]) -> Result<Vec<PathBuf>, ()> {
-    fn to_pathbuf<T: AsRef<str>>(path: T) -> Result<PathBuf, ()> {
+use anyhow::{bail, Result};
+
+pub(crate) fn to_pathbufs<T: AsRef<str>>(paths: &[T]) -> Result<Vec<PathBuf>> {
+    fn to_pathbuf<T: AsRef<str>>(path: T) -> Result<PathBuf> {
         let path = Path::new(path.as_ref());
 
         if !path.exists() {
-            error!("{:?} does not exist.", path);
-            return Err(());
+            bail!(format!("{:?} does not exist.", path));
         }
 
         Ok(path.to_path_buf())

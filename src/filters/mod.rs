@@ -1,3 +1,4 @@
+use anyhow::{bail, Context, Result};
 use regex::Regex;
 
 pub struct Filters {
@@ -12,18 +13,14 @@ enum FilteringOn {
 }
 
 impl Filters {
-    pub fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Result<Filters, ()> {
-        fn to_regexes(to_regexes: Vec<String>) -> Result<Vec<Regex>, ()> {
+    pub fn new(only_search: Vec<String>, ignore_search: Vec<String>) -> Result<Filters> {
+        fn to_regexes(to_regexes: Vec<String>) -> Result<Vec<Regex>> {
             let mut regexes = vec![];
 
             for to_regex in to_regexes {
-                match Regex::new(&to_regex) {
-                    Ok(regex) => regexes.push(regex),
-                    Err(_) => {
-                        error!("Unable to convert {:?} to a regex.", to_regex);
-                        return Err(());
-                    }
-                }
+                let regex = Regex::new(&to_regex)
+                    .context(format!("Unable to convert {:?} to a regex.", to_regex))?;
+                regexes.push(regex);
             }
 
             Ok(regexes)
@@ -34,24 +31,25 @@ impl Filters {
                 filters: vec![],
                 filtering_on: FilteringOn::None,
             }),
-            (_, 0) => match to_regexes(only_search) {
-                Ok(filters) => Ok(Filters {
+            (_, 0) => {
+                let filters =
+                    to_regexes(only_search).context("Unable to create only search filters.")?;
+                Ok(Filters {
                     filters,
                     filtering_on: FilteringOn::Only,
-                }),
-                Err(_) => Err(()),
-            },
+                })
+            }
 
-            (0, _) => match to_regexes(ignore_search) {
-                Ok(filters) => Ok(Filters {
+            (0, _) => {
+                let filters =
+                    to_regexes(ignore_search).context("Unable to create ignore search filters.")?;
+                Ok(Filters {
                     filters,
                     filtering_on: FilteringOn::Ignore,
-                }),
-                Err(_) => Err(()),
-            },
+                })
+            }
             _ => {
-                error!("Only and ignore filters are mutually exclusive.");
-                Err(())
+                bail!("Only and ignore filters are mutually exclusive.");
             }
         }
     }
