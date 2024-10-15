@@ -2,6 +2,8 @@ use std::cmp::Ordering;
 use std::hash::{Hash, Hasher};
 use std::path::{Path, PathBuf};
 
+use anyhow::{bail, Result};
+
 #[derive(Debug, Clone, Eq)]
 pub struct FilePathVariants {
     pub(crate) file_canonicalize_path: String,
@@ -11,15 +13,10 @@ pub struct FilePathVariants {
 }
 
 impl FilePathVariants {
-    pub(crate) fn new(path: PathBuf) -> Result<FilePathVariants, ()> {
-        fn get_file_canonicalize_path(path: &Path) -> Result<String, ()> {
-            match path.canonicalize() {
-                Ok(canonicalized_path) => Ok(canonicalized_path.display().to_string()),
-                Err(error) => {
-                    error!("{:?}", error);
-                    Err(())
-                }
-            }
+    pub(crate) fn new(path: PathBuf) -> Result<FilePathVariants> {
+        fn get_file_canonicalize_path(path: &Path) -> Result<String> {
+            let canonicalized_path = path.canonicalize()?;
+            Ok(canonicalized_path.display().to_string())
         }
 
         fn get_file_relative_path(path: &Path) -> String {
@@ -29,34 +26,30 @@ impl FilePathVariants {
                 .to_string()
         }
 
-        fn get_file_name(path: &Path) -> Result<String, ()> {
+        fn get_file_name(path: &Path) -> Result<String> {
             match path.file_name() {
                 Some(file_name) => match file_name.to_str() {
                     Some(str) => Ok(str.to_string()),
                     None => {
-                        error!("Can not convert {:?} to str.", file_name);
-                        Err(())
+                        bail!(format!("Can not convert {:?} to str.", file_name));
                     }
                 },
                 None => {
-                    error!("{:?} has no file name.", path.display());
-                    Err(())
+                    bail!(format!("{:?} has no file name.", path.display()));
                 }
             }
         }
 
-        fn get_file_stem(path: &Path) -> Result<String, ()> {
+        fn get_file_stem(path: &Path) -> Result<String> {
             match path.file_stem() {
                 Some(file_stem) => match file_stem.to_str() {
                     Some(str) => Ok(str.to_string()),
                     None => {
-                        error!("Can not convert {:?} to str.", file_stem);
-                        Err(())
+                        bail!(format!("Can not convert {:?} to str.", file_stem));
                     }
                 },
                 None => {
-                    error!("{:?} has no file steam.", path.display());
-                    Err(())
+                    bail!(format!("{:?} has no file steam.", path.display()));
                 }
             }
         }

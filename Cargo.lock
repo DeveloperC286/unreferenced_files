@@ -61,6 +61,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.89"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "86fdf8605db99b54d3cd748a44c6d04df638eb5dafb219b135d0149bd0db01f6"
+
+[[package]]
 name = "clap"
 version = "4.5.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -313,6 +319,7 @@ checksum = "e91b56cd4cadaeb79bbf1a5645f6b4f8dc5bde8834ad5894a8db35fda9efa1fe"
 name = "unreferenced_files"
 version = "2.0.0"
 dependencies = [
+ "anyhow",
  "clap",
  "insta",
  "lazy_static",
