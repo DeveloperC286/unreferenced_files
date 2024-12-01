@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.1 (2024-12-01)
+
+## What's Changed
+* fix(deps): update rust crate regex to v1.11.1 by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/42
+* fix(deps): update rust crate anyhow to v1.0.93 - autoclosed by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/41
+* chore(deps): update rust crate insta to v1.41.1 by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/43
+* ci: Alpine migration for pinning/updating all dependencies by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/46
+* ci: adding Renovate GitHub Workflow Earthly updating by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/52
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.1.0...v2.1.1
+
 ## 2.1.0 (2024-10-19)
 
 ## What's Changed
