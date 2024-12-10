@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.1 (2024-12-10)
+
+## What's Changed
+* fix(deps): update rust crate regex to v1.11.1 by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/42
+* fix(deps): update rust crate anyhow to v1.0.93 - autoclosed by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/41
+* chore(deps): update rust crate insta to v1.41.1 by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/43
+* ci: Alpine migration for pinning/updating all dependencies by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/46
+* ci: adding Renovate GitHub Workflow Earthly updating by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/52
+* chore(deps): update dependency alpine_3_20/python3 to v3.12.8-r1 by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/57
+* chore(deps): update earthly/earthly docker tag to v0.8.15 by @renovate in https://github.com/DeveloperC286/unreferenced_files/pull/53
+* ci: replacing missed Earthly download with action by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/59
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.1.0...v2.1.1
+
 ## 2.1.0 (2024-10-19)
 
 ## What's Changed
