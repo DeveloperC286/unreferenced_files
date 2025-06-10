@@ -10,7 +10,7 @@ def reset_context(context):
     context.behave_directory = os.getcwd()
 
     context.pre_command = ""
-    context.unreferenced_files_path = f"{context.behave_directory}/../target/debug/unreferenced_files"
+    context.unreferenced_files_path = f"{context.behave_directory}/../target/x86_64-unknown-linux-musl/debug/unreferenced_files" # fmt: off
     context.arguments = ""
 
 
