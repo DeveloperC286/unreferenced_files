@@ -47,9 +47,9 @@ impl Search {
                 let raw_file = RawFile::new(path)?;
 
                 if filters.should_ignore(&raw_file.file_path_variants.file_canonicalize_path) {
-                    debug!("Ignoring the file {:?} and not searching it.", raw_file);
+                    debug!("Ignoring the file {raw_file:?} and not searching it.");
                 } else {
-                    trace!("Adding {:?} to the files searching.", raw_file);
+                    trace!("Adding {raw_file:?} to the files searching.");
                     return Ok(raw_file);
                 }
             }
