@@ -19,7 +19,7 @@ impl Filters {
 
             for to_regex in to_regexes {
                 let regex = Regex::new(&to_regex)
-                    .context(format!("Unable to convert {:?} to a regex.", to_regex))?;
+                    .context(format!("Unable to convert {to_regex:?} to a regex."))?;
                 regexes.push(regex);
             }
 
