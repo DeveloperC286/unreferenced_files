@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.2 (2025-07-04)
+
+## What's Changed
+* build: simplifying Makefile by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/198
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.1.1...v2.1.2
+
 ## 2.1.1 (2025-07-01)
 
 ## What's Changed
