@@ -79,4 +79,10 @@ pub(crate) struct Arguments {
         help = "Return a nonzero exit code if there are any unreferenced files."
     )]
     pub(crate) assert_no_unreferenced_files: bool,
+
+    #[arg(
+        long,
+        help = "Enable verbose output, respects RUST_LOG environment variable if set."
+    )]
+    pub(crate) verbose: bool,
 }

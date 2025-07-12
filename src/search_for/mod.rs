@@ -27,7 +27,7 @@ impl SearchFor {
             filters: &Filters,
         ) -> Result<HashSet<FilePathVariants>> {
             let mut files_path_variants = HashSet::new();
-            trace!(
+            debug!(
                 "Searching the directory {:?} for files to search for.",
                 path.display()
             );
@@ -61,7 +61,7 @@ impl SearchFor {
                     file_path_variants.file_relative_path
                 );
             } else {
-                trace!(
+                debug!(
                     "Adding {:?} to the files searching for.",
                     file_path_variants.file_relative_path
                 );
@@ -84,6 +84,7 @@ impl SearchFor {
             }
         }
 
+        info!("Found {} files to search for references.", search_for.len());
         Ok(SearchFor { search_for })
     }
 
@@ -106,7 +107,7 @@ impl SearchFor {
 
         for search in searching.raw_files {
             if !unreferenced_files.is_empty() {
-                info!(
+                debug!(
                     "Searching the file {:?}.",
                     search.file_path_variants.file_relative_path
                 );
