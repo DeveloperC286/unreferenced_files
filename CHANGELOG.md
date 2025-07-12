@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.2.0 (2025-07-12)
+
+## What's Changed
+* build: simplifying Makefile by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/198
+* chore(deps): update mvdan/shfmt docker tag to v3.12.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/200
+* chore(deps): update dependency alpine_3_21/git to v2.47.3-r0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/201
+* fix(deps): update rust crate clap to v4.5.41 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/202
+* feat: adding verbose CLI option by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/203
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.1.1...v2.2.0
+
 ## 2.1.1 (2025-07-01)
 
 ## What's Changed
