@@ -11,7 +11,6 @@ A utility for finding unused and unreferenced files.
  * [Usage](#usage)
     + [Usage - Additional Arguments](#usage-additional-arguments)
     + [Usage - Example](#usage-example)
-    + [Usage - Logging](#usage-logging)
  * [Compiling via Local Repository](#compiling-via-local-repository)
  * [Compiling via Cargo](#compiling-via-cargo)
  * [End-to-End Testing](#end-to-end-testing)
@@ -78,12 +77,6 @@ You can find all the unreferenced files inside `src/test/resources/` via
 cd src/test/resources/
 unreferenced_files --search-for ./ --search ../java/
 ```
-
-
-### Usage - Logging
-The crates `pretty_env_logger` and `log` are used to provide logging.
-The environment variable `RUST_LOG` can be used to set the logging level.
-See [https://crates.io/crates/pretty_env_logger](https://crates.io/crates/pretty_env_logger) for more detailed documentation.
 
 
 ## Compiling via Local Repository

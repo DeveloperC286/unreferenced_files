@@ -20,7 +20,7 @@ impl Search {
     pub fn new<T: AsRef<str>>(paths: &[T], filters: Filters) -> Result<Search> {
         fn get_raw_files_in_directory(path: &Path, filters: &Filters) -> Result<HashSet<RawFile>> {
             let mut raw_files = HashSet::new();
-            trace!(
+            debug!(
                 "Searching the directory {:?} for files to search.",
                 path.display()
             );
@@ -49,7 +49,7 @@ impl Search {
                 if filters.should_ignore(&raw_file.file_path_variants.file_canonicalize_path) {
                     debug!("Ignoring the file {raw_file:?} and not searching it.");
                 } else {
-                    trace!("Adding {raw_file:?} to the files searching.");
+                    debug!("Adding {raw_file:?} to the files searching.");
                     return Ok(raw_file);
                 }
             }
@@ -68,6 +68,10 @@ impl Search {
             }
         }
 
+        info!(
+            "Loaded {} files to search within for references.",
+            raw_files.len()
+        );
         Ok(Search { raw_files })
     }
 }
