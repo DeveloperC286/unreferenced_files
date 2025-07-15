@@ -30,9 +30,7 @@ mod tests;
 const ERROR_EXIT_CODE: i32 = 1;
 
 fn main() {
-    info!("Version {}.", env!("CARGO_PKG_VERSION"));
     let arguments = cli::Arguments::parse();
-    debug!("The command line arguments provided are {arguments:?}.");
 
     // Set up logging: if verbose is true and RUST_LOG is not set, default to info level
     if arguments.verbose && std::env::var("RUST_LOG").is_err() {
@@ -40,6 +38,9 @@ fn main() {
     }
 
     pretty_env_logger::init();
+
+    info!("Version {}.", env!("CARGO_PKG_VERSION"));
+    debug!("The command line arguments provided are {arguments:?}.");
 
     if let Err(err) = run(arguments) {
         error!("{err:?}");
