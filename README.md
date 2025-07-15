@@ -3,19 +3,18 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![License](https://img.shields.io/badge/License-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-
 A utility for finding unused and unreferenced files.
 
-
-## Content
- * [Usage](#usage)
-    + [Usage - Additional Arguments](#usage-additional-arguments)
-    + [Usage - Example](#usage-example)
- * [Compiling via Local Repository](#compiling-via-local-repository)
- * [Compiling via Cargo](#compiling-via-cargo)
- * [End-to-End Testing](#end-to-end-testing)
- * [Issues/Feature Requests](#issuesfeature-requests)
-
+- [Usage](#usage)
+  - [Additional Arguments](#additional-arguments)
+  - [Example](#example)
+- [Examples](#examples)
+  - [GitHub Actions](#github-actions)
+  - [GitLab CI](#gitlab-ci)
+- [Installation](#installation)
+  - [Binary](#binary)
+  - [Cargo](#cargo)
+  - [Docker](#docker)
 
 ## Usage
 `unreferenced_files` is a very simple and fast tool.
@@ -32,15 +31,14 @@ tree parent
 
 parent/
 ├── child
-│   └── file2.txt
+│   └── file2.txt
 └── file1.txt
 ```
 
 For the example directory above, if the argument was `--search-for parent/` then for the file `parent/file1.txt` the relative path of `parent/file1.txt`, the file name `file1.txt`, and the file stem `file1` would be searched for.
 For the file `parent/child/file2.txt` the relative path of `parent/child/file2.txt`, the file name `file2.txt` and file stem `file2` would be searched for.
 
-
-### Usage - Additional Arguments
+### Additional Arguments
 
 Additional command line flags can be passed to alter what is searched for to determine if a file is referenced.
 
@@ -56,9 +54,8 @@ Additional command line flags can be passed to alter what is searched for to det
 | --print-full-path | Output the full path of each unreferenced file, instead of the relative path. |
 | --assert-no-unreferenced-files | Return a nonzero exit code if there are any unreferenced files. |
 
-
-### Usage - Example
-For an example Java project with tests referencing files  inside `src/test/resources/` where the tests are calling the files by name e.g.
+### Example
+For an example Java project with tests referencing files inside `src/test/resources/` where the tests are calling the files by name e.g.
 
 ```java
 @Test
@@ -78,22 +75,55 @@ cd src/test/resources/
 unreferenced_files --search-for ./ --search ../java/
 ```
 
+## Examples
+### GitHub Actions
+<!-- x-release-please-start-version -->
+```yaml
+name: CI
 
-## Compiling via Local Repository
-Checkout the code repository locally, change into the repository's directory and then build via cargo.
-Using the `--release` flag produces an optimised binary but takes longer to compile.
+on: pull_request
 
-```sh
-git clone https://github.com/DeveloperC286/unreferenced_files.git
-cd unreferenced_files/
-cargo build --release
+jobs:
+  check-unreferenced-files:
+    name: Check Unreferenced Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code.
+        uses: actions/checkout@v4
+      - name: Install Unreferenced Files.
+        run: version="v2.1.1" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
+      - name: Check for unreferenced files
+        run: unreferenced_files --search-for src/test/resources/ --search src/test/java/ --assert-no-unreferenced-files
 ```
+<!-- x-release-please-end -->
 
-The compiled binary is present in `target/release/unreferenced_files`.
+### GitLab CI
+<!-- x-release-please-start-version -->
+```yaml
+check-unreferenced-files:
+  stage: check-unreferenced-files
+  image: rust
+  before_script:
+    - version="v2.1.1" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
+  script:
+    - unreferenced_files --search-for src/test/resources/ --search src/test/java/ --assert-no-unreferenced-files
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
 
+```
+<!-- x-release-please-end -->
 
-## Compiling via Cargo
-Cargo is the Rust package manager, the `install` sub-command pulls from [crates.io](https://crates.io/crates/clean_git_history) and then compiles the binary locally, placing the compiled binary at `${HOME}/.cargo/bin/clean_git_history`.
+## Installation
+
+### Binary
+<!-- x-release-please-start-version -->
+```sh
+version="v2.1.1" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
+```
+<!-- x-release-please-end -->
+
+### Cargo
+Cargo is the Rust package manager, the `install` sub-command pulls from [crates.io](https://crates.io/crates/unreferenced_files) and then compiles the binary locally, placing the compiled binary at `${HOME}/.cargo/bin/unreferenced_files`.
 
 ```sh
 cargo install unreferenced_files
@@ -103,43 +133,28 @@ By default it installs the latest version at the time of execution.
 You can specify a specific version to install using the `--version` argument.
 For certain environments such as CICD etc you may want to pin the version.
 
+<!-- x-release-please-start-version -->
 e.g.
 
 ```sh
-cargo install unreferenced_files --version 2.0.0
+cargo install unreferenced_files --version 2.1.1
 ```
+<!-- x-release-please-end -->
 
 Rather than pinning to a specific version you can specify the major or minor version.
 
+<!-- x-release-please-start-version -->
 e.g.
 
 ```sh
 cargo install unreferenced_files --version ^2
 ```
+<!-- x-release-please-end -->
 
 Will download the latest `2.*` release whether that is `2.0.0` or `2.7.0`.
 
-
-## End-to-End Testing
-To ensure correctness as there are a variety of out of process dependencies the project has an End-to-End behaviour driven test suite using the behave framework (https://github.com/behave/behave).
-
-To run the test suite you need to
- - Compile the Unreferenced Files binary.
- - Install Python3.
- - Install Behave.
- - Execute Behave.
-
-__Note - You can't use --release as the test suite uses `target/debug/unreferenced_files`.__
-
-```sh
-cargo build
-cd unreferenced_files/end-to-end-tests/
-virtualenv -p python3 .venv
-source .venv/bin/activate
-pip3 install -r requirements.txt
-behave
-```
-
+### Docker
+You can use the Docker image published to [ghcr.io/developerc286/unreferenced_files](https://github.com/DeveloperC286/unreferenced_files/pkgs/container/unreferenced_files).
 
 ## Issues/Feature Requests
-To report an issue or request a new feature use [https://github.com/DeveloperC286/unreferenced_files/issues](https://github.com/DeveloperC286/unreferenced_files/issues).
+Report issues or request features on our [GitHub Issues](https://github.com/DeveloperC286/unreferenced_files/issues).
