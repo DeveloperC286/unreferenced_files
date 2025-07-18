@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.2.0 (2025-07-18)
+
+## What's Changed
+* build: simplifying Makefile by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/198
+* chore(deps): update mvdan/shfmt docker tag to v3.12.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/200
+* chore(deps): update dependency alpine_3_21/git to v2.47.3-r0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/201
+* fix(deps): update rust crate clap to v4.5.41 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/202
+* feat: adding verbose CLI option by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/203
+* docs: condensed/simplified README.md by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/204
+* chore(deps): update alpine:3.22 docker digest to 4bcff63 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/205
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to 6a5f50a by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/206
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to fd94400 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/207
+* chore(deps): update rust:1.88.0-alpine3.21 docker digest to 63f574f by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/208
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to 716e13a by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/209
+* chore(deps): update rust:1.88.0-alpine3.21 docker digest to b7a47e9 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/210
+* chore(deps): update alpine docker tag to v3.22.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/211
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to 763eee4 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/212
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.1.1...v2.2.0
+
 ## 2.1.1 (2025-07-01)
 
 ## What's Changed
