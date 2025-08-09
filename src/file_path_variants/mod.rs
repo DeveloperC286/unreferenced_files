@@ -92,10 +92,7 @@ impl Hash for FilePathVariants {
 impl PartialOrd for FilePathVariants {
     #[inline]
     fn partial_cmp(&self, other: &FilePathVariants) -> Option<Ordering> {
-        Some(
-            self.file_canonicalize_path
-                .cmp(&other.file_canonicalize_path),
-        )
+        Some(self.cmp(other))
     }
 }
 
