@@ -1,5 +1,145 @@
 # Changelog
 
+## 2.2.0 (2026-01-04)
+
+## What's Changed
+* build: simplifying Makefile by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/198
+* chore(deps): update mvdan/shfmt docker tag to v3.12.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/200
+* chore(deps): update dependency alpine_3_21/git to v2.47.3-r0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/201
+* fix(deps): update rust crate clap to v4.5.41 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/202
+* feat: adding verbose CLI option by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/203
+* docs: condensed/simplified README.md by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/204
+* chore(deps): update alpine:3.22 docker digest to 4bcff63 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/205
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to 6a5f50a by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/206
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to fd94400 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/207
+* chore(deps): update rust:1.88.0-alpine3.21 docker digest to 63f574f by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/208
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to 716e13a by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/209
+* chore(deps): update rust:1.88.0-alpine3.21 docker digest to b7a47e9 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/210
+* chore(deps): update alpine docker tag to v3.22.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/211
+* chore(deps): update python:3.13.5-alpine3.21 docker digest to 763eee4 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/212
+* chore(deps): update rust:1.88.0-alpine3.21 docker digest to 54e937b by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/213
+* fix(deps): update rust crate clap to v4.5.42 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/214
+* chore(deps): update dependency behave to v1.3.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/215
+* chore(deps): update docker/login-action digest to 184bdaa by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/216
+* fix(deps): update rust crate clap to v4.5.43 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/217
+* chore(deps): update python docker tag to v3.13.6 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/218
+* chore(deps): update python:3.13.6-alpine3.21 docker digest to f5f2574 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/219
+* chore(deps): update dependency alpine_3_22/github-cli to v2.72.0-r2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/220
+* chore(deps): update rust docker tag to v1.89.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/221
+* chore(deps): update actions/checkout action to v4.3.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/222
+* chore(deps): update actions/checkout action to v5 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/223
+* chore(deps): update dependency behave to v1.3.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/224
+* fix(deps): update rust crate clap to v4.5.44 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/225
+* chore(deps): update dependency parse-type to v0.6.6 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/227
+* fix(deps): update rust crate anyhow to v1.0.99 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/228
+* fix(deps): update rust crate clap to v4.5.45 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/229
+* chore(deps): update python:3.13.6-alpine3.21 docker digest to 5bcbb2a by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/230
+* chore(deps): update python:3.13.6-alpine3.21 docker digest to 52153b8 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/231
+* chore(deps): update python:3.13.6-alpine3.21 docker digest to 2af1351 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/232
+* chore(deps): update python:3.13.6-alpine3.21 docker digest to 4358f4b by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/233
+* chore(deps): update python docker tag to v3.13.7 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/234
+* chore(deps): update python:3.13.7-alpine3.21 docker digest to 8f70fe3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/235
+* chore(deps): update python:3.13.7-alpine3.21 docker digest to 0c3d4f2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/236
+* chore(deps): update googleapis/release-please-action action to v4.3.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/237
+* fix(deps): update rust crate regex to v1.11.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/238
+* fix(deps): update rust crate clap to v4.5.46 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/239
+* chore(deps): update dependency behave to v1.3.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/240
+* chore(deps): update dependency behave to v1.3.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/241
+* chore(deps): update rust crate insta to v1.43.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/242
+* fix(deps): update rust crate clap to v4.5.47 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/243
+* fix(deps): update rust crate log to v0.4.28 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/244
+* chore(deps): update dependency alpine_3_22/github-cli to v2.72.0-r3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/245
+* chore(deps): update ghcr.io/developerc286/clean_git_history docker tag to v1.1.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/246
+* chore(deps): update rust docker tag to v1.90.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/248
+* fix(deps): update rust crate anyhow to v1.0.100 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/249
+* fix(deps): update rust crate clap to v4.5.48 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/250
+* ci: adding Claude Code workflows by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/251
+* chore(deps): update ghcr.io/developerc286/conventional_commits_linter docker tag to v0.16.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/247
+* chore(deps): update anthropics/claude-code-action digest to 426380f by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/252
+* chore(deps): update docker/login-action digest to 5e57cd1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/253
+* chore(deps): update anthropics/claude-code-action digest to 90d189f by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/254
+* chore(deps): update anthropics/claude-code-action digest to ac1a320 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/255
+* chore(deps): update python docker tag to v3.14.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/256
+* chore(deps): update python:3.14.0-alpine3.21 docker digest to c2410fb by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/258
+* chore(deps): update rust:1.90.0-alpine3.21 docker digest to 1b3ecdc by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/259
+* chore(deps): update alpine:3.22 docker digest to 4b7ce07 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/257
+* chore(deps): update rust crate regex to v1.11.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/263
+* chore(deps): update python:3.14.0-alpine3.21 docker digest to 814983b by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/261
+* chore(deps): update rust:1.90.0-alpine3.21 docker digest to 3757b14 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/262
+* chore(deps): update alpine docker tag to v3.22.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/260
+* chore(deps): update anthropics/claude-code-action digest to 777ffcb by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/264
+* chore(deps): update rust crate regex to v1.12.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/265
+* chore(deps): update python:3.14.0-alpine3.21 docker digest to f1ac9e0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/266
+* chore(deps): update rhysd/actionlint docker tag to v1.7.8 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/267
+* chore(deps): update dependency alpine_3_22/github-cli to v2.72.0-r4 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/268
+* chore(deps): update rust crate clap to v4.5.49 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/269
+* chore(deps): update rust crate regex to v1.12.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/270
+* chore(deps): update ghcr.io/google/yamlfmt docker tag to v0.18.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/271
+* chore(deps): update anthropics/claude-code-action digest to e8bad57 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/272
+* ci: Claude Code only reviewing owner by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/273
+* chore(deps): update ghcr.io/google/yamlfmt docker tag to v0.18.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/274
+* chore(deps): update ghcr.io/google/yamlfmt docker tag to v0.19.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/275
+* chore(deps): update rust crate clap to v4.5.50 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/276
+* chore(deps): update ghcr.io/google/yamlfmt docker tag to v0.20.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/277
+* chore(deps): update anthropics/claude-code-action digest to f30f5ee by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/278
+* chore(deps): update googleapis/release-please-action action to v4.4.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/279
+* chore(deps): update anthropics/claude-code-action digest to f4d737a by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/280
+* chore(deps): update rust crate clap to v4.5.51 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/281
+* chore(deps): update anthropics/claude-code-action digest to 8a1c437 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/282
+* chore(deps): update rust docker tag to v1.91.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/283
+* chore(deps): update rust docker tag to v1.91.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/284
+* chore(deps): update ghcr.io/developerc286/clean_git_history docker tag to v1.1.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/285
+* chore(deps): update ghcr.io/developerc286/conventional_commits_linter docker tag to v0.16.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/286
+* ci: skip Claude Code review on draft PRs by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/287
+* chore(deps): update actions/checkout digest to 93cb6ef by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/288
+* chore(deps): update actions/checkout action to v5.0.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/289
+* chore(deps): update anthropics/claude-code-action digest to 906bd89 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/290
+* chore(deps): update rust crate clap to v4.5.52 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/291
+* chore(deps): update anthropics/claude-code-action digest to 6902c22 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/292
+* chore(deps): update rust crate clap to v4.5.53 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/293
+* chore(deps): update rust crate insta to v1.44.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/294
+* chore(deps): update actions/checkout action to v6 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/295
+* chore(deps): update rust crate insta to v1.44.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/296
+* chore(deps): update rhysd/actionlint docker tag to v1.7.9 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/297
+* chore(deps): update anthropics/claude-code-action digest to f9b2917 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/298
+* chore(deps): update anthropics/claude-code-action digest to 798cf09 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/299
+* chore(deps): update anthropics/claude-code-action digest to a7e4c51 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/300
+* chore(deps): update rust crate insta to v1.44.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/301
+* chore(deps): update rust crate insta to v1.44.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/302
+* chore(deps): update anthropics/claude-code-action digest to 6337623 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/303
+* chore(deps): update actions/checkout digest to 8e8c483 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/304
+* chore(deps): update actions/checkout action to v6.0.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/305
+* chore(deps): update rust crate log to v0.4.29 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/307
+* chore(deps): update python docker tag to v3.14.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/306
+* chore(deps): update ghcr.io/developerc286/conventional_commits_linter docker tag to v0.17.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/308
+* chore(deps): update python:3.14.1-alpine3.21 docker digest to fd8407c by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/309
+* chore(deps): update dependency alpine_3_22/github-cli to v2.72.0-r5 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/310
+* chore(deps): update alpine docker tag by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/311
+* chore(deps): update rust:1.91.1-alpine3.21 docker digest to 32817dd by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/312
+* chore(deps): update dependency alpine_3_23/github-cli to v2.83.0-r0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/313
+* chore(deps): update dependency alpine_3_23/github-cli to v2.83.0-r1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/314
+* chore(deps): update anthropics/claude-code-action digest to f0c8eb2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/315
+* chore(deps): update rust docker tag to v1.92.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/316
+* chore(deps): update anthropics/claude-code-action digest to 9acae26 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/317
+* chore(deps): update anthropics/claude-code-action digest to d7b6d50 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/318
+* chore(deps): update alpine:3.23 docker digest to be171b5 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/319
+* chore(deps): update anthropics/claude-code-action digest to 0d19335 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/320
+* chore(deps): update alpine:3.23 docker digest to 865b95f by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/321
+* chore(deps): update alpine docker tag to v3.23.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/322
+* chore(deps): update rust crate insta to v1.45.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/323
+* chore(deps): update docker/setup-buildx-action digest to 8d2750c by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/324
+* chore(deps): update anthropics/claude-code-action digest to 7145c3e by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/325
+* chore(deps): update ghcr.io/developerc286/clean_git_history docker tag to v1.1.5 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/326
+* ci: deleting Claude workflows by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/327
+* chore(deps): update rust crate insta to v1.45.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/328
+* chore(deps): update rhysd/actionlint docker tag to v1.7.10 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/329
+* chore(deps): update rust crate clap to v4.5.54 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/330
+* chore(deps): update rust crate insta to v1.46.0 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/332
+* ci: converting from Docker -> Nix by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/331
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.1.1...v2.2.0
+
 ## 2.1.1 (2025-07-01)
 
 ## What's Changed
