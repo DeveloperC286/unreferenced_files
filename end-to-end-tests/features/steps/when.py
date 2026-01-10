@@ -1,4 +1,4 @@
-from behave import *
+from behave import when
 
 
 @when('the flag --assert-no-unreferenced-files is set.')
@@ -7,7 +7,7 @@ def set_assert_no_unreferenced_files(context):
 
 
 @when('the flag --only-file-name is set.')
-def set_assert_no_unreferenced_files(context):
+def set_only_file_name(context):
     context.arguments += " --only-file-name "
 
 
@@ -17,12 +17,12 @@ def set_search_for(context, search_for):
 
 
 @when('the argument --only-search-for is provided as "{only_search_for}".')
-def set_only_search(context, only_search_for):
+def set_only_search_for(context, only_search_for):
     context.arguments += f" --only-search-for {only_search_for} "
 
 
 @when('the argument --ignore-search-for is provided as "{ignore_search_for}".')
-def set_only_search(context, ignore_search_for):
+def set_ignore_search_for(context, ignore_search_for):
     context.arguments += f" --ignore-search-for {ignore_search_for} "
 
 
@@ -37,5 +37,5 @@ def set_only_search(context, only_search):
 
 
 @when('the argument --ignore-search is provided as "{ignore_search}".')
-def set_only_search(context, ignore_search):
+def set_ignore_search(context, ignore_search):
     context.arguments += f" --ignore-search {ignore_search} "
