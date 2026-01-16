@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.2.1 (2026-01-16)
+
+## What's Changed
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/333
+* chore(deps): update dependency https://github.com/developerc286/template to v1.6.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/335
+* chore(deps): update dependency https://github.com/developerc286/template to v1.6.4 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/336
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/337
+* chore(deps): update rust crate insta to v1.46.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/338
+* chore(deps): update dependency https://github.com/developerc286/template to v1.7.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/339
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.2.0...v2.2.1
+
 ## 2.2.0 (2026-01-04)
 
 ## What's Changed
