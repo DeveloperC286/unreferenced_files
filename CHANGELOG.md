@@ -1,5 +1,37 @@
 # Changelog
 
+## 2.2.1 (2026-02-23)
+
+## What's Changed
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/333
+* chore(deps): update dependency https://github.com/developerc286/template to v1.6.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/335
+* chore(deps): update dependency https://github.com/developerc286/template to v1.6.4 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/336
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/337
+* chore(deps): update rust crate insta to v1.46.1 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/338
+* chore(deps): update dependency https://github.com/developerc286/template to v1.7.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/339
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/340
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/341
+* chore(deps): update rust crate clap to v4.5.55 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/342
+* chore(deps): update alpine docker tag to v3.23.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/343
+* chore(deps): update rust crate clap to v4.5.56 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/344
+* chore(deps): update rust crate insta to v1.46.2 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/345
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/346
+* chore(deps): update rust crate insta to v1.46.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/347
+* chore(deps): update rust crate regex to v1.12.3 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/348
+* chore(deps): update rust crate clap to v4.5.57 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/349
+* chore(deps): update rust crate anyhow to v1.0.101 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/350
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/351
+* chore(deps): update rust crate clap to v4.5.58 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/352
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/353
+* chore(deps): update rust crate clap to v4.5.59 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/354
+* chore(deps): update rust crate clap to v4.5.60 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/355
+* chore(deps): update dependency https://github.com/developerc286/template to v1.7.5 by @DeveloperC286 in https://github.com/DeveloperC286/unreferenced_files/pull/356
+* chore(deps): update rust crate anyhow to v1.0.102 by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/357
+* chore(deps): update nix flake lock by @renovate[bot] in https://github.com/DeveloperC286/unreferenced_files/pull/358
+
+
+**Full Changelog**: https://github.com/DeveloperC286/unreferenced_files/compare/v2.2.0...v2.2.1
+
 ## 2.2.0 (2026-01-04)
 
 ## What's Changed
