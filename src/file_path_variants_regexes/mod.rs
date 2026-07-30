@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
+use log::error;
 use regex::Regex;
 
 use crate::file_path_variants::FilePathVariants;

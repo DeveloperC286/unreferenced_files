@@ -2,6 +2,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
 use anyhow::{bail, Result};
+use log::{debug, info};
 
 use crate::filters::Filters;
 use crate::search::raw_file::RawFile;

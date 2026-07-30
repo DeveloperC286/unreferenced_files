@@ -2,6 +2,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
 use anyhow::Result;
+use log::{debug, info};
 
 use crate::file_path_variants::FilePathVariants;
 use crate::file_path_variants_regexes::FilePathVariantsRegexes;
