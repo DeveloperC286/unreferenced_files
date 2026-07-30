@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::hash::{Hash, Hasher};
 use std::path::{Path, PathBuf};
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 
 #[derive(Debug, Clone, Eq)]
 pub struct FilePathVariants {
