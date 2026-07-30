@@ -1,8 +1,8 @@
 use std::collections::HashSet;
 
 use crate::file_path_variants::FilePathVariants;
-use crate::search::raw_file::RawFile;
 use crate::search::Search;
+use crate::search::raw_file::RawFile;
 use crate::search_for::SearchFor;
 
 const FOUND: &str = "found";

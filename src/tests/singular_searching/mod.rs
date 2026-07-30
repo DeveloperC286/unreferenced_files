@@ -69,7 +69,6 @@ fn test_multiple_searching_for_not_found() {
     // Given
     let search_for = UNREFERENCED_FILE1_AND_FILE2.clone();
     let searching = raw_file_with_content!(
-
         "@test\npublic void testImporting() {\n  import(\"./file3.txt\");\n  import(\"./file4.txt\");\n}"
     );
 

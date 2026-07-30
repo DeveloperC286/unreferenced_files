@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 
 pub(crate) fn to_pathbufs<T: AsRef<str>>(paths: &[T]) -> Result<Vec<PathBuf>> {
     fn to_pathbuf<T: AsRef<str>>(path: T) -> Result<PathBuf> {
