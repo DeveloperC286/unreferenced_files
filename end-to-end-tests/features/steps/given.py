@@ -1,9 +1,10 @@
-import os
 import hashlib
+import os
+
+from assertions import assert_command_successful
 from behave import given
 
 from utilities import execute_command
-from assertions import assert_command_successful
 
 
 def reset_context(context):

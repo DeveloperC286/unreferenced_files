@@ -1,15 +1,15 @@
-from behave import then
-
-from utilities import execute_unreferenced_files
 from assertions import (
-    assert_no_output,
-    assert_no_errors,
     assert_command_successful,
     assert_command_unsuccessful,
     assert_error_equals,
     assert_error_is_one_of,
+    assert_no_errors,
+    assert_no_output,
     assert_unreferenced_files,
 )
+from behave import then
+
+from utilities import execute_unreferenced_files
 
 
 @then('unreferenced files are not found.')
