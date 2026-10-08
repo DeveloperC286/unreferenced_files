@@ -91,7 +91,7 @@ jobs:
       - name: Checkout code.
         uses: actions/checkout@v4
       - name: Install Unreferenced Files.
-        run: version="v2.2.0" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
+        run: version="v2.2.1" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
       - name: Check for unreferenced files
         run: unreferenced_files --search-for src/test/resources/ --search src/test/java/ --assert-no-unreferenced-files
 ```
@@ -104,7 +104,7 @@ check-unreferenced-files:
   stage: check-unreferenced-files
   image: rust
   before_script:
-    - version="v2.2.0" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
+    - version="v2.2.1" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
   script:
     - unreferenced_files --search-for src/test/resources/ --search src/test/java/ --assert-no-unreferenced-files
   rules:
@@ -118,7 +118,7 @@ check-unreferenced-files:
 ### Binary
 <!-- x-release-please-start-version -->
 ```sh
-version="v2.2.0" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
+version="v2.2.1" && wget -O - "https://github.com/DeveloperC286/unreferenced_files/releases/download/${version}/x86_64-unknown-linux-musl.tar.gz" | tar xz --directory "/usr/bin/"
 ```
 <!-- x-release-please-end -->
 
@@ -137,7 +137,7 @@ For certain environments such as CICD etc you may want to pin the version.
 e.g.
 
 ```sh
-cargo install unreferenced_files --version 2.2.0
+cargo install unreferenced_files --version 2.2.1
 ```
 <!-- x-release-please-end -->
 
